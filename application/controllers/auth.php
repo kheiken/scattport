@@ -11,6 +11,13 @@ class Auth extends CI_Controller {
      * Shows the index page.
      */
 	public function index()	{
+		$this->load->view('index');
+	}
+
+    /**
+     * Shows the index page.
+     */
+	public function login()	{
 		$this->load->view('auth/login');
 	}
 
@@ -18,6 +25,13 @@ class Auth extends CI_Controller {
 	 * Logs the user in - or not ;-)
 	 */
 	public function do_login() {
+	    echo "{success: true}";
+	}
+
+	/**
+	 * Logs the user out.
+	 */
+	public function do_logout() {
 	    echo "{success: true}";
 	}
 }
