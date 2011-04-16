@@ -1,0 +1,13 @@
+body {
+    background: #7f99be;
+}
+
+#header {
+    border-bottom: 1px solid #666;
+    background: #1e4176;
+    padding: 5px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
