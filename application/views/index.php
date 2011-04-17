@@ -1,43 +1,44 @@
 <?php $this->load->view('header'); ?>
 
 <script type="text/javascript">
-var layoutLeft1 = new Ext.tree.TreePanel({
-    region: 'north',
+var projectPanel = new Ext.tree.TreePanel({
+    id: 'project-tree',
+    region: 'west',
     title: "Projekte",
-    height: 250,
+    height: 400,
     bodyStyle: 'margin-bottom: 6px;',
     autoScroll: true,
-    enableDD: false,
-    rootVisible: false,
-    id: 'treePanel',
+    rootVisible: true,
+    lines: false,
+    tbar: [{
+    	icon: BASE_PATH + 'assets/images/icons/box--plus.png',
+        text: "Neues Projekt",
+        scope: this
+    },{
+        id: 'delete',
+        icon: BASE_PATH + 'assets/images/icons/box--minus.png',
+        text: "Entfernen",
+        scope: this
+    }],
     root: {
-        text: "Projekte",
+        text: "Meine Projekte",
         expanded: true,
-        nodeType: 'async',
         children: [{
             text: 'Projekt 1',
-            expanded: false
+            leaf: true
         }, {
             text: 'Projekt 2',
-            expanded: false,
+            leaf: true
         }]
     }
 });
 
 var layoutLeft2 = new Ext.Panel({
-    region: 'center',
+    region: 'west',
     margin: '10 0 0 0',
     autoScroll: true,
     bodyStyle: 'padding: 10px; background: #eee;',
     html: 'Test'
-});
-
-var toolbarCenter = new Ext.Toolbar({
-    items: ['->', {
-        icon: BASE_PATH + 'assets/images/icons/minus-circle.png',
-        text: 'Logout',
-        handler: logout
-    }]
 });
 
 var panelCenter = new Ext.TabPanel({
@@ -65,36 +66,34 @@ var layoutCenter = new Ext.Panel({
     margins: '0 5 5 0',
     activeItem: 0,
     border: true,
-    tbar: toolbarCenter,
     items: [panelCenter]
 });
 
 var layoutMain = new Ext.Viewport({
     layout: 'border',
-    renderTo: Ext.getBody(),
     items: [{
+        height: 46,
         region: 'north',
+        xtype: 'box',
+        el: 'header',
+        border: false
+    }, {
+        region: 'west',
+        baseCls: 'x-plain',
+        xtype: 'panel',
         autoHeight: true,
-        height: 100,
+        width: 190,
+        minWidth: 190,
+        maxWidth: 300,
         border: false,
-            html: '<div id="header">Scattport</div>',
-            margins: '0 0 5 0',
-            style: 'margin-bottom: 4px;'
-        }, {
-            region: 'west',
-            baseCls: 'x-plain',
-            xtype: 'panel',
-            autoHeight: true,
-            width: 180,
-            border: false,
-            split: true,
-            margins: '0 0 0 5',
-            items: [layoutLeft1, layoutLeft2]
-        }, layoutCenter]
+        split: true,
+        margins: '0 0 0 5',
+        items: [projectPanel, layoutLeft2]
+    }, layoutCenter]
 });
 
 function logout() {
-    Ext.Ajax.request({
+    $.ajax({
         url: BASE_URL + 'auth/do_logout',
         method: 'post',
         success: function(xhr) {
@@ -102,8 +101,8 @@ function logout() {
         }
     });
 }
-
-layoutMain.show();
 </script>
+
+<div id="main"></div>
 
 <?php $this->load->view('footer'); ?>
