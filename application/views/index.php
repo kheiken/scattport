@@ -9,6 +9,8 @@ var projectTree = new Ext.tree.TreePanel({
     autoScroll: true,
     enableDD: false,
     rootVisible: false,
+    lines: false,
+    useArrows: true,
     id: 'treePanel',
 	tbar: [{
     	icon: BASE_PATH + 'assets/images/icons/box--plus.png',
@@ -30,15 +32,6 @@ var projectTree = new Ext.tree.TreePanel({
 });
 
 projectTree.on('click', loadProjectInfo);
-
-var infoPanel = new Ext.Panel({
-    region: 'west',
-    margin: '10 0 0 0',
-    autoScroll: true,
-    bodyStyle: 'padding: 10px; background: #eee;',
-    html: 'Test'
-});
-
 
 var tabPanel = new Ext.TabPanel({
     xtype: 'tabpanel',
@@ -108,9 +101,9 @@ function loadProjectInfo(n) {
 	        url: BASE_URL + 'projects/detail' + n.id,
 	        method: 'get',
 	        success: function ( result, request ) {
-	          	
+
 				var theResponse = Ext.util.JSON.decode(result.responseText);
-				
+
 				tabPanel.add({
 		            title: 'New Tab ',
 		            html: 'Lade Projekt...',
@@ -122,7 +115,7 @@ function loadProjectInfo(n) {
 		                    '<p>ID: {id}</p>',
 		                    '<p>Name: {name}</p>'
 		                );
-						
+
 		                tpl.overwrite(this.html, data);
 		            }
 		        }).show();
@@ -140,7 +133,7 @@ function loadProjectInfo(n) {
 	       		}
 	       	}
 	   	});
-		
+
     }
 }
 
