@@ -21,3 +21,11 @@
 </head>
 
 <body>
+
+<div id="header">
+  <?=img(array('src' => 'assets/images/logo.png', 'style' => 'margin-left: 5px'));?>
+  <div style="float: right; margin-top: 15px; margin-right: 10px; color: #ccc;">
+    <?=anchor('auth/settings', "Einstellungen", array('style' => 'padding: 5px;'));?> |
+    <?=anchor('auth/logout', "Logout", array('style' => 'padding: 5px;'));?>
+  </div>
+</div>
