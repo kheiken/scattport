@@ -17,6 +17,8 @@
 
   $(document).ready(function() {
       Ext.QuickTips.init();
+
+
   });
   </script>
 </head>
@@ -29,4 +31,5 @@
     <?=anchor('auth/settings', "Einstellungen", array('style' => 'padding: 5px;'));?> |
     <?=anchor('auth/logout', "Logout", array('style' => 'padding: 5px;'));?>
   </div>
+  <?=img(array('src' => 'assets/images/lang_de.png', 'style' => 'float: right; margin-top: 18px; margin-right: 5px;'));?>
 </div>

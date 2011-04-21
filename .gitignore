@@ -2,5 +2,6 @@
 .project
 .settings/
 .htaccess
+*.xcf
 application/config/config.php
 application/config/database.php

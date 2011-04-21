@@ -28,3 +28,11 @@ a:hover {
 .x-viewport body {
     background: #ededed url('../images/back.png') repeat-x !important;
 }
+
+.x-tree-node-el {
+    padding: 2px;
+}
+
+.x-tree-node-icon {
+    height: 16px !important;
+}
