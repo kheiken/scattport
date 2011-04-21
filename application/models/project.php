@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * Configurations are used to store different variations of the same project.
+ * 
+ * @property CI_DB_active_record $db
+ * @author Karsten Heiken, karsten@disposed.de
+ */
 class Project extends CI_Model {
 
+	/**
+	 * Get the user's own projects.
+	 *
+	 * @return array The user's projects.
+	 */
 	public function getOwn() {
 		$query = $this->db->where(array('owner' => '215cd70f310ae6ae'))
 				->order_by('lastaccess', 'desc')
@@ -21,6 +32,11 @@ class Project extends CI_Model {
 		return $ownProjects;
 	}
 
+	/**
+	 * Get projects the user was invited to use.
+	 *
+	 * @return array The shared projects.
+	 */
 	public function getShared() {
 		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => '215cd70f310ae6ae'));
 		$this->db->join('projects', 'projects.id = shares.project_id');
@@ -41,6 +57,11 @@ class Project extends CI_Model {
 		return $sharedProjects;
 	}
 
+	/**
+	 * Get all publicly available projects.
+	 *
+	 * @return array All public projects.
+	 */
 	public function getPublic() {
 		$query = $this->db->where(array('public' => '1'))
 			->order_by('name', 'asc')
@@ -58,5 +79,19 @@ class Project extends CI_Model {
 		}
 
 		return $publicProjects;
+	}
+	
+	/**
+	 * Get all available configurations from a specific project.
+	 *
+	 * @param array $project_id The project to get the configuration from.
+	 */
+	public function get_configurations($project_id) {
+		$query = $this->db->get_where('configurations', array('project_id' => $project_id));
+
+		$configurations = $query->result_array();
+		$configuration_count = $query->num_rows();
+
+		return array('count' => $configuration_count, 'configs' => $configurations);
 	}
 }
