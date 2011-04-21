@@ -1,7 +1,7 @@
 <?php
 
 class Project extends CI_Model {
-	
+
 	public function getOwn() {
 		$query = $this->db->where(array('owner' => '215cd70f310ae6ae'))
 				->order_by('lastaccess', 'desc')
@@ -15,18 +15,17 @@ class Project extends CI_Model {
 			$ownProjects[$i]['cls'] = 'folder';
 			$ownProjects[$i]['text'] = $project['name'];
 			$ownProjects[$i]['leaf'] = true;
-			$ownProjects[$i]['icon'] = "/ScattPort/assets/images/icons/document.png";
 			$i++;
 		}
-		
+
 		return $ownProjects;
 	}
-	
+
 	public function getShared() {
 		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => '215cd70f310ae6ae'));
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
-		
+
 		$projects = $query->result_array();
 		$sharedCount = $query->num_rows();
 
@@ -36,13 +35,12 @@ class Project extends CI_Model {
 			$sharedProjects[$i]['cls'] = 'folder';
 			$sharedProjects[$i]['text'] = $project['name'];
 			$sharedProjects[$i]['leaf'] = true;
-			$sharedProjects[$i]['icon'] = "/ScattPort/assets/images/icons/document.png";
 			$i++;
 		}
-		
+
 		return $sharedProjects;
 	}
-	
+
 	public function getPublic() {
 		$query = $this->db->where(array('public' => '1'))
 			->order_by('name', 'asc')
@@ -56,10 +54,9 @@ class Project extends CI_Model {
 			$publicProjects[$i]['cls'] = 'folder';
 			$publicProjects[$i]['text'] = $project['name'];
 			$publicProjects[$i]['leaf'] = true;
-			$publicProjects[$i]['icon'] = "/ScattPort/assets/images/icons/document.png";
 			$i++;
 		}
-		
+
 		return $publicProjects;
 	}
 }

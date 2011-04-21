@@ -6,19 +6,23 @@ class Projects extends CI_Controller {
 	 * List all projects the user has access to.
 	 */
 	public function getAvailable() {
-		$this->load->model('Project');
+		$this->load->model('project');
+		$this->load->helper('tree');
 
 		$path = $this->input->get_post('node');
 
 		switch($path) {
 			case '/projects/own':
-				$projects = $this->Project->getOwn();
+				$projects = $this->project->getOwn();
+				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
 				break;
 			case '/projects/shared':
-				$projects = $this->Project->getShared();
+				$projects = $this->project->getShared();
+				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
 				break;
 			case '/projects/public':
-				$projects = $this->Project->getPublic();
+				$projects = $this->project->getPublic();
+				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
 				break;
 			default:
 				$projects = array(
