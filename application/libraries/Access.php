@@ -321,5 +321,5 @@ class Access {
 
 }
 
-/* End of file access.php */
-/* Location: ./application/libraries/access.php */
+/* End of file Access.php */
+/* Location: ./application/libraries/Access.php */
