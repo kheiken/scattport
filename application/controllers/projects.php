@@ -65,10 +65,10 @@ class Projects extends CI_Controller {
 	}
 
 	public function detail($projects, $area, $id) {
-		$result = $this->db->get_where('projects', array('id' => $id))->row_array();
+		$project = $this->project->get($id);
 		$this->output
 			->set_content_type('application/json')
-			->set_output(json_encode(array('result' => $result)));
+			->set_output(json_encode($project));
 	}
 
 	/**

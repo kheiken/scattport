@@ -14,7 +14,7 @@ class Project extends CI_Model {
 	 * @return array The user's projects.
 	 */
 	public function getOwn() {
-		$query = $this->db->where(array('owner' => $this->session->user_data('id')))
+		$query = $this->db->where(array('owner' => $this->session->user_data('user_id')))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
 		$projects = $query->result_array();
@@ -38,7 +38,7 @@ class Project extends CI_Model {
 	 * @return array The shared projects.
 	 */
 	public function getShared() {
-		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->user_data('id')));
+		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->user_data('user_id')));
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
@@ -80,6 +80,18 @@ class Project extends CI_Model {
 
 		return $publicProjects;
 	}
+
+	/**
+	 * Get a specific project from the database.
+	 *
+	 * @param type $project_id The project to get.
+	 */
+	public function get($project_id) {
+		$result = $this->db->get_where('projects', array('id' => $project_id))->row_array();
+		
+		$this->db->query('UPDATE `projects` SET `lastaccess` = NOW() WHERE `id`='.$this->db->escape($project_id).';');
+		return $result;
+	}
 	
 	/**
 	 * Get all available configurations from a specific project.
@@ -102,21 +114,25 @@ class Project extends CI_Model {
 	 */
 	public function search($needle) {
 
-		// get matching projects that are public or belong directly to the user
-		$query = $this->db->where('public','1')
-				->or_where('owner', $this->session->userdata('id'))
-				->like('name', $needle)->get('projects');
-		$results = $query->result_array();
+		// get matching projects that are public
+		$query = $this->db->query("SELECT * FROM `projects` WHERE `public`='1' AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
+		$public_results = $query->result_array();
+
+		// or belong directly to the user
+		$query = $this->db->query("SELECT * FROM `projects` WHERE `owner`=".$this->db->escape($this->session->userdata('user_id'))
+				." AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
+		$own_results = $query->result_array();
+
 
 		// get matching projects that are shared to the user
 		$this->db->select('*')->from('shares')
-				->where(array('user_id' => $this->session->userdata('id')))
+				->where(array('user_id' => $this->session->userdata('user_id')))
 				->like('name', $needle);
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
-		$own_results = $query->result_array();
+		$shared_results = $query->result_array();
 
-		return array_merge($results, $own_results);
+		return array_merge($own_results, $shared_results);
 	}
 }
