@@ -25,7 +25,7 @@ var loginForm = new Ext.form.FormPanel({
     border: false,
     width: 340,
     labelWidth: 120,
-    url: BASE_URL + 'auth/do_login',
+    url: BASE_URL + 'auth/login',
     method: 'POST',
     items: [
         new Ext.form.TextField({
