@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @author Karsten Heiken, karsten@disposed.de
+ */
 class Projects extends CI_Controller {
 
     /**
@@ -66,5 +69,17 @@ class Projects extends CI_Controller {
 		$this->output
 			->set_content_type('application/json')
 			->set_output(json_encode(array('result' => $result)));
+	}
+
+	/**
+	 * Search for a specific project and return a list of possible results.
+	 *
+	 * @param type $needle The needle to look for in the haystack.
+	 */
+	public function search($needle) {
+		$results = $this->project->search($needle);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('count' => count($results), 'results' => $results)));
 	}
 }

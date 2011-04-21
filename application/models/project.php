@@ -94,4 +94,29 @@ class Project extends CI_Model {
 
 		return array('count' => $configuration_count, 'configs' => $configurations);
 	}
+
+	/**
+	 * Search for a specific project and return a list of possible results.
+	 *
+	 * @param type $needle The needle to look for in the haystack.
+	 */
+	public function search($needle) {
+
+		// get matching projects that are public or belong directly to the user
+		$query = $this->db->where('public','1')
+				->or_where('owner', $this->session->userdata('id'))
+				->like('name', $needle)->get('projects');
+		$results = $query->result_array();
+
+		// get matching projects that are shared to the user
+		$this->db->select('*')->from('shares')
+				->where(array('user_id' => $this->session->userdata('id')))
+				->like('name', $needle);
+		$this->db->join('projects', 'projects.id = shares.project_id');
+		$query = $this->db->get();
+
+		$own_results = $query->result_array();
+
+		return array_merge($results, $own_results);
+	}
 }
