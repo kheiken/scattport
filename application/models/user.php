@@ -274,7 +274,6 @@ class User extends CI_Model {
 
                 $session_data = array(
                     'username' => $result->username,
-                    'id' => $result->id, // kept for backwards compatibility
 					'user_id' => $result->id,
 					'group_id' => $result->group_id,
 					'group' => $group->name
