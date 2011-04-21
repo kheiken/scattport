@@ -30,7 +30,7 @@ class Auth extends CI_Controller {
     }
 
     /**
-     * Logs the user in.
+     * Logs the user in - or not ;-)
      */
     public function login() {
         if ($this->access->loggedIn()) {
@@ -41,51 +41,26 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('username', "Benutzername", 'required');
         $this->form_validation->set_rules('password', "Passwort", 'required');
 
-        if ($this->form_validation->run() == true) { //check to see if the user is logging in
+        if ($this->form_validation->run() == true) {
             // check for "remember me"
             $remember = (boolean) $this->input->post('remember');
 
-            if ($this->access->login($this->input->post('username'), $this->input->post('password'), $remember)) { //if the login is successful
-                //redirect them back to the home page
-                $this->session->set_flashdata('message', $this->access->messages());
-                redirect('', 'refresh');
-            } else { //if the login was un-successful
-                //redirect them back to the login page
-                $this->session->set_flashdata('message', $this->access->errors());
-                //redirect('auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
-                echo "{success: false}";
+            if ($this->access->login($this->input->post('username'), $this->input->post('password'), $remember)) {
+                $this->data['success'] = true;
+            } else { // if the login was un-successful
+                $this->data['success'] = false;
+                $this->data['message'] = $this->access->errors();
             }
-        } else {  //the user is not logging in so display the login page
-            //set the flash data error message if there is one
-            $this->data['message'] = validation_errors() ? validation_errors() : $this->session->flashdata('message');
+
+            // output json data
+            $this->output->set_content_type('application/json')
+                    ->set_output(json_encode($this->data));
+        } else {
+            $this->data['message'] = validation_errors() ? validation_errors() : null;
             $this->data['username'] = $this->form_validation->set_value('username');
 
             $this->load->view('auth/login', $this->data);
         }
-    }
-
-	/**
-	 * Logs the user in - or not ;-)
-	 */
-    public function do_login() {
-        $this->form_validation->set_rules('username', "Benutzername", 'required');
-        $this->form_validation->set_rules('password', "Passwort", 'required');
-
-        if ($this->form_validation->run() == true) {
-            $remember = (boolean) $this->input->post('remember');
-
-            if ($this->access->login($this->input->post('username'), $this->input->post('password'), $remember)) {
-                $this->session->set_flashdata('message', $this->access->messages());
-                $return['success'] = true;
-            } else { // if the login was un-successful
-                $this->session->set_flashdata('message', $this->access->errors());
-                $return['success'] = false;
-                $return['message'] = "Benutzername oder PW falsch";
-            }
-        }
-
-        $this->output->set_content_type('application/json')
-                ->set_output(json_encode($return));
     }
 
     /**
@@ -229,31 +204,6 @@ class Auth extends CI_Controller {
         }
     }
 
-    private function _get_csrf_nonce() {
-        $this->load->helper('string');
-        $key = random_string('alnum', 8);
-        $value = random_string('alnum', 20);
-        $this->session->set_flashdata('csrfkey', $key);
-        $this->session->set_flashdata('csrfvalue', $value);
-
-        return array($key => $value);
-    }
-
-    private function _valid_csrf_nonce() {
-        if ($this->input->post($this->session->flashdata('csrfkey')) !== false &&
-        $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-	/**
-	 * Logs the user out.
-	 */
-	public function do_logout() {
-	    echo "{success: true}";
-	}
 }
 
 /* End of file auth.php */

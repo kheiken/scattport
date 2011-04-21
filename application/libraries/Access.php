@@ -8,29 +8,22 @@
 class Access {
 
     /**
-     * CodeIgniter global
-     *
-     * @var string
-     **/
+     * Contains the CI instance.
+     */
     protected $ci;
 
-    protected $message_start_delimiter = '<p>';
-    protected $message_end_delimiter = '</p>';
-    protected $error_start_delimiter = '<p>';
-    protected $error_end_delimiter = '</p>';
-
     /**
-     * message (uses lang file)
+     * Contains occured messages (using the language file).
      *
      * @var string
-     **/
+     */
     protected $messages = array();
 
     /**
-     * error message (uses lang file)
+     * Contains occured errors (using the language file).
      *
      * @var string
-     **/
+     */
     protected $errors = array();
 
     /**
@@ -44,9 +37,6 @@ class Access {
         $this->ci->load->model('user');
         $this->ci->load->model('group');
         $this->ci->load->helper('cookie');
-
-        $this->messages = array();
-        $this->errors = array();
 
         // auto-login the user if they are remembered
         if (!$this->loggedIn() && get_cookie('username') && get_cookie('remember_code')) {
@@ -179,10 +169,10 @@ class Access {
         if ($this->ci->user->login($username, $password, $remember)) {
             $this->setMessage('login_successful');
             return true;
+        } else {
+            $this->setError('login_unsuccessful');
+            return false;
         }
-
-        $this->setError('login_unsuccessful');
-        return false;
     }
 
     /**
@@ -297,12 +287,12 @@ class Access {
      * @return void
      */
     public function messages() {
-        $_output = '';
+        $output = '';
         foreach ($this->messages as $message) {
-            $_output .= $this->message_start_delimiter . $this->ci->lang->line($message) . $this->message_end_delimiter;
+            $output .= lang($message) . '<br />';
         }
 
-        return $_output;
+        return $output;
     }
 
     /**
@@ -321,12 +311,12 @@ class Access {
      * @return void
      */
     public function errors() {
-        $_output = '';
+        $output = '';
         foreach ($this->errors as $error) {
-            $_output .= $this->error_start_delimiter . $this->ci->lang->line($error) . $this->error_end_delimiter;
+            $output .= lang($error) . '<br />';
         }
 
-        return $_output;
+        return $output;
     }
 
 }
