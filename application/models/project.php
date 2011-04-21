@@ -114,11 +114,15 @@ class Project extends CI_Model {
 	 */
 	public function search($needle) {
 
-		// get matching projects that are public or belong directly to the user
-		$query = $this->db->where('public','1')
-				->or_where('owner', $this->session->userdata('id'))
-				->like('name', $needle)->get('projects');
-		$results = $query->result_array();
+		// get matching projects that are public
+		$query = $this->db->query("SELECT * FROM `projects` WHERE `public`='1' AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
+		$public_results = $query->result_array();
+
+		// or belong directly to the user
+		$query = $this->db->query("SELECT * FROM `projects` WHERE `owner`=".$this->db->escape($this->session->userdata('id'))
+				." AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
+		$own_results = $query->result_array();
+
 
 		// get matching projects that are shared to the user
 		$this->db->select('*')->from('shares')
@@ -127,8 +131,8 @@ class Project extends CI_Model {
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
-		$own_results = $query->result_array();
+		$shared_results = $query->result_array();
 
-		return array_merge($results, $own_results);
+		return array_merge($own_results, $shared_results);
 	}
 }
