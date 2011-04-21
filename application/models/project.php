@@ -80,6 +80,18 @@ class Project extends CI_Model {
 
 		return $publicProjects;
 	}
+
+	/**
+	 * Get a specific project from the database.
+	 *
+	 * @param type $project_id The project to get.
+	 */
+	public function get($project_id) {
+		$result = $this->db->get_where('projects', array('id' => $project_id))->row_array();
+		
+		$this->db->query('UPDATE `projects` SET `lastaccess` = NOW() WHERE `id`='.$this->db->escape($project_id).';');
+		return $result;
+	}
 	
 	/**
 	 * Get all available configurations from a specific project.
