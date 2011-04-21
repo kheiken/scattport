@@ -10,6 +10,7 @@
   <?=script_tag('assets/js/ext/adapter/jquery/ext-jquery-adapter.js');?>
   <!-- ExtJS library: all widgets -->
   <?=script_tag('assets/js/ext/ext-all.js');?>
+  <?=script_tag('assets/js/ProjectInfoWindow.js');?>
   <script type="text/javascript">
   var BASE_URL = '<?=base_url();?>' + 'index.php/';
   var BASE_PATH = '<?=base_url();?>';

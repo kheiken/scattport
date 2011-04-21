@@ -1,16 +1,16 @@
 <?php $this->load->view('header'); ?>
 
 <script type="text/javascript">
-var projectPanel = new Ext.tree.TreePanel({
-    id: 'project-tree',
+var projectTree = new Ext.tree.TreePanel({
     region: 'west',
     title: "Projekte",
-    height: 400,
+    height: 250,
     bodyStyle: 'margin-bottom: 6px;',
     autoScroll: true,
-    rootVisible: true,
-    lines: false,
-    tbar: [{
+    enableDD: false,
+    rootVisible: false,
+    id: 'treePanel',
+	tbar: [{
     	icon: BASE_PATH + 'assets/images/icons/box--plus.png',
         text: "Neues Projekt",
         scope: this
@@ -20,20 +20,18 @@ var projectPanel = new Ext.tree.TreePanel({
         text: "Entfernen",
         scope: this
     }],
+    dataUrl: BASE_URL + 'projects/getAvailable',
     root: {
-        text: "Meine Projekte",
+        nodeType: 'async',
+        text: 'Projekte',
         expanded: true,
-        children: [{
-            text: 'Projekt 1',
-            leaf: true
-        }, {
-            text: 'Projekt 2',
-            leaf: true
-        }]
+        id: 'projects'
     }
 });
 
-var layoutLeft2 = new Ext.Panel({
+projectTree.on('click', loadProjectInfo);
+
+var infoPanel = new Ext.Panel({
     region: 'west',
     margin: '10 0 0 0',
     autoScroll: true,
@@ -41,7 +39,8 @@ var layoutLeft2 = new Ext.Panel({
     html: 'Test'
 });
 
-var panelCenter = new Ext.TabPanel({
+
+var tabPanel = new Ext.TabPanel({
     xtype: 'tabpanel',
     resizeTabs: false,
     minTabWidth: 115,
@@ -55,7 +54,8 @@ var panelCenter = new Ext.TabPanel({
         xtype: 'panel',
         id: 'tab_welcome',
         bodyStyle: 'padding: 10px',
-        title: "Willkommen"
+        title: "Willkommen",
+        closable: true,
     }]
 });
 
@@ -66,7 +66,7 @@ var layoutCenter = new Ext.Panel({
     margins: '0 5 5 0',
     activeItem: 0,
     border: true,
-    items: [panelCenter]
+    items: [tabPanel]
 });
 
 var layoutMain = new Ext.Viewport({
@@ -88,12 +88,12 @@ var layoutMain = new Ext.Viewport({
         border: false,
         split: true,
         margins: '0 0 0 5',
-        items: [projectPanel, layoutLeft2]
+        items: [projectTree]
     }, layoutCenter]
 });
 
 function logout() {
-    $.ajax({
+    Ext.Ajax.request({
         url: BASE_URL + 'auth/do_logout',
         method: 'post',
         success: function(xhr) {
@@ -101,8 +101,50 @@ function logout() {
         }
     });
 }
-</script>
 
+function loadProjectInfo(n) {
+	if(n.isLeaf()){
+		Ext.Ajax.request({
+	        url: BASE_URL + 'projects/detail' + n.id,
+	        method: 'get',
+	        success: function ( result, request ) {
+	          	
+				var theResponse = Ext.util.JSON.decode(result.responseText);
+				
+				tabPanel.add({
+		            title: 'New Tab ',
+		            html: 'Lade Projekt...',
+		            closable:true,
+		            handler: function(){
+		            	alert("foo");
+		            	var data = theResponse.result;
+		                var tpl = new Ext.Template(
+		                    '<p>ID: {id}</p>',
+		                    '<p>Name: {name}</p>'
+		                );
+						
+		                tpl.overwrite(this.html, data);
+		            }
+		        }).show();
+	       	},
+	        failure: function ( result, request ) {
+	       		//Ext.MessageBox.alert("Fehler!", "Das gewünschte Projekt kann nicht geladen werden.");
+	       		switch(result.status) {
+	       			case 404:
+	       				Ext.MessageBox.alert("Fehler", "Das gewünschte Projekt konnte nicht gefunden werden.");
+	       				break;
+	       			case 401:
+	       				Ext.MessageBox.alert("Fehler", "Sie besitzen nicht die nötigen Zugriffsrechte, um dieses Projekt zu lesen."
+	       					+ "Wenden Sie sich an den Projektbesitzer, um Zugriff zu erhalten.");
+	       				break;
+	       		}
+	       	}
+	   	});
+		
+    }
+}
+
+</script>
 <div id="main"></div>
 
 <?php $this->load->view('footer'); ?>
