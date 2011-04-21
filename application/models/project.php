@@ -25,6 +25,7 @@ class Project extends CI_Model {
 			$ownProjects[$i]['id'] = '/projects/own/'.$project['id'];
 			$ownProjects[$i]['cls'] = 'folder';
 			$ownProjects[$i]['text'] = $project['name'];
+			$ownProjects[$i]['prjId'] = $project['id'];
 			$ownProjects[$i]['leaf'] = true;
 			$i++;
 		}
@@ -50,6 +51,7 @@ class Project extends CI_Model {
 			$sharedProjects[$i]['id'] = '/projects/shared/'.$project['id'];
 			$sharedProjects[$i]['cls'] = 'folder';
 			$sharedProjects[$i]['text'] = $project['name'];
+			$sharedProjects[$i]['prjId'] = $project['id'];
 			$sharedProjects[$i]['leaf'] = true;
 			$i++;
 		}
@@ -74,6 +76,7 @@ class Project extends CI_Model {
 			$publicProjects[$i]['id'] = '/projects/public/'.$project['id'];
 			$publicProjects[$i]['cls'] = 'folder';
 			$publicProjects[$i]['text'] = $project['name'];
+			$publicProjects[$i]['prjId'] = $project['id'];
 			$publicProjects[$i]['leaf'] = true;
 			$i++;
 		}
