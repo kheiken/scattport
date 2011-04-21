@@ -2,13 +2,22 @@
 
 class Projects extends CI_Controller {
 
+    /**
+     * Constructor.
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('project');
+        $this->load->helper('tree');
+
+        // load language file
+        $this->lang->load(strtolower($this->router->class));
+    }
+
 	/**
-	 * List all projects the user has access to.
+	 * Lists all projects the user has access to.
 	 */
 	public function getAvailable() {
-		$this->load->model('project');
-		$this->load->helper('tree');
-
 		$path = $this->input->get_post('node');
 
 		switch($path) {
@@ -29,18 +38,18 @@ class Projects extends CI_Controller {
 					array(
 						'id' => '/projects/own',
 						'cls' => 'folder',
-						'text' => "Eigene Projekte",
+						'text' => lang('projects_own'),
 						'icon' => base_url() . 'assets/images/icons/folder.png',),
 					array(
 						'id' => '/projects/shared',
 						'cls' => 'leaf',
-						'text' => "Für mich freigegeben",
+						'text' => lang('projects_shared'),
 						'icon' => base_url() . 'assets/images/icons/folder-share.png',
 					),
 					array(
 						'id' => '/projects/public',
 						'cls' => 'folder',
-						'text' => "Öffentliche Projekte",
+						'text' => lang('projects_public'),
 						'icon' => base_url() . 'assets/images/icons/folder-network.png',
 					),
 				);
