@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?=$this->config->item('lang_selected');?>">
 <head>
   <title>Scattport</title>
   <meta charset="utf-8" />
