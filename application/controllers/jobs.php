@@ -4,7 +4,7 @@ class Jobs extends CI_Controller {
 	
 	public function getOwn() {
 		$query = $this->db->order_by('progress', 'desc')
-			->get_where('jobs', array('started_by' => '215cd70f310ae6ae'));
+			->get_where('jobs', array('started_by' => $this->session->user_data('id')));
 		$count = $query->num_rows();
 		$jobs = $query->result_array();
 		
@@ -39,7 +39,7 @@ class Jobs extends CI_Controller {
 	
 	public function listResultsNotSeen() {
 		$query = $this->db->order_by('started_at', 'asc')
-			->get_where('jobs', array('started_by' => '215cd70f310ae6ae', 'seen' => '0'));
+			->get_where('jobs', array('started_by' => $this->session->user_data('id'), 'seen' => '0'));
 		$count = $query->num_rows();
 		$jobs = $query->result_array();
 		
