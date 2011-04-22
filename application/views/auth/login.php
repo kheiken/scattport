@@ -14,6 +14,7 @@
   var BASE_URL = '<?=site_url('/');?>';
   var BASE_PATH = '<?=base_url();?>';
   </script>
+  <?=script_tag('assets/js/language/' . $this->config->item('language') . '.js');?>
   <?=script_tag('assets/js/common.js');?>
 </head>
 

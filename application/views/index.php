@@ -87,7 +87,7 @@ var layoutMain = new Ext.Viewport({
 
 function logout() {
     Ext.Ajax.request({
-        url: BASE_URL + 'auth/do_logout',
+        url: BASE_URL + 'auth/logout',
         method: 'post',
         success: function(xhr) {
             window.location = BASE_URL + 'auth/login';

@@ -14,6 +14,7 @@
   var BASE_URL = '<?=site_url('/');?>';
   var BASE_PATH = '<?=base_url();?>';
   </script>
+  <?=script_tag('assets/js/language/' . $this->config->item('language') . '.js');?>
   <?=script_tag('assets/js/common.js');?>
 </head>
 
@@ -22,7 +23,7 @@
 <div id="header">
   <?=img(array('src' => 'assets/images/logo.png', 'style' => 'margin-left: 5px'));?>
   <div style="float: right; margin-top: 15px; margin-right: 10px; color: #ccc;">
-    <?=anchor('auth/settings', "Einstellungen", array('style' => 'padding: 5px;'));?> |
+    <a href="javascript:settings.show()" style="padding: 5px">Einstellungen</a>
     <?=anchor('auth/logout', "Logout", array('style' => 'padding: 5px;'));?>
   </div>
   <?=img(array('src' => 'assets/images/lang_' . $this->config->item('lang_selected') . '.png', 'style' => 'float: right; margin-top: 18px; margin-right: 5px;'));?>

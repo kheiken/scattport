@@ -233,6 +233,15 @@ class Access {
     }
 
     /**
+     * Gets the current logged in user.
+     *
+     * @return object
+     */
+    public function getCurrentUser() {
+        return $this->ci->user->getUserByID($this->ci->session->userdata('user_id'))->row();
+    }
+
+    /**
      * Gets the profile of the current user.
      *
      * @return array

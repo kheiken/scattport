@@ -14,6 +14,7 @@ class Auth extends CI_Controller {
         parent::__construct();
         $this->load->library('access');
         $this->load->library('form_validation');
+        $this->load->model('user');
     }
 
     //redirect if needed, otherwise display the user list
@@ -116,53 +117,28 @@ class Auth extends CI_Controller {
         $this->load->view('auth/register_success', $this->data);
     }
 
-    //change password
-    public function change_password() {
-        $this->form_validation->set_rules('old', 'Old password', 'required');
-        $this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'access') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_confirm]');
-        $this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
-
+    public function settings() {
         if (!$this->access->loggedIn()) {
             redirect('auth/login', 'refresh');
         }
-        $user = $this->access->get_user($this->session->userdata('user_id'));
 
-        if ($this->form_validation->run() == false) { //display the form
-            //set the flash data error message if there is one
-            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        // validate form
+        $this->form_validation->set_rules('new_password', 'New Password', 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'auth') . ']|matches[new_password_confirm]');
 
-            $this->data['old_password'] = array('name' => 'old',
-				'id' => 'old',
-				'type' => 'password'
-            );
-            $this->data['new_password'] = array('name' => 'new',
-				'id' => 'new',
-				'type' => 'password'
-            );
-            $this->data['new_password_confirm'] = array('name' => 'new_confirm',
-				'id' => 'new_confirm',
-				'type' => 'password'
-            );
-            $this->data['user_id'] = array('name' => 'user_id',
-				'id' => 'user_id',
-				'type' => 'hidden',
-				'value' => $user->id
-            );
+        if ($this->form_validation->run() == true) {
+            // change password if needed
+            if ($this->input->post('new_password') != '') {
+                $username = $this->session->userdata('username');
+                $change = $this->access->changePassword($username, $this->input->post('old_password'), $this->input->post('new_password'));
 
-            //render
-            $this->load->view('auth/change_password', $this->data);
-        } else {
-            $username = $this->session->userdata('username');
-
-            $change = $this->access->change_password($username, $this->input->post('old'), $this->input->post('new'));
-
-            if ($change) { //if the password was successfully changed
-                $this->session->set_flashdata('message', $this->access->messages());
-                $this->logout();
-            } else {
-                $this->session->set_flashdata('message', $this->access->errors());
-                redirect('auth/change_password', 'refresh');
+                if ($change) {
+                    $this->logout();
+                }
             }
+            echo "{success: true}";
+        } else {
+            echo validation_errors();
+            $user = $this->access->getCurrentUser();
         }
     }
 
@@ -204,6 +180,9 @@ class Auth extends CI_Controller {
         }
     }
 
+    public function test() {
+        echo "{xtype: 'form', title: 'Bla'}";
+    }
 }
 
 /* End of file auth.php */
