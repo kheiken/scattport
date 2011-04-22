@@ -37,4 +37,14 @@ class Server extends CI_Model {
 				. ", `last_update`=NOW()"
 				. " WHERE `secret`=".$this->db->escape($secret));
 	}
+
+	/**
+	 * Get the best suiting server for a new job.
+	 *
+	 * @todo not yet verified.
+	 */
+	public function get_best_server() {
+		return $this->db->limit(1)->order_by('last_update', 'desc')->
+				get_where('servers', 'workload <= 2')->row_array();
+	}
 }
