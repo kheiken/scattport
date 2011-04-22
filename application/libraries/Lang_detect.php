@@ -128,9 +128,8 @@ class Lang_detect {
         for ($i = $this->CI->uri->total_segments(); $i > 0; $i--) {
             $segment = $this->CI->uri->segment($i);
             // the uri segment with the language code has the prefix 'l_'
-            if (!empty($segment) && (strpos($segment, 'l_') === 0)) {
-                // extract the language code
-                return substr($segment, 2);
+            if (strlen($segment) == 2 && array_key_exists($segment, $this->languages)) {
+                return $segment;
             }
         }
         return false;
