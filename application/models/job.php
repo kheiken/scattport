@@ -20,4 +20,19 @@ class Job extends CI_Model {
 				$this->db->escape($progress).$finished_at. " WHERE `id`=".
 				$this->db->escape($job_id));
 	}
+
+	/**
+	 * Get a list of results that the owner has not yet seen.
+	 */
+	public function getUnseenResults() {
+		$query = $this->db->order_by('started_at', 'asc')
+			->get_where('jobs', array('started_by' => $this->session->userdata('user_id'), 'seen' => '0'));
+		$jobs = $query->result_array();
+
+		for($i=0; $i<count($jobs); $i++) {
+			$jobs[$i]['project_name'] = $this->db->select('name')->get_where('projects', array('id' => $jobs[$i]['project_id']))->row()->name;
+		}
+
+		return $jobs;
+	}
 }

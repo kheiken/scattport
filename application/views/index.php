@@ -98,7 +98,7 @@ function logout() {
 function loadProjectInfo(n) {
 	if(n.isLeaf()){
 		Ext.Ajax.request({
-	        url: BASE_URL + 'projects/detail' + n.id,
+	        url: BASE_URL + 'projects/detail/' + n.prjId,
 	        method: 'get',
 	        success: function ( result, request ) {
 
@@ -107,21 +107,10 @@ function loadProjectInfo(n) {
 				tabPanel.add({
 		            title: 'New Tab ',
 		            html: 'Lade Projekt...',
-		            closable:true,
-		            handler: function(){
-		            	alert("foo");
-		            	var data = theResponse.result;
-		                var tpl = new Ext.Template(
-		                    '<p>ID: {id}</p>',
-		                    '<p>Name: {name}</p>'
-		                );
-
-		                tpl.overwrite(this.html, data);
-		            }
+		            closable:true
 		        }).show();
 	       	},
 	        failure: function ( result, request ) {
-	       		//Ext.MessageBox.alert("Fehler!", "Das gewünschte Projekt kann nicht geladen werden.");
 	       		switch(result.status) {
 	       			case 404:
 	       				Ext.MessageBox.alert("Fehler", "Das gewünschte Projekt konnte nicht gefunden werden.");
