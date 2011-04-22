@@ -397,7 +397,7 @@ class User extends CI_Model {
      * @return boolean
      */
     public function update($id, $data) {
-        $user = $this->get_user($id)->row();
+        $user = $this->getUserByID($id)->row();
 
         $this->db->trans_begin();
 

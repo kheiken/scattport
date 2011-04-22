@@ -123,7 +123,7 @@ class Auth extends CI_Controller {
         }
 
         // validate form
-        $this->form_validation->set_rules('new_password', 'New Password', 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'auth') . ']|matches[new_password_confirm]');
+        $this->form_validation->set_rules('new_password', 'New Password', 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_password_confirm]');
 
         if ($this->form_validation->run() == true) {
             // change password if needed
@@ -135,10 +135,25 @@ class Auth extends CI_Controller {
                     $this->logout();
                 }
             }
+
+            // update user
+            $updateData = array(
+                'firstname' => $this->input->post('firstname'),
+                'lastname' => $this->input->post('lastname'),
+                'institution' => $this->input->post('institution'),
+            	'phone' => $this->input->post('phone'),
+                'email' => $this->input->post('email'),
+            );
+            $this->access->updateUser($this->session->userdata('user_id'), $updateData);
+
             echo "{success: true}";
         } else {
-            echo validation_errors();
-            $user = $this->access->getCurrentUser();
+            $this->data['success'] = true;
+            $this->data['data'] = $this->access->getCurrentUser();
+
+            // output json data
+            $this->output->set_content_type('application/json')
+                    ->set_output(json_encode($this->data));
         }
     }
 

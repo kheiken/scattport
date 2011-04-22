@@ -238,7 +238,7 @@ class Access {
      * @return object
      */
     public function getCurrentUser() {
-        return $this->ci->user->getUserByID($this->ci->session->userdata('user_id'))->row();
+        return $this->ci->user->getUserByID($this->ci->session->userdata('user_id'))->row_array();
     }
 
     /**
