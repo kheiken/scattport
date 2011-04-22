@@ -29,6 +29,9 @@ class Jobs extends CI_Controller {
 				case -1:
 					$progress = lang('waiting');
 					break;
+				case -2:
+					$progress = lang('failed');
+					break;
 				case 100:
 					$progress = lang('done');
 					break;
