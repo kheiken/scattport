@@ -19,7 +19,6 @@ class Jobs extends CI_Controller {
 	public function getOwn() {
 		$query = $this->db->order_by('progress', 'desc')
 			->get_where('jobs', array('started_by' => $this->session->userdata('user_id')));
-		$count = $query->num_rows();
 		$jobs = $query->result_array();
 		
 		for($i=0; $i<count($jobs); $i++) {
@@ -45,7 +44,7 @@ class Jobs extends CI_Controller {
 			->set_content_type('application/json')
 			->set_output(json_encode(
 				array(
-					'count' => $count,
+					'count' => count($jobs),
 					'jobs' => $jobs
 				)
 			));
