@@ -64,7 +64,7 @@ class Projects extends CI_Controller {
 		//	->set_output(json_encode(array('count' => $count, 'projects' => $projects)));
 	}
 
-	public function detail($projects, $area, $id) {
+	public function detail($project_id) {
 		$project = $this->project->get($id);
 		$this->output
 			->set_content_type('application/json')
