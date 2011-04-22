@@ -14,7 +14,7 @@ class Project extends CI_Model {
 	 * @return array The user's projects.
 	 */
 	public function getOwn() {
-		$query = $this->db->where(array('owner' => $this->session->user_data('user_id')))
+		$query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
 		$projects = $query->result_array();
@@ -25,6 +25,7 @@ class Project extends CI_Model {
 			$ownProjects[$i]['id'] = '/projects/own/'.$project['id'];
 			$ownProjects[$i]['cls'] = 'folder';
 			$ownProjects[$i]['text'] = $project['name'];
+			$ownProjects[$i]['prjId'] = $project['id'];
 			$ownProjects[$i]['leaf'] = true;
 			$i++;
 		}
@@ -38,7 +39,8 @@ class Project extends CI_Model {
 	 * @return array The shared projects.
 	 */
 	public function getShared() {
-		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->user_data('user_id')));
+		$this->load->library('session');
+		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->userdata('user_id')));
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
@@ -50,6 +52,7 @@ class Project extends CI_Model {
 			$sharedProjects[$i]['id'] = '/projects/shared/'.$project['id'];
 			$sharedProjects[$i]['cls'] = 'folder';
 			$sharedProjects[$i]['text'] = $project['name'];
+			$sharedProjects[$i]['prjId'] = $project['id'];
 			$sharedProjects[$i]['leaf'] = true;
 			$i++;
 		}
@@ -74,6 +77,7 @@ class Project extends CI_Model {
 			$publicProjects[$i]['id'] = '/projects/public/'.$project['id'];
 			$publicProjects[$i]['cls'] = 'folder';
 			$publicProjects[$i]['text'] = $project['name'];
+			$publicProjects[$i]['prjId'] = $project['id'];
 			$publicProjects[$i]['leaf'] = true;
 			$i++;
 		}
