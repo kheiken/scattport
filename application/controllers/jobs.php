@@ -1,7 +1,20 @@
 <?php
 
 class Jobs extends CI_Controller {
-	
+
+	/**
+     * Constructor.
+     */
+    public function __construct() {
+        parent::__construct();
+
+        // load language file
+        $this->lang->load(strtolower($this->router->class));
+    }
+
+	/**
+	 * Get jobs belonging to projects owned by the user.
+	 */
 	public function getOwn() {
 		$query = $this->db->order_by('progress', 'desc')
 			->get_where('jobs', array('started_by' => $this->session->userdata('user_id')));
@@ -14,10 +27,10 @@ class Jobs extends CI_Controller {
 			
 			switch($progress) {
 				case -1:
-					$progress = "Warte auf Start...";
+					$progress = lang('waiting');
 					break;
 				case 100:
-					$progress = "Fertig";
+					$progress = lang('done');
 					break;
 				default:
 					$progress = $progress . "%";
