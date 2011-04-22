@@ -102,7 +102,7 @@ class Project extends CI_Model {
 	 *
 	 * @param array $project_id The project to get the configuration from.
 	 */
-	public function get_configurations($project_id) {
+	public function getConfigurations($project_id) {
 		$query = $this->db->get_where('configurations', array('project_id' => $project_id));
 
 		$configurations = $query->result_array();

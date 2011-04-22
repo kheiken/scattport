@@ -57,7 +57,7 @@ class Jobs extends CI_Controller {
 	 * @todo not yet verified
 	 */
 	public function get_unseen_results() {
-		$results = $this->job->get_unseen_results();
+		$results = $this->job->getUnseenResults();
 		$this->output
 			->set_content_type('application/json')
 			->set_output(json_encode(

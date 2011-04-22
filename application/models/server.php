@@ -10,7 +10,7 @@ class Server extends CI_Model {
 	 *
 	 * @return array List of all available servers.
 	 */
-	public function get_all() {
+	public function getAll() {
 		return $this->db->get('servers')->result_array();
 	}
 
@@ -19,7 +19,7 @@ class Server extends CI_Model {
 	 *
 	 * @return array List of servers that could handle another job.
 	 */
-	public function get_idle() {
+	public function getIdle() {
 		return $this->db->get_where('servers', 'workload <= 2')->result_array();
 	}
 
@@ -32,7 +32,7 @@ class Server extends CI_Model {
 	 * @param type $secret The server's secret for basic authentication.
 	 * @param type $workload The server's workload.
 	 */
-	public function update_workload($secret, $workload) {
+	public function updateWorkload($secret, $workload) {
 		$this->db->query("UPDATE `servers` SET `workload`=".$this->db->escape($workload)
 				. ", `last_update`=NOW()"
 				. " WHERE `secret`=".$this->db->escape($secret));
@@ -43,7 +43,7 @@ class Server extends CI_Model {
 	 *
 	 * @todo not yet verified.
 	 */
-	public function get_best_server() {
+	public function getBestServer() {
 		return $this->db->limit(1)->order_by('last_update', 'desc')->
 				get_where('servers', 'workload <= 2')->row_array();
 	}

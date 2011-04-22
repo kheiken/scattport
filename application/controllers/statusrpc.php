@@ -44,6 +44,6 @@ class Statusrpc extends CI_Controller {
 			die("Unauthorized access.");
 		}
 
-		$this->server->update_workload($secret, $workload);
+		$this->server->updateWorkload($secret, $workload);
 	}
 }

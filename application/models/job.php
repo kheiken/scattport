@@ -24,7 +24,7 @@ class Job extends CI_Model {
 	/**
 	 * Get a list of results that the owner has not yet seen.
 	 */
-	public function get_unseen_results() {
+	public function getUnseenResults() {
 		$query = $this->db->order_by('started_at', 'asc')
 			->get_where('jobs', array('started_by' => $this->session->userdata('user_id'), 'seen' => '0'));
 		$jobs = $query->result_array();
