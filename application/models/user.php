@@ -211,7 +211,7 @@ class User extends CI_Model {
      * @return boolean
      */
     public function register($username, $password, $email, $additionalData = false, $groupName = false) {
-        if ($this->username_check($username)) {
+        if ($this->checkUsername($username)) {
             $this->access->setError('account_creation_duplicate_username');
             return false;
         }
@@ -401,7 +401,7 @@ class User extends CI_Model {
 
         $this->db->trans_begin();
 
-        if (array_key_exists('username', $data) && $this->username_check($data['username']) && $user->username !== $data['username']) {
+        if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user->username !== $data['username']) {
             $this->db->trans_rollback();
             $this->access->setError('account_creation_duplicate_username');
             return false;
@@ -459,7 +459,7 @@ class User extends CI_Model {
      * @return boolean
      */
     public function loginRememberedUser() {
-        if (!get_cookie('username') || !get_cookie('remember_code') || !$this->username_check(get_cookie('username'))) {
+        if (!get_cookie('username') || !get_cookie('remember_code') || !$this->checkUsername(get_cookie('username'))) {
             return false;
         }
 
