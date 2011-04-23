@@ -5,9 +5,8 @@
   <meta charset="utf-8" />
   <?=link_tag('assets/css/main.css');?>
   <?=link_tag('assets/js/ext/resources/css/ext-all.css');?>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
   <!-- ExtJS library: base/adapter -->
-  <?=script_tag('assets/js/ext/adapter/jquery/ext-jquery-adapter.js');?>
+  <?=script_tag('assets/js/ext/adapter/ext/ext-base.js');?>
   <!-- ExtJS library: all widgets -->
   <?=script_tag('assets/js/ext/ext-all.js');?>
   <script type="text/javascript">
