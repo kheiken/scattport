@@ -25,7 +25,7 @@ var projectTree = new Ext.tree.TreePanel({
     dataUrl: BASE_URL + 'projects/getAvailable',
     root: {
         nodeType: 'async',
-        text: 'Projekte',
+        text: "Projekte",
         expanded: true,
         id: 'projects'
     }
@@ -48,7 +48,7 @@ var tabPanel = new Ext.TabPanel({
         id: 'tab_welcome',
         bodyStyle: 'padding: 10px',
         title: "Willkommen",
-        closable: true,
+        closable: true
     }]
 });
 
@@ -85,32 +85,21 @@ var layoutMain = new Ext.Viewport({
     }, layoutCenter]
 });
 
-function logout() {
-    Ext.Ajax.request({
-        url: BASE_URL + 'auth/logout',
-        method: 'post',
-        success: function(xhr) {
-            window.location = BASE_URL + 'auth/login';
-        }
-    });
-}
-
 function loadProjectInfo(n) {
-	if(n.isLeaf()){
+	if (n.isLeaf()) {
 		Ext.Ajax.request({
 	        url: BASE_URL + 'projects/detail/' + n.prjId,
 	        method: 'get',
-	        success: function ( result, request ) {
-
+	        success: function(result, request) {
 				var theResponse = Ext.util.JSON.decode(result.responseText);
 
 				tabPanel.add({
-		            title: 'New Tab ',
-		            html: 'Lade Projekt...',
-		            closable:true
+		            title: "New Tab",
+		            html: "Lade Projekt...",
+		            closable: true
 		        }).show();
 	       	},
-	        failure: function ( result, request ) {
+	        failure: function(result, request) {
 	       		switch(result.status) {
 	       			case 404:
 	       				Ext.MessageBox.alert("Fehler", "Das gewünschte Projekt konnte nicht gefunden werden.");
@@ -119,13 +108,11 @@ function loadProjectInfo(n) {
 	       				Ext.MessageBox.alert("Fehler", "Sie besitzen nicht die nötigen Zugriffsrechte, um dieses Projekt zu lesen."
 	       					+ "Wenden Sie sich an den Projektbesitzer, um Zugriff zu erhalten.");
 	       				break;
-	       		}
+	       		};
 	       	}
 	   	});
-
     }
 }
-
 </script>
 <div id="main"></div>
 

@@ -36,3 +36,7 @@ a:hover {
 .x-tree-node-icon {
     height: 16px !important;
 }
+
+.x-form-display-field {
+    color: #777;
+}
