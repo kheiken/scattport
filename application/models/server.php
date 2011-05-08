@@ -6,6 +6,26 @@
 class Server extends CI_Model {
 
 	/**
+	 * Create a new server.
+	 *
+	 * @param array $data the server informations
+	 * @return bool was the insert successful
+	 */
+	public function create($data) {
+		return $this->db->insert('servers', $data);
+	}
+
+	/**
+	 * Delete a server.
+	 *
+	 * @param string $server_id
+	 * @return bool was the deletion successful
+	 */
+	public function delete($server_id) {
+		return $this->db->delete('servers', array('id' => $server_id));
+	}
+
+	/**
 	 * Get a list of all available servers.
 	 *
 	 * @return array List of all available servers.
