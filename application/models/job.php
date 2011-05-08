@@ -6,6 +6,25 @@
 class Job extends CI_Model {
 
 	/**
+	 * Create a new job.
+	 *
+	 * @param array $data the data of the new job
+	 * @return bool was the insert successful
+	 */
+	public function create($data) {
+		return $this->db->insert('jobs', $data);
+	}
+
+	/**
+	 * Delete a job.
+	 * @param string the job id to delete
+	 * @return bool was the deletion successful
+	 */
+	public function delete($job_id) {
+		return $this->db->delete('jobs', array('id' => $job_id));
+	}
+
+	/**
 	 * Update the progress of a given job.
 	 *
 	 * @param string $job_id The job's id you want to update.
