@@ -8,6 +8,25 @@
 class Configuration extends CI_Model {
 
 	/**
+	 * Create a new configuration.
+	 *
+	 * @param array $data the data of the new configuration
+	 * @return bool was the insert successful
+	 */
+	public function create($data) {
+		return $this->db->insert('configurations', $data);
+	}
+
+	/**
+	 * Delete a configuration.
+	 * @param string the configuration id to delete
+	 * @return bool was the deletion successful
+	 */
+	public function delete($configuration_id) {
+		return $this->db->delete('configurations', array('id' => $configuration_id));
+	}
+
+	/**
 	 * Get a configuration by id.
 	 *
 	 * @param type $configuration_id The configuration to get.
