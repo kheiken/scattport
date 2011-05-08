@@ -24,18 +24,13 @@ class Server extends CI_Model {
 	}
 
 	/**
-	 * Set a server's workload.
-	 *
-	 * In order to check if a server can handle another job we need to know
-	 * the workload of every server.
-	 *
+	 * Update a server.
+	 *	 *
 	 * @param type $secret The server's secret for basic authentication.
 	 * @param type $workload The server's workload.
 	 */
-	public function updateWorkload($secret, $workload) {
-		$this->db->query("UPDATE `servers` SET `workload`=".$this->db->escape($workload)
-				. ", `last_update`=NOW()"
-				. " WHERE `secret`=".$this->db->escape($secret));
+	public function update($server_id, $data) {
+		return $this->db->update('servers', $data);
 	}
 
 	/**
