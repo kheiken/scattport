@@ -139,4 +139,30 @@ class Project extends CI_Model {
 
 		return array_merge($own_results, $shared_results);
 	}
+
+	/**
+	 * Create a new project.
+	 *
+	 * @param array $data array with "name" and "description"
+	 */
+	public function create($data) {
+		$this->load->helper(array('hash', 'date'));
+
+		$data['owner'] = $this->session->userdata('user_id');
+		$data['created'] = mysql_now();
+		$data['lastaccess'] = mysql_now();
+		$data['id'] = random_hash();
+
+		return $this->db->insert('projects', $data);
+	}
+
+	/**
+	 * Delete a project.
+	 *
+	 * There is no security check in here to verify if the user has the
+	 * rights to do so. This needs to be done in the controller!
+	 */
+	public function delete($project_id) {
+		return $this->db->delete('projects', array('id' => $project_id));
+	}
 }
