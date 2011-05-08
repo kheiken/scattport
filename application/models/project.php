@@ -106,9 +106,8 @@ class Project extends CI_Model {
 		$query = $this->db->get_where('configurations', array('project_id' => $project_id));
 
 		$configurations = $query->result_array();
-		$configuration_count = $query->num_rows();
 
-		return array('count' => $configuration_count, 'configs' => $configurations);
+		return $configurations;
 	}
 
 	/**
