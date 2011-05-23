@@ -108,7 +108,7 @@ class Project extends CI_Model {
 		$configurations = $query->result_array();
 		$configuration_count = $query->num_rows();
 
-		return array('count' => $configuration_count, 'configs' => $configurations);
+		return $configurations;
 	}
 
 	/**
