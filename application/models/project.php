@@ -92,7 +92,7 @@ class Project extends CI_Model {
 	 */
 	public function get($project_id) {
 		$result = $this->db->get_where('projects', array('id' => $project_id))->row_array();
-		$this->db->where('project', $project_id)->update('projects', array(
+		$this->db->where('id', $project_id)->update('projects', array(
 			'lastaccess' => mysql_now(),
 		));
 		
