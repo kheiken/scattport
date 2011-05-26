@@ -7,7 +7,7 @@ and open the template in the editor.
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Project <?=$name?></title>
-		<link rel="stylesheet" href="/ScattPort/assets/css/inuit.css" />
+		<link rel="stylesheet" href="<?=base_url();?>/assets/css/inuit.css" />
     </head>
     <body>
 		<div class="grids">
