@@ -5,7 +5,7 @@
  *
  * @author Karsten Heiken, karsten@disposed.de
  */
-class Statusrpc extends CI_Controller {
+class api extends CI_Controller {
 	
 	/**
 	 * Update the state of a given job.
@@ -17,7 +17,7 @@ class Statusrpc extends CI_Controller {
 	 * @param type $job_id The job id that is running on the server.
 	 * @param type $state The state of the job.
 	 */
-	public function update_job($secret, $job_id, $progress) {
+	public function update_job() {
 		$this->load->model('job');
 
 		$query = $this->db->get_where('servers', array('secret' => $secret));
@@ -34,7 +34,7 @@ class Statusrpc extends CI_Controller {
 	/**
 	 * Update the workload of the server.
 	 */
-	public function update_workload($secret, $workload) {
+	public function update_workload() {
 		$this->load->model('server');
 		$query = $this->db->get_where('servers', array('secret' => $secret));
 
