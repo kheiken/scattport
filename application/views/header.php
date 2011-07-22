@@ -5,18 +5,18 @@
 
 <title>ScattPort | Dashboard</title>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/form.css" type="text/css" media="screen">
+<?=link_tag('assets/css/style.css');?>
+<?=link_tag('assets/css/table.css');?>
+<?=link_tag('assets/css/form.css');?>
 
-<script type="text/javascript" src="js/minmax.js"></script>
+<?=script_tag('assets/js/minmax.js');?>
 
 </head>
 <body>
 
 <div id="header">
 
-	<h1><a href="#"><img src="images/logo.gif" alt="Shadmin"></a></h1>
+	<h1><a href="#"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
 	<div class="menu">Hallo <a href="#">Admin</a>! | <a href="#">Hilfe</a> | <a href="#">Einstellungen</a> | <a href="#">Logout</a></div>
 
 </div>
@@ -58,7 +58,7 @@
 		<div class="box">
 			<form id="search-form" method="get" action="#">
 				<input type="text" name="search" id="search-input" class="search-input">
-				<input type="image" src="images/button-search.gif" id="search-submit" class="search-submit">
+				<input type="image" src="<?=site_url('assets/images/button-search.gif')?>" id="search-submit" class="search-submit">
 			</form>
 		</div>
 
