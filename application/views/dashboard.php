@@ -3,36 +3,21 @@
 <div id="content">
 
 	<div class="title">
-		<h2>Neues Projekt erstellen</h2>
+		<h2>Dashboard</h2>
 	</div>
 
 	<div class="box">
-		<h3>Angaben zum Projekt</h3>
-		<form method="post" action="#">
+		<h3>Lorem Ipsum.</h3>
+		<p>Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel?</p>
 
-		<ul>
-			<li>
-				<label>Projektname <span class="req">*</span></label>
-				<div><input type="text" name="title" class="short text" value=""> <span class="error"><strong>ERROR:</strong> Error message.</span></div>
-			</li>
-			<li>
-				<label>Beschreibung</label>
-				<div><textarea name="description" rows="6" cols="60" tabindex="1" class="textarea"></textarea></div>
-			</li>
-			<li>
-				<label>3D-Modell <span class="req">*</span></label>
-				<div><input type="file" class="file" name="model"></div>
-			</li>
-			<li>
-				<label>Konfiguration <span class="req">*</span></label>
-				<div><input type="file" class="file" name="model"></div>
-			</li>
-			<li>
-				<input type="button" value="Submit" class="button"> <input type="button" value="Reset" class="button">
-			</li>
-		</ul>
-		</form>
-		</div>
+		<p>Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte! Hatte einer seiner zahllosen Kollegen dieselbe Idee gehabt, ihn beobachtet und abgewartet, um ihn nun um die Früchte seiner Arbeit zu erleichtern?</p>
+
+		<p>Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören.</p>
+
+		<p>Gehetzt sah er sich um. Plötzlich erblickte er den schmalen Durchgang. Blitzartig drehte er sich nach rechts und verschwand zwischen den beiden Gebäuden. Beinahe wäre er dabei über den umgestürzten Mülleimer gefallen, der mitten im Weg lag.</p>
+
+		<p>Er versuchte, sich in der Dunkelheit seinen Weg zu ertasten und erstarrte: Anscheinend gab es keinen anderen Ausweg aus diesem kleinen Hof als den Durchgang, durch den er gekommen war. Die Schritte wurden lauter und lauter, er sah eine dunkle Gestalt um die Ecke biegen. Fieberhaft irrten seine Augen durch die nächtliche Dunkelheit und suchten einen Ausweg. War jetzt wirklich</p>
+	</div>
 
 </div>
 
