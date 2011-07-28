@@ -18,19 +18,19 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr class="odd">
-			<td><a href="#"><abbr title="Beschreibung des Projekts">Blutkörperchen</abbr></a></td>
-			<td>Karsten Heiken</td>
-			<td><span class="active">Erfolgreich abgeschlossen</span></td>
-			<td><a href="#">Ergebnisse anzeigen</a> | <a href="#">Entfernen</a></td>
-		</tr>
+		<?
+			foreach($projects as $project):
+		?>
+			<tr>
+				<td><a href="<?=site_url('projects/detail/' . $project['id'])?>"><abbr title="<?=$project['description']?>"><?=$project['name']?></abbr></a></td>
+				<td><?=$project['owner']?></td>
+				<td><span class="active">Erfolgreich abgeschlossen</span></td>
+				<td><a href="#">Ergebnisse anzeigen</a> | <a href="#">Entfernen</a></td>
+			</tr>
+		<?
+			endforeach;
+		?>
 		<tr>
-			<td><a href="#"><abbr title="Beschreibung des Projekts">Blutkörperchen</abbr></a></td>
-			<td>Karsten Heiken</td>
-			<td><span class="pending">Berechnung im Gange: 80%</span></td>
-			<td><a href="#">Anhalten</a> | <a href="#">Entfernen</a></td>
-		</tr>
-		<tr class="odd">
 			<td><a href="#"><abbr title="Beschreibung des Projekts">Blutkörperchen</abbr></a></td>
 			<td>Karsten Heiken</td>
 			<td><span class="closed">Fehlgeschlagen</span></td>
@@ -42,7 +42,7 @@
 			<td><span class="pending">Berechnung im Gange: 20%</span></td>
 			<td><a href="#">Anhalten</a> | <a href="#">Entfernen</a></td>
 		</tr>
-		<tr class="odd">
+		<tr>
 			<td><a href="#"><abbr title="Beschreibung des Projekts">Blutkörperchen</abbr></a></td>
 			<td>Karsten Heiken</td>
 			<td><span class="pending">Berechnung im Gange: 60%</span></td>
@@ -54,7 +54,7 @@
 			<td><span class="pending">Berechnung im Gange: 0%</span></td>
 			<td><a href="#">Anhalten</a> | <a href="#">Entfernen</a></td>
 		</tr>
-		<tr class="odd">
+		<tr>
 			<td><a href="#"><abbr title="Beschreibung des Projekts">Blutkörperchen</abbr></a></td>
 			<td>Karsten Heiken</td>
 			<td><span class="closed">Fehlgeschlagen</span></td>
