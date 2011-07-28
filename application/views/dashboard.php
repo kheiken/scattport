@@ -8,6 +8,8 @@
 
 	<div class="box">
 		<h3>Lorem Ipsum.</h3>
+
+		<p><a href="projects/create" title="Neues Projekt anlegen">Neues Projekt anlegen</a></p>
 		<p>Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel?</p>
 
 		<p>Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte! Hatte einer seiner zahllosen Kollegen dieselbe Idee gehabt, ihn beobachtet und abgewartet, um ihn nun um die Früchte seiner Arbeit zu erleichtern?</p>
