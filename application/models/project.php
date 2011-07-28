@@ -13,7 +13,7 @@ class Project extends CI_Model {
 	 *
 	 * @return array The user's projects.
 	 */
-	public function getOwn() {
+	private function getOwn() {
 		$query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
@@ -25,7 +25,7 @@ class Project extends CI_Model {
 	 *
 	 * @return array The shared projects.
 	 */
-	public function getShared() {
+	private function getShared() {
 		$this->load->library('session');
 		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->userdata('user_id')));
 		$this->db->join('projects', 'projects.id = shares.project_id');
@@ -39,7 +39,7 @@ class Project extends CI_Model {
 	 *
 	 * @return array All public projects.
 	 */
-	public function getPublic() {
+	private function getPublic() {
 		$query = $this->db->where(array('public' => '1'))
 			->order_by('name', 'asc')
 			->get('projects');
