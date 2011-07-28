@@ -76,22 +76,19 @@ class Projects extends CI_Controller {
 	}
 
 	public function index() {
-		$projects = new Project();
-		$projects->where('id', 'c5ca461679712e6e6f24784a79b5511199da1a35')->get();
-
-		//$tpl['notice'][] = print_r($projects->all, true);
-		$tpl['projects'] = $projects->all;
+		$projects = $this->project->getAll();
+		
+		$tpl['projects'] = $projects;
 		$this->load->view('project/list', $tpl);
 	}
 
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
 		$trials = $this->trial->getByProjectId($prj_id);
-		foreach($trials as $trial) {
-			$jobsDone = $this->job->getJobsByTrial($trial_id, $status='done');
-		}
+		
 		$tpl['project'] = $project;
 		$tpl['trials'] = $trials;
+		$tpl['jobsDone'] = null;
 		$this->load->view('project/detail', $tpl);
 	}
 }
