@@ -11,7 +11,7 @@
  * @subpackage	Helpers
  * @category	Helpers
  * @author		ExpressionEngine Dev Team, stensi
- * @link		http://codeigniter.com/user_guide/helpers/inflector_helper.html
+ * @link		http://codeigniter.com/user_guide/helpers/directory_helper.html
  */
 
 // --------------------------------------------------------------------
@@ -74,7 +74,7 @@ if ( ! function_exists('singular'))
 		}
 		else
 		{
-			if ($end1 == 's' && $end2 != 'us' && $end2 != 'ss')
+			if ($end1 == 's')
 			{
 				$str = substr($str, 0, -1);
 			}
@@ -102,7 +102,6 @@ if ( ! function_exists('plural'))
 	{
 		$str = strtolower(trim($str));
 		$end3 = substr($str, -3);
-		$end2 = substr($str, -2);
 		$end1 = substr($str, -1);
 
 		if ($end3 == 'eau')
@@ -131,29 +130,9 @@ if ( ! function_exists('plural'))
 		}
 		elseif ($end1 == 'y')
 		{
-			if(preg_match('#[aeiou]y#i', $end2))
-			{
-				// ays, oys, etc.
-				$str = $str . 's';
-			}
-			else
-			{
-				$str = substr($str, 0, -1).'ies';
-			}
+			$str = substr($str, 0, -1).'ies';
 		}
-		elseif ($end1 == 'o')
-		{
-			if(preg_match('#[aeiou]o#i', $end2))
-			{
-				// oos, etc.
-				$str = $str . 's';
-			}
-			else
-			{
-				$str .= 'es';
-			}
-		}
-		elseif ($end1 == 'x' || in_array($end2, array('ss', 'ch', 'sh')) )
+		elseif (in_array($end1, array('h', 'o', 'x')))
 		{
 			$str .= 'es';
 		}
