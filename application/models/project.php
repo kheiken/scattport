@@ -111,21 +111,18 @@ class Project extends CI_Model {
 	public function create($data) {
 		$this->load->helper(array('hash', 'date'));
 
-		$data['owner'] = $this->session->userdata('user_id');
+		$data['owner'] = '215cd70f310ae6ae'; //$this->session->userdata('user_id');
 		$data['created'] = mysql_now();
 		$data['lastaccess'] = mysql_now();
-		$data['id'] = random_hash();
 
-		return $this->db->insert('projects', $data);
-	}
+		do {
+			$data['id'] = random_hash();
+		} while ($this->db->where('id', $data['id'])->from('projects')->count_all_results() > 0);
 
-	/**
-	 * Delete a project.
-	 *
-	 * There is no security check in here to verify if the user has the
-	 * rights to do so. This needs to be done in the controller!
-	 */
-	public function delete($project_id) {
-		return $this->db->delete('projects', array('id' => $project_id));
+
+		if($this->db->insert('projects', $data))
+			return $data['id'];
+		else
+			return FALSE;
 	}
 }
