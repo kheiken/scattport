@@ -125,4 +125,14 @@ class Project extends CI_Model {
 		else
 			return FALSE;
 	}
+
+	/**
+	 * Delete a project.
+	 *
+	 * There is no security check in here to verify if the user has the
+	 * rights to do so. This needs to be done in the controller!
+	 */
+	public function delete($project_id) {
+		return $this->db->delete('projects', array('id' => $project_id));
+	}
 }
