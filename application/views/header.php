@@ -16,7 +16,7 @@
 
 <div id="header">
 
-	<h1><a href="#"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
+	<h1><a href="<?=base_url()?>"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
 	<div class="menu">Hallo <a href="#">Admin</a>! | <a href="#">Hilfe</a> | <a href="#">Einstellungen</a> | <a href="#">Logout</a></div>
 
 </div>
@@ -33,7 +33,7 @@
 	<div id="sidebar">
 
 		<div class="title">
-			<h2>Projekte</h2>
+			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
 
 		<div class="navigation">
