@@ -62,6 +62,15 @@ class Project extends CI_Model {
 	}
 	
 	/**
+	 * Get all projects from the database.
+	 */
+	public function getAll() {
+		$result = $this->db->get('projects')->result_array();
+
+		return $result;
+	}
+
+	/**
 	 * Get all available configurations from a specific project.
 	 *
 	 * @param array $project_id The project to get the configuration from.
