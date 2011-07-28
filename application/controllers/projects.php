@@ -11,6 +11,7 @@ class Projects extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('project');
+        $this->load->model('trial');
         $this->load->helper('tree');
 
         // load language file
@@ -18,68 +19,79 @@ class Projects extends CI_Controller {
     }
 
 	/**
-	 * Lists all projects the user has access to.
+	 * Create a new project.
 	 */
-	public function getAvailable() {
-		$path = $this->input->get_post('node');
+	public function create() {
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
-		switch($path) {
-			case '/projects/own':
-				$projects = $this->project->getOwn();
-				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
-				break;
-			case '/projects/shared':
-				$projects = $this->project->getShared();
-				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
-				break;
-			case '/projects/public':
-				$projects = $this->project->getPublic();
-				array_walk($projects, 'set_tree_icons', base_url() . 'assets/images/icons/document.png');
-				break;
-			default:
-				$projects = array(
-					array(
-						'id' => '/projects/own',
-						'cls' => 'folder',
-						'text' => lang('projects_own'),
-						'icon' => base_url() . 'assets/images/icons/folder.png',),
-					array(
-						'id' => '/projects/shared',
-						'cls' => 'leaf',
-						'text' => lang('projects_shared'),
-						'icon' => base_url() . 'assets/images/icons/folder-share.png',
-					),
-					array(
-						'id' => '/projects/public',
-						'cls' => 'folder',
-						'text' => lang('projects_public'),
-						'icon' => base_url() . 'assets/images/icons/folder-network.png',
-					),
-				);
+		$config = array(
+			array(
+				'field' => 'name',
+				'label' => 'Projektname',
+				'rules' => 'trim|required|min_length[3]|max_length[100]|xss_clean',
+			),
+			array(
+				'field' => 'description',
+				'label' => 'Beschreibung',
+				'rules' => 'trim|required|xss_clean',
+			),
+			array(
+				'field' => 'defaultmodel',
+				'label' => '3D-Modell',
+			),
+			array(
+				'field' => 'defaultconfig',
+				'label' => 'Standard-Konfiguration',
+			),
+		);
+		
+		$this->form_validation->set_rules($config);
+
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('project/new');
+		}
+		else
+		{
+			// TODO: handle file upload
+
+			$data = array(
+				'name' => $this->input->post('name'),
+				'description' => $this->input->post('description'),
+				'defaultmodel' => "todo",
+				'defaultconfig' => "todo",
+			);
+
+			$result = $this->project->create($data);
+			if($result)
+				redirect('/projects/detail/' . $result, 'refresh');
+			else {
+				$tpl['error'][] = "Das Projekt konnte nicht gespeichert werden.";
+				$this->load->view('project/new', $tpl);
+			}
 		}
 
-		$this->output
-			->set_content_type('application/json')
-			->set_output(json_encode($projects));
-		//	->set_output(json_encode(array('count' => $count, 'projects' => $projects)));
 	}
 
-	public function detail($project_id) {
-		$project = $this->project->get($id);
-		$this->output
-			->set_content_type('application/json')
-			->set_output(json_encode($project));
+	public function index() {
+		$projects = new Project();
+		$projects->where('id', 'c5ca461679712e6e6f24784a79b5511199da1a35')->get();
+
+		//$tpl['notice'][] = print_r($projects->all, true);
+		$tpl['projects'] = $projects->all;
+		$this->load->view('project/list', $tpl);
 	}
 
-	/**
-	 * Search for a specific project and return a list of possible results.
-	 *
-	 * @param type $needle The needle to look for in the haystack.
-	 */
-	public function search($needle) {
-		$results = $this->project->search($needle);
-		$this->output
-			->set_content_type('application/json')
-			->set_output(json_encode(array('count' => count($results), 'results' => $results)));
+	public function detail($prj_id) {
+		$project = $this->project->getById($prj_id);
+		$trials = $this->trial->getByProjectId($prj_id);
+		foreach($trials as $trial) {
+			$jobsDone = $this->job->getJobsByTrial($trial_id, $status='done');
+		}
+		$tpl['project'] = $project;
+		$tpl['trials'] = $trials;
+		$this->load->view('project/detail', $tpl);
 	}
 }
