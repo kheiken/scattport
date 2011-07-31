@@ -13,8 +13,9 @@ class Project extends CI_Model {
 	 *
 	 * @return array The user's projects.
 	 */
-	private function getOwn() {
-		$query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
+	public function getOwn() {
+		// TODO: Session: $query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
+		$query = $this->db->where(array('owner' => '215cd70f310ae6ae'))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
 		return $query->result_array();
