@@ -9,7 +9,7 @@
 	<div class="box">
 
 		
-		<form method="post" action="<?=site_url('projects/create')?>">
+		<form method="post" name="createproject" action="<?=site_url('projects/create')?>">
 		<h3>Erforderliche Angaben zum Projekt</h3>
 		<?php echo validation_errors(); ?>
 			<ul>
@@ -50,7 +50,7 @@
 					</div>
 				</li>
 				<li>
-					<input type="submit" tabindex="5" value="Projekt anlegen" class="button" />
+					<a href="#" onclick="document.forms.createproject.submit()" class="button">Speichern</a>
 				</li>
 			</ul>
 		</form>
