@@ -12,7 +12,6 @@ class Projects extends CI_Controller {
         parent::__construct();
         $this->load->model('project');
         $this->load->model('trial');
-        $this->load->helper('tree');
 
         // load language file
         $this->lang->load(strtolower($this->router->class));
