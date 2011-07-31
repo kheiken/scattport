@@ -86,7 +86,7 @@
 ?>
 							<tr>
 								<td><abbr title="<?=$param['description']?>"><?=$param['readable']?></abbr></td>
-								<td><input type="text" name="<?=$param['fieldname']?>" class="short text" value="<?=set_value($param['fieldname'])?>"><?=form_error($param['fieldname'])?></td>
+								<td><input type="text" name="<?=$param['fieldname']?>" class="long text" value="<?=set_value($param['fieldname'])?>"><?=form_error($param['fieldname'])?></td>
 								<td><?=$param['unit']?></td>
 							</tr>
 <?
