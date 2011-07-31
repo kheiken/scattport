@@ -23,7 +23,7 @@
 </div>
 
 <div id="wrapper">
-
+<div id="notifications">
 <?
 $messages = $this->messages->get();
 if (is_array($messages)):
@@ -36,6 +36,7 @@ if (is_array($messages)):
 	endforeach;
 endif;
 ?>
+</div>
 	
 	<div id="sidebar">
 
