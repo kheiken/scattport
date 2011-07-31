@@ -35,14 +35,21 @@
 		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
-
+<?
+	$this->load->model('project');
+?>
 		<div class="navigation">
 			<ul>
 				<li><a href="#">Eigene Projekte</a>
 					<ul>
-						<li><a href="#">Blutkörperchen</a></li>
-						<li><a href="#">Gerstenkorn</a></li>
-						<li><a href="#">Bleistiftspitze</a></li>
+<?
+	$projects = $this->project->getOwn();
+	foreach($projects as $project):
+?>
+						<li><a href="<?=site_url('projects/detail/'.$project['id'])?>"><?=$project['name']?></a></li>
+<?
+	endforeach;
+?>
 					</ul>
 				</li>
 				<li><a href="#">Freigegebene Projekte</a>
