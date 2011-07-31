@@ -25,12 +25,14 @@
 
 <div id="wrapper">
 
-<? if(isset($error))
-	foreach($error as $e) echo "<div id=\"error\">".$e."</div>"; ?>
-<? if(isset($notice))
-	foreach($notice as $n) echo "<div id=\"notice\">".$n."</div>"; ?>
-<? if(isset($success))
-	foreach($success as $s) echo "<div id=\"success\">".$s."</div>"; ?>
+<? 
+	if(isset($error))
+		foreach($error as $e) echo "<div class=\"error\">".$e."</div>";
+	if(isset($notice))
+		foreach($notice as $n) echo "<div class=\"notice\">".$n."</div>";
+	if(isset($success))
+	foreach($success as $s) echo "<div class=\"success\">".$s."</div>";
+?>
 	
 	<div id="sidebar">
 

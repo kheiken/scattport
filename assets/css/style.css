@@ -21,8 +21,7 @@ p { margin: 0px 0px 20px 0px; line-height: 18px;}
 ul { margin: 5px 0px 15px 0px; padding: 0px;}
 li { margin-left: 20px;}
 
-#notice {
-	clear: both;
+.notice {
 	margin: 0 0 15px;
 	padding: 0 10px;
 	background: #fffbcc;
@@ -31,8 +30,7 @@ li { margin-left: 20px;}
 	color: #222;
 }
 
-#succeed {
-	clear: both;
+.succeed {
 	margin: 0 0 15px;
 	padding: 0 10px;
 	background: #d1ecb8;
@@ -41,8 +39,7 @@ li { margin-left: 20px;}
 	color: #222;
 }
 
-#error {
-	clear: both;
+.error {
 	margin: 0 0 15px;
 	padding: 0 10px;
 	background: #ffebe8;
