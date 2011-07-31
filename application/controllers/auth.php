@@ -46,14 +46,11 @@ class Auth extends CI_Controller {
 
 			if ($this->access->login($this->input->post('username'), $this->input->post('password'), $remember)) {
 				$this->data['success'] = true;
+				redirect('dashboard', 'refresh');
 			} else { // if the login was un-successful
 				$this->data['success'] = false;
 				$this->data['message'] = $this->access->errors();
 			}
-
-			// output JSON data
-			$this->output->set_content_type('application/json')
-			->set_output(json_encode($this->data));
 		} else {
 			$this->data['message'] = validation_errors() ? validation_errors() : null;
 			$this->data['username'] = $this->form_validation->set_value('username');
@@ -68,9 +65,7 @@ class Auth extends CI_Controller {
 	public function logout() {
 		$logout = $this->access->logout();
 
-		// output JSON data
-		$this->output->set_content_type('application/json')
-		->set_output(json_encode(array('success' => true)));
+		redirect(base_url(), 'refresh');
 	}
 
 	/**
@@ -78,7 +73,7 @@ class Auth extends CI_Controller {
 	 */
 	public function register() {
 		if ($this->access->loggedIn()) {
-			redirect('welcome');
+			redirect('dashboard');
 		}
 
 		// validate form input
