@@ -28,6 +28,25 @@ class Program extends CI_Model {
 	}
 
 	/**
+	 * Get all available programs from the database.
+	 *
+	 * @return array Declarative array with all available information of all programs.
+	 */
+	public function getAll() {
+		return $this->db->get('programs')->result_array();
+	}
+
+	/**
+	 * Get a specific program.
+	 *
+	 * @param string $prg_id The id of the program to get from the database
+	 * @return array Declarative array with all available information of the program.
+	 */
+	public function getById($prg_id) {
+		return $this->db->get_where('programs', array('id' => $prg_id))->row_array();
+	}
+
+	/**
 	 * Get a program's available parameters by program id.
 	 *
 	 * The structure of the returned array is generated in the following way:
