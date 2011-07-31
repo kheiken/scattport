@@ -17,9 +17,8 @@
 <body>
 
 <div id="header">
-
 	<h1><a href="<?=base_url()?>"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
-	<div class="menu">Hallo <a href="#">Admin</a>! | <a href="#">Hilfe</a> | <a href="#">Einstellungen</a> | <a href="#">Logout</a></div>
+	<div class="menu">Hallo <a href="#"><?=$this->user->profile()->firstname?> <?=$this->user->profile()->lastname?></a>! | <a href="#">Hilfe</a> | <a href="#">Einstellungen</a> | <a href="#">Logout</a></div>
 
 </div>
 
