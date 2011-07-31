@@ -25,13 +25,17 @@
 
 <div id="wrapper">
 
-<? 
-	if(isset($error))
-		foreach($error as $e) echo "<div class=\"error\">".$e."</div>";
-	if(isset($notice))
-		foreach($notice as $n) echo "<div class=\"notice\">".$n."</div>";
-	if(isset($success))
-	foreach($success as $s) echo "<div class=\"success\">".$s."</div>";
+<?
+$messages = $this->messages->get();
+if (is_array($messages)):
+	foreach ($messages as $type => $msgs):
+		if (count($msgs > 0)):
+			foreach ($msgs as $message):
+				echo ('<div class="' .  $type .'">' . $message . '</div>');
+			endforeach;
+		endif;
+	endforeach;
+endif;
 ?>
 	
 	<div id="sidebar">
