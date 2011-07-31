@@ -8,6 +8,7 @@
 
 	<div class="box">
 		<h3>Versuche</h3>
+		<p><a href="<?=site_url('trials/create/'.$project['id'])?>">Neuen Versuch erstellen</a>
 		<table>
 			<thead>
 				<tr>
