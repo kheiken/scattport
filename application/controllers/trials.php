@@ -13,6 +13,7 @@ class Trials extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('trial');
+		$this->load->model('program');
 		$this->load->model('project');
 
         // load language file
@@ -25,6 +26,9 @@ class Trials extends CI_Controller {
 	public function create() {
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		// Get the parameters for a specific program
+		$parameters = $this->program->getParameters('28dc3aeef315080ee26524cf515f763187f52601');
 
 		$config = array(
 			array(
@@ -44,7 +48,8 @@ class Trials extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('trial/new');
+			$tpl['parameters'] = $parameters;
+			$this->load->view('trial/new', $tpl);
 		}
 		else
 		{

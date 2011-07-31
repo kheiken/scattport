@@ -31,6 +31,7 @@
 					<li>
 						<label>3D-Modell</label><br />
 <?
+	$defaultmodel = "foo";
 	if(isset($defaultmodel)):
 ?>
 						<label class="note"><strong>Für dieses Projekt ist ein Standardmodell vorhanden.</strong><br />
@@ -50,15 +51,16 @@
 
 			<h3>Parameter für die Berechnung</h3>
 <?
-if(isset($defaultmodel)):
+	$defaultconfig = "foo";
+	if(isset($defaultconfig)):
 ?>
 			<p>
-				Für dieses Projekt ist eine Standardkonfiguration vorhanden.<br />
-				Das folgende Formular enthält die Standardparameter. Diese können für diesen Versuch nach belieben angepasst werden. <br />
+				<strong>Für dieses Projekt ist eine Standardkonfiguration vorhanden.</strong><br />
+				Das folgende Formular enthält die Standardparameter. Diese können für diesen Versuch nach Belieben angepasst werden. <br />
 				Die Standardkonfiguration wird dabei nicht verändert.
 			</p>
 <?
-endif;
+	endif;
 ?>
 			<table>
 				<thead>
@@ -69,21 +71,17 @@ endif;
 					</tr>
 				</thead>
 				<tbody>
+<?
+	foreach($parameters as $param):
+?>
 					<tr>
-						<td>Wellenlänge</td>
-						<td><input type="text" name="lambda" class="short text" value="<?=set_value('lambda')?>"><?=form_error('lambda')?></td>
-						<td>nm</td>
+						<td><abbr title="<?=$param['description']?>"><?=$param['readable']?></abbr></td>
+						<td><input type="text" name="<?=$param['fieldname']?>" class="short text" value="<?=set_value($param['fieldname'])?>"><?=form_error($param['fieldname'])?></td>
+						<td><?=$param['unit']?></td>
 					</tr>
-					<tr>
-						<td>Lichtrichtung</td>
-						<td><input type="text" name="angle" class="short text" value="<?=set_value('angle')?>"><?=form_error('angle')?></td>
-						<td>&deg;</td>
-					</tr>
-					<tr>
-						<td>Parameter #3</td>
-						<td><input type="text" name="foobar1" class="short text" value="<?=set_value('foobar1')?>"><?=form_error('foobar1')?></td>
-						<td>foo</td>
-					</tr>
+<?
+	endforeach;
+?>
 				</tbody>
 			</table>
 		</div>
