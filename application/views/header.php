@@ -10,6 +10,8 @@
 <?=link_tag('assets/css/form.css');?>
 
 <?=script_tag('assets/js/minmax.js');?>
+<?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
+<?=script_tag('assets/js/scattport.js');?>
 
 </head>
 <body>
