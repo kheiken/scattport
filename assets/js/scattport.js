@@ -1,3 +1,10 @@
+function get_notifications() {
+    $('#notifications').load(SITE_URL + 'ajax/get_notifications',
+            function() {
+                $('#notifications').slideDown();
+            });
+}
+
 $(document).ready(function() {
 
 	//When page loads...
@@ -17,4 +24,7 @@ $(document).ready(function() {
 		return false;
 	});
 
+    $('#notifications').hide();
+
+    setInterval(get_notifications(), '5000');
 });

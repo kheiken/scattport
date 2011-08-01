@@ -12,6 +12,9 @@
 <?=script_tag('assets/js/minmax.js');?>
 <?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
 <?=script_tag('assets/js/scattport.js');?>
+<script type="text/javascript">
+	var SITE_URL = '<?=site_url()?>';
+</script>
 
 </head>
 <body>
@@ -23,20 +26,7 @@
 </div>
 
 <div id="wrapper">
-<div id="notifications">
-<?
-$messages = $this->messages->get();
-if (is_array($messages)):
-	foreach ($messages as $type => $msgs):
-		if (count($msgs > 0)):
-			foreach ($msgs as $message):
-				echo ('<div class="' .  $type .'">' . $message . '</div>');
-			endforeach;
-		endif;
-	endforeach;
-endif;
-?>
-</div>
+<div id="notifications"></div>
 	
 	<div id="sidebar">
 
