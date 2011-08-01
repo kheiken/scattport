@@ -49,8 +49,11 @@ class Trials extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
+		$programs = $this->program->getAll();
+
 		// Get the parameters for a specific program
-		$parameters = $this->program->getParameters('28dc3aeef315080ee26524cf515f763187f52601');
+		foreach($programs as $program)
+			$parameters[$program['id']] = $this->program->getParameters($program['id']);
 
 		$config = array(
 			array(
@@ -71,6 +74,7 @@ class Trials extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			$tpl['parameters'] = $parameters;
+			$tpl['programs'] = $programs;
 			$this->load->view('trial/new', $tpl);
 		}
 		else

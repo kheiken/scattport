@@ -64,14 +64,22 @@
 <?
 	endif;
 ?>
-			<p>Bitte wählen Sie zunächst das Programm aus, mit dem Sie eine Berechnung durchführen möchten:</p>
-			<ul class="tabs">
-				<li class="active"><a href="#tab1">Ultimate Scattering Tool</a></li>
-				<li><a href="#tab2">Crazy Little Simulator</a></li>
-			</ul>
+			<h4>Programm zur Berechnung</h4>
+			<p>
+<?
+	foreach($programs as $program):
+?><a class="button" onclick="$('.program-parameters').hide();$('#<?=$program['id']?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');return false;" href="#"><?=$program['name']?></a>
+<?
+	endforeach;
+?>
+			</p>
+<?
+	foreach($programs as $program):
+?>
 
-			<div class="tab_container">
-				<div id="tab1" class="tab_content">
+			<div class="program-parameters" id="<?=$program['id']?>-params" style="display:none">
+				<h4>Parameter für <?=$program['name']?></h4>
+				<p>
 					<table>
 						<thead>
 							<tr>
@@ -82,7 +90,7 @@
 						</thead>
 						<tbody>
 <?
-	foreach($parameters as $param):
+	foreach($parameters[$program['id']] as $param):
 ?>
 							<tr>
 								<td><abbr title="<?=$param['description']?>"><?=$param['readable']?></abbr></td>
@@ -94,12 +102,14 @@
 ?>
 						</tbody>
 					</table>
-				</div>
-				<div id="tab2" class="tab_content">
-				   <p>foobar</p>
-				</div>
+				</p>
 			</div>
-
+<?
+	endforeach;
+?>
+			<div id="mlcm-params" style="display:none">
+				<p>Verwende MLCM</p>
+			</div>
 		</div>
 	</form>
 
