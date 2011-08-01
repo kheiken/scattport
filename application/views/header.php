@@ -31,6 +31,44 @@
 	<div id="sidebar">
 
 		<div class="title">
+			<h2>Aktionen</h2>
+		</div>
+		<div class="navigation">
+			<ul>
+<?
+	if($this->session->userdata('active_project')):
+		$active_project = $this->project->getById($this->session->userdata('active_project'));
+?>
+				<li>Projekt <?=$active_project['name']?>
+					<ul>
+						<li><a href="<?=site_url('/projects/detail/'.$active_project['id'])?>" title="Projektübersicht öffnen">Übersicht</a></li>
+						<li><a href="<?=site_url('/trials/create/'.$active_project['id'])?>" title="Neuen Versuch für das Projekt &quot;<?=$active_project['name']?>&quot; anlegen">Neuer Versuch</a></li>
+						<li><a href="<?=site_url('/results/project/'.$active_project['id'])?>" title="Alle Ergebnisse für das Projekt &quot;<?=$active_project['name']?>&quot; öffnen">Ergebnisse</a></li>
+					</ul>
+				</li>
+<?
+	endif;
+?>
+				<li>Global
+					<ul>
+						<li><a href="<?=site_url('/projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
+					</ul>
+				</li>
+<?
+	if($this->session->userdata('group') == 'admins'):
+?>
+				<li>Administration
+					<ul>
+						<li><a href="<?=site_url('/servers/')?>" title="Berechnungsserver verwalten">Berechnungsserver</a></li>
+					</ul>
+				</li>
+<?
+	endif;
+?>
+			</ul>
+		</div>
+		
+		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
 		<div class="navigation">
