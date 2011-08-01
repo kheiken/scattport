@@ -105,6 +105,7 @@ class Projects extends CI_Controller {
 
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
+		$this->session->set_userdata('active_project', $prj_id);
 		$trials = $this->trial->getByProjectId($prj_id);
 		
 		$tpl['project'] = $project;
