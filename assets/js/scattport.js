@@ -1,8 +1,9 @@
 function get_notifications() {
-    $('#notifications').load(SITE_URL + 'ajax/get_notifications',
-            function() {
-                $('#notifications').slideDown();
-            });
+	$.get(SITE_URL + 'ajax/get_notifications', function(data) {
+		if(data.length > 0) {
+			$('#notifications').append(data).slideDown();
+		}
+	});
 }
 
 $(document).ready(function() {
@@ -24,7 +25,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-    $('#notifications').hide();
-
-    setInterval(get_notifications(), '5000');
+	$('#notifications').hide();
+	get_notifications();
+	setInterval('get_notifications()', '5000');
 });
