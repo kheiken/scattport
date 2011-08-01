@@ -11,7 +11,6 @@
 		
 		<form method="post" name="createproject" action="<?=site_url('projects/create')?>">
 		<h3>Erforderliche Angaben zum Projekt</h3>
-		<?php echo validation_errors(); ?>
 			<ul>
 				<li>
 					<h4>Projektname <span class="req">*</span></h4>
