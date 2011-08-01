@@ -23,7 +23,7 @@
 		?>
 			<tr>
 				<td><a href="<?=site_url('projects/detail/' . $project['id'])?>"><abbr title="<?=$project['description']?>"><?=$project['name']?></abbr></a></td>
-				<td><?=$project['owner']?></td>
+				<td><?=$project['firstname'] . " " . $project['lastname']?></td>
 				<td><span class="active">Erfolgreich abgeschlossen</span></td>
 				<td><a href="#">Ergebnisse anzeigen</a> | <a href="#">Entfernen</a></td>
 			</tr>
