@@ -87,7 +87,11 @@ class Project extends CI_Model {
 	 * Get all projects from the database.
 	 */
 	public function getAll() {
-		$result = $this->db->get('projects')->result_array();
+		$result = $this->db->select('projects.*, users.firstname AS `firstname`, users.lastname AS `lastname`')
+				->join('users', 'users.id = projects.owner', 'left')
+				->get('projects')->result_array();
+
+
 
 		return $result;
 	}
