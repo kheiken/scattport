@@ -27,17 +27,17 @@
  */
 class Projects extends CI_Controller {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('project');
-        $this->load->model('trial');
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('project');
+		$this->load->model('trial');
 
-        // load language file
-        $this->lang->load(strtolower($this->router->class));
-    }
+		// load language file
+		$this->lang->load(strtolower($this->router->class));
+	}
 
 	/**
 	 * Create a new project.
@@ -66,16 +66,13 @@ class Projects extends CI_Controller {
 				'label' => 'Standard-Konfiguration',
 			),
 		);
-		
+
 		$this->form_validation->set_rules($config);
 
 
-		if ($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('project/new');
-		}
-		else
-		{
+		} else {
 			// TODO: handle file upload
 
 			$data = array(
@@ -85,37 +82,46 @@ class Projects extends CI_Controller {
 				'defaultconfig' => "todo",
 			);
 
-			$result = $this->project->create($data);
-			if($result)
-				redirect('/projects/detail/' . $result, 301);
-			else {
+			$data['project_id'] = $this->project->create($data);
+			if ($data['project_id']) {
+				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
+				$projectpath = $userpath . $data['project_id'] . '/';
+				if (!is_dir($projectpath))
+					if(!is_dir($userpath))
+						mkdir($userpath, 0777);
+					mkdir($projectpath, 0777);
+				chmod($userpath, 0777);
+				chmod($projectpath, 0777);
+			$this->messages->add($projectpath, 'notice');
+				redirect('/projects/detail/' . $data['project_id'], 301);
+			} else {
 				$this->messages->add('Das Projekt konnte nicht gespeichert werden.', 'error');
 				$this->load->view('project/new');
 			}
 		}
-
 	}
 
 	public function index() {
 		$projects = $this->project->getAll();
-		
+
 		$tpl['projects'] = $projects;
 		$this->load->view('project/list', $tpl);
 	}
 
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
-		if(!$project) {
+		if (!$project) {
 			$this->messages->add('Das Projekt konnte nicht geladen werden.', 'error');
 			redirect('/projects/', 301);
 		}
 
 		$this->session->set_userdata('active_project', $prj_id);
 		$trials = $this->trial->getByProjectId($prj_id);
-		
+
 		$tpl['project'] = $project;
 		$tpl['trials'] = $trials;
 		$tpl['jobsDone'] = null;
 		$this->load->view('project/detail', $tpl);
 	}
+
 }

@@ -30,17 +30,17 @@
 class Trials extends CI_Controller {
 
 	/**
-     * Constructor.
-     */
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('trial');
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('trial');
 		$this->load->model('program');
 		$this->load->model('project');
 
-        // load language file
-        // $this->lang->load(strtolower($this->router->class));
-    }
+		// load language file
+		// $this->lang->load(strtolower($this->router->class));
+	}
 
 	/**
 	 * Create a new project.
@@ -52,7 +52,7 @@ class Trials extends CI_Controller {
 		$programs = $this->program->getAll();
 
 		// Get the parameters for a specific program
-		foreach($programs as $program)
+		foreach ($programs as $program)
 			$parameters[$program['id']] = $this->program->getParameters($program['id']);
 
 		$config = array(
@@ -71,14 +71,11 @@ class Trials extends CI_Controller {
 		$this->form_validation->set_rules($config);
 
 
-		if ($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$tpl['parameters'] = $parameters;
 			$tpl['programs'] = $programs;
 			$this->load->view('trial/new', $tpl);
-		}
-		else
-		{
+		} else {
 			// TODO: handle file upload
 
 			$data = array(
@@ -89,13 +86,25 @@ class Trials extends CI_Controller {
 			);
 
 			$result = $this->trial->create($data);
-			if($result)
+			if ($result) {
+				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
+				$projectpath = $userpath . $data['project_id'] . '/';
+				$trialpath = $projectpath . $data['trial_id'] . '/';
+				if(!is_dir($trialpath))
+					if (!is_dir($projectpath))
+						if(!is_dir($userpath))
+							mkdir($userpath);
+						mkdir($projectpath);
+					mkdir($trialpath);
+				chmod($userpath, 0777);
+				chmod($projectpath, 0777);
+				chmod($trialpath, 0777);
+
 				redirect('/trial/detail/' . $result, 'refresh');
-			else {
+			} else {
 				$tpl['error'][] = "Der Versuch konnte nicht gespeichert werden.";
 				$this->load->view('trial/new', $tpl);
 			}
 		}
-
 	}
 }
