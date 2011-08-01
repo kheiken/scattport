@@ -25,7 +25,7 @@
 /**
  * Trials are used to store different variations of the same project.
  *
- * @author Karsten Heiken, karsten@disposed.de
+ * @author Karsten Heiken <karsten@disposed.de>
  */
 class Trials extends CI_Controller {
 

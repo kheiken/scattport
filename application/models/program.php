@@ -25,7 +25,7 @@
 /**
  * Programs are used to do the actual calculation of a trial.
  * 
- * @author Karsten Heiken, karsten@disposed.de
+ * @author Karsten Heiken <karsten@disposed.de>
  */
 class Program extends CI_Model {
 

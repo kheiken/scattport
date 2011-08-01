@@ -25,8 +25,7 @@
 /**
  * Configurations are used to store different variations of the same project.
  * 
- * @property CI_DB_active_record $db
- * @author Karsten Heiken, karsten@disposed.de
+ * @author Karsten Heiken <karsten@disposed.de>
  */
 class Project extends CI_Model {
 

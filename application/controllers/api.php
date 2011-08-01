@@ -25,7 +25,7 @@
 /**
  * Simple RPC class to handle requests from calculation servers.
  *
- * @author Karsten Heiken, karsten@disposed.de
+ * @author Karsten Heiken <karsten@disposed.de>
  */
 class api extends CI_Controller {
 	

@@ -22,6 +22,9 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @author Karsten Heiken <karsten@disposed.de>
+ */
 class Dashboard extends CI_Controller {
 
 	/**

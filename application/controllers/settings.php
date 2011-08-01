@@ -23,7 +23,7 @@
  */
 
 /**
- * @author Karsten Heiken, karsten@disposed.de
+ * @author Karsten Heiken <karsten@disposed.de>
  */
 class Settings extends CI_Controller {
 
