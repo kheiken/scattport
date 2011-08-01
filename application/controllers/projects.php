@@ -87,7 +87,7 @@ class Projects extends CI_Controller {
 
 			$result = $this->project->create($data);
 			if($result)
-				redirect('/projects/detail/' . $result, 'refresh');
+				redirect('/projects/detail/' . $result, 301);
 			else {
 				$tpl['error'][] = "Das Projekt konnte nicht gespeichert werden.";
 				$this->load->view('project/new', $tpl);
