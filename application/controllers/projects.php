@@ -105,6 +105,7 @@ class Projects extends CI_Controller {
 
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
+		if(!$project) {
 			$this->messages->add('Das Projekt konnte nicht geladen werden.', 'error');
 			redirect('/projects/', 301);
 		}
