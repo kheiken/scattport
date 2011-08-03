@@ -107,9 +107,6 @@
 <?
 	endforeach;
 ?>
-			<div id="mlcm-params" style="display:none">
-				<p>Verwende MLCM</p>
-			</div>
 		</div>
 	</form>
 
