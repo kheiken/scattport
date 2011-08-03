@@ -81,8 +81,6 @@ class Trials extends CI_Controller {
 			$data = array(
 				'name' => $this->input->post('name'),
 				'description' => $this->input->post('description'),
-				'defaultmodel' => "todo",
-				'defaultconfig' => "todo",
 			);
 
 			$result = $this->trial->create($data);
