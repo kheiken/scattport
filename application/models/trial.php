@@ -68,7 +68,7 @@ class Trial extends CI_Model {
 		return $query->row_array();
 	}
 
-		/**
+	/**
 	 * Get a trial by its project id.
 	 *
 	 * @param type $trial_id The trials to get.
