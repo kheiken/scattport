@@ -6,12 +6,11 @@
 		<h2>Neuen Versuch erstellen</h2>
 	</div>
 
-	<form method="post" action="<?=site_url('trials/create')?>">
+	<form name="newtrial" method="post" action="<?=site_url('trials/create')?>">
 		<div class="box">
 
 
 			<h3>Erforderliche Angaben zum Versuch</h3>
-			<?php echo validation_errors(); ?>
 				<ul>
 					<li>
 						<h4>Versuchsbezeichnung <span class="req">*</span></h4>
@@ -107,6 +106,9 @@
 <?
 	endforeach;
 ?>
+			<p>
+				<a class="button save-big big" href="#" onclick="document.forms.newtrial.submit();return false">Speichern</a>
+			</p>
 		</div>
 	</form>
 
