@@ -11,7 +11,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th scope="col">Versuche</th>
+					<th scope="col">Versuch</th>
 					<th scope="col">Berechnungen</th>
 					<th scope="col">Aktionen</th>
 				</tr>
