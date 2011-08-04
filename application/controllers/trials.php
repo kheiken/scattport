@@ -100,7 +100,7 @@ class Trials extends CI_Controller {
 
 				redirect('/trial/detail/' . $result, 'refresh');
 			} else {
-				$tpl['error'][] = "Der Versuch konnte nicht gespeichert werden.";
+				$this->messages->add('Der Versuch konnte nicht gespeichert werden.', 'error');
 				$this->load->view('trial/new', $tpl);
 			}
 		}
