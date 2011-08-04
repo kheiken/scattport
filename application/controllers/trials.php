@@ -88,15 +88,18 @@ class Trials extends CI_Controller {
 				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
 				$projectpath = $userpath . $data['project_id'] . '/';
 				$trialpath = $projectpath . $data['trial_id'] . '/';
-				if(!is_dir($trialpath))
-					if (!is_dir($projectpath))
-						if(!is_dir($userpath))
+				if(!is_dir($trialpath)) {
+					if (!is_dir($projectpath)) {
+						if(!is_dir($userpath)) {
 							mkdir($userpath);
+							chmod($userpath, 0777);
+						}
 						mkdir($projectpath);
+						chmod($projectpath, 0777);
+					}
 					mkdir($trialpath);
-				chmod($userpath, 0777);
-				chmod($projectpath, 0777);
-				chmod($trialpath, 0777);
+					chmod($trialpath, 0777);
+				}
 
 				redirect('/trial/detail/' . $result, 'refresh');
 			} else {
