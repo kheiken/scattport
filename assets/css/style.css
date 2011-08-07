@@ -444,8 +444,7 @@ ul.tabs li a {
 	text-decoration: none;
 	color: #000;
 	display: block;
-	padding: 0 20px;
-	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
+	padding: 1px 21px;
 	outline: none;
 }
 ul.tabs li a:hover {
