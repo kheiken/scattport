@@ -20,9 +20,8 @@
 <body>
 
 <div id="header">
-	<h1><a href="<?=base_url()?>"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
-	<div class="menu">Hallo <a href="#"><?=$this->user->profile()->firstname?> <?=$this->user->profile()->lastname?></a>! | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
-
+	<h1><?=anchor('', img('assets/images/logo.gif'))?></h1>
+	<div class="menu">Hallo <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
 </div>
 
 <div id="wrapper">
