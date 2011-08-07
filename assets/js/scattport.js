@@ -13,21 +13,19 @@ $.fn.alternateRowColors = function() {
 };
 
 $(document).ready(function() {
+	$(".tab_content").hide(); // hide all content
+	$("ul.tabs li:first").addClass("active").show(); // activate first tab
+	$(".tab_content:first").show(); // show first tab content
 
-	//When page loads...
-	$(".tab_content").hide(); //Hide all content
-	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content:first").show(); //Show first tab content
-
-	//On Click Event
+	// onClick event
 	$("ul.tabs li").click(function() {
 
-		$("ul.tabs li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content").hide(); //Hide all tab content
+		$("ul.tabs li").removeClass("active"); // remove any "active" class
+		$(this).addClass("active"); // add "active" class to selected tab
+		$(".tab_content").hide(); // hide all tab content
 
-		var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active ID content
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).fadeIn(); // fade in the active tab content
 		return false;
 	});
 
@@ -36,17 +34,22 @@ $(document).ready(function() {
 	setInterval('get_notifications()', '5000');
 });
 
+/*
+ * Tables
+ */
 $(document).ready(function() {
-    var settings = $.extend( {
+    var settings = {
         table_class : 'tableList'
-    }, settings);
+    };
 
+    // add or delete "hover" class on mouseOver event
     $('.' + settings.table_class + ' tbody tr').hover(function() {
         $(this).addClass("hover");
     }, function() {
         $(this).removeClass("hover");
     });
 
+    // add or delete "selected" class if a row is selected via checkbox
     $('.' + settings.table_class + ' tbody input:checkbox').click(function() {
         if ($(this).attr('checked') == true) {
             $(this).parent().parent().addClass('selected');
@@ -55,13 +58,15 @@ $(document).ready(function() {
         }
     });
 
+    // alternate table rows
     $('.' + settings.table_class).each(function() {
         var table = $(this);
         table.alternateRowColors(table);
     });
-});
 
-$(document).ready(function() {
+    /*
+     * Pagination
+     */
     $('.paginated').each(function() {
         var currentPage = 0;
         var numPerPage = 6;
@@ -91,7 +96,7 @@ $(document).ready(function() {
         }
 
         $pagelist.find('li.page-number:first').addClass('active');
-        $pager.append($pagelist)
+        $pager.append($pagelist);
         $pager.insertAfter(table);
 
         table.trigger('repaginate');
