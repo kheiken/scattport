@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Projects extends CI_Controller {
+class Projects extends MY_Controller {
 
 	/**
 	 * Constructor.
@@ -34,9 +34,6 @@ class Projects extends CI_Controller {
 		parent::__construct();
 		$this->load->model('project');
 		$this->load->model('trial');
-
-		// load language file
-		$this->lang->load(strtolower($this->router->class));
 	}
 
 	/**

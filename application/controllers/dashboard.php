@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Dashboard extends CI_Controller {
+class Dashboard extends MY_Controller {
 
 	/**
 	* Constructor.
@@ -35,9 +35,6 @@ class Dashboard extends CI_Controller {
 		$this->load->model('job');
 		$this->load->model('project');
 		$this->load->model('user');
-
-		// load language file
-		$this->lang->load(strtolower($this->router->class));
 	}
 
 	public function index() {

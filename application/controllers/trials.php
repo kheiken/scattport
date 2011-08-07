@@ -27,7 +27,7 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Trials extends CI_Controller {
+class Trials extends MY_Controller {
 
 	/**
 	 * Constructor.
@@ -37,9 +37,6 @@ class Trials extends CI_Controller {
 		$this->load->model('trial');
 		$this->load->model('program');
 		$this->load->model('project');
-
-		// load language file
-		// $this->lang->load(strtolower($this->router->class));
 	}
 
 	/**

@@ -5,7 +5,7 @@
  *
  * @author Eike Foken <kontakt@eikefoken.de>
  */
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 	/**
 	 * Constructor.

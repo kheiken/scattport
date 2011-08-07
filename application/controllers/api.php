@@ -27,14 +27,14 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class api extends CI_Controller {
-	
+class Api extends CI_Controller {
+
 	/**
 	 * Update the state of a given job.
-	 * 
+	 *
 	 * Because we do not want any access from servers we do not trust,
 	 * we need a special secret to authenticate the servers.
-	 * 
+	 *
 	 * @param type $secret The secret to authenticate the server.
 	 * @param type $job_id The job id that is running on the server.
 	 * @param type $state The state of the job.
