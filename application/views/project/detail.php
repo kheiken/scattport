@@ -8,7 +8,7 @@
 
 	<div class="box">
 		<h3>Versuche</h3>
-		<table>
+		<table class="tableList">
 			<thead>
 				<tr>
 					<th scope="col">Versuch</th>
@@ -50,7 +50,7 @@
 	</div>
 
 	<div class="box">
-				<table>
+		<table class="tableList">
 			<thead>
 				<tr>
 					<th scope="col">Versuch</th>
