@@ -48,6 +48,10 @@ li { margin-left: 20px;}
 	color: #222;
 }
 
+.editable {
+    background: #fffbcc;
+}
+
 .clear { clear:both;}
 
 /* Header */
@@ -359,11 +363,11 @@ a.supersize {
     padding: 15px 20px;
 }
 a.save {
-    background: url(../images/button-sprite.png) 10px 9px no-repeat #f3f3f3;
+    background: url(../images/icons/tick.png) 10px center no-repeat #f3f3f3;
     padding-left: 30px;
 }
 a.add {
-    background: url(../images/button-sprite.png)  10px -25px no-repeat #f3f3f3;
+    background: url(../images/icons/plus-circle.png) 10px center no-repeat #f3f3f3;
     padding-left: 30px;
 }
 a.delete {
@@ -372,6 +376,10 @@ a.delete {
 }
 a.flag {
     background: url(../images/button-sprite.png)  10px -94px no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+a.cancel {
+    background: url(../images/icons/slash.png) 10px center no-repeat #f3f3f3;
     padding-left: 30px;
 }
 a.up {
