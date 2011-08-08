@@ -8,7 +8,7 @@
 
 	<div class="box">
 		<h3>Übersicht aller Projekte</h3>
-		<table>
+		<table class="tableList paginated">
 		<thead>
 		<tr>
 			<th scope="col">Projekt</th>
@@ -25,7 +25,7 @@
 				<td><a href="<?=site_url('projects/detail/' . $project['id'])?>"><abbr title="<?=$project['description']?>"><?=$project['name']?></abbr></a></td>
 				<td><?=$project['firstname'] . " " . $project['lastname']?></td>
 				<td><span class="active">Erfolgreich abgeschlossen</span></td>
-				<td><a href="#">Ergebnisse anzeigen</a> | <a href="#">Entfernen</a></td>
+				<td><a href="#">Ergebnisse anzeigen</a> | <?=anchor('projects/delete/' . $project['id'], "Entfernen");?></td>
 			</tr>
 		<?
 			endforeach;
@@ -68,19 +68,6 @@
 		</tr>
 		</tbody>
 		</table>
-
-		<div class="pagination">
-			<ul>
-				<li class="pages">Seite:</li>
-				<li>1</li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li>...</li>
-				<li><a href="#">10</a></li>
-			</ul>
-		</div>
 	</div>
 
 </div>

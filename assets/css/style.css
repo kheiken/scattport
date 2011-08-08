@@ -255,6 +255,16 @@ li { margin-left: 20px;}
 .pagination ul li a {
 }
 
+.pagination ul li.clickable {
+    color: #0088cc;
+    cursor: pointer;
+}
+
+.pagination ul li.active {
+    color: #222;
+    cursor: default;
+}
+
 /* Footer */
 
 #footer {
@@ -412,34 +422,33 @@ ul.tabs {
 	padding: 0;
 	float: left;
 	list-style: none;
-	height: 32px; /*--Set height of tabs--*/
-	border-bottom: 1px solid #999;
-	border-left: 1px solid #999;
+	height: 27px; /*--Set height of tabs--*/
+	border-bottom: 1px solid #e8e8e8;
+	border-left: 1px solid #e8e8e8;
 	width: 100%;
 }
 ul.tabs li {
 	float: left;
 	margin: 0;
 	padding: 0;
-	height: 31px; /*--Subtract 1px from the height of the unordered list--*/
-	line-height: 31px; /*--Vertically aligns the text within the tab--*/
-	border: 1px solid #999;
+	height: 26px; /*--Subtract 1px from the height of the unordered list--*/
+	line-height: 26px; /*--Vertically aligns the text within the tab--*/
+	border: 1px solid #e8e8e8;
 	border-left: none;
 	margin-bottom: -1px; /*--Pull the list item down 1px--*/
 	overflow: hidden;
 	position: relative;
-	background: #e0e0e0;
+	background: #e0e0e0 url('../images/navigation-off.gif');
 }
 ul.tabs li a {
 	text-decoration: none;
 	color: #000;
 	display: block;
-	padding: 0 20px;
-	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
+	padding: 1px 21px;
 	outline: none;
 }
 ul.tabs li a:hover {
-	background: #ccc;
+	background: #f0f0f0;
 }
 html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
 	background: #fff;
@@ -447,7 +456,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 
 .tab_container {
-	border: 1px solid #999;
+	border: 1px solid #e8e8e8;
 	border-top: none;
 	overflow: hidden;
 	background: #fff;

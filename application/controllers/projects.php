@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Projects extends CI_Controller {
+class Projects extends MY_Controller {
 
 	/**
 	 * Constructor.
@@ -34,13 +34,20 @@ class Projects extends CI_Controller {
 		parent::__construct();
 		$this->load->model('project');
 		$this->load->model('trial');
-
-		// load language file
-		$this->lang->load(strtolower($this->router->class));
 	}
 
 	/**
-	 * Create a new project.
+	 * Shows a list of all projects.
+	 */
+	public function index() {
+		$projects = $this->project->getAll();
+
+		$tpl['projects'] = $projects;
+		$this->load->view('project/list', $tpl);
+	}
+
+	/**
+	 * Allows users to create a new project.
 	 */
 	public function create() {
 		$this->load->library('form_validation');
@@ -101,18 +108,16 @@ class Projects extends CI_Controller {
 		}
 	}
 
-	public function index() {
-		$projects = $this->project->getAll();
-
-		$tpl['projects'] = $projects;
-		$this->load->view('project/list', $tpl);
-	}
-
+	/**
+	 * Shows the project details
+	 *
+	 * @param integer $prj_id The ID of the project to show
+	 */
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
 		if (!$project) {
 			$this->messages->add('Das Projekt konnte nicht geladen werden.', 'error');
-			redirect('/projects/', 301);
+			redirect('projects', 301);
 		}
 
 		$this->session->set_userdata('active_project', $prj_id);
@@ -122,6 +127,18 @@ class Projects extends CI_Controller {
 		$tpl['trials'] = $trials;
 		$tpl['jobsDone'] = null;
 		$this->load->view('project/detail', $tpl);
+	}
+
+	/**
+	 * Allows users to delete a project.
+	 *
+	 * @param unknown_type $projectId
+	 */
+	public function delete($projectId) {
+		$this->project->delete($projectId);
+		$this->session->unset_userdata('active_project');
+		$this->messages->add("Das Projekt wurde gelöscht.", 'notice');
+		redirect('projects');
 	}
 
 }

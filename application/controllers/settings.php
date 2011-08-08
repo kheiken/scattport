@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Settings extends CI_Controller {
+class Settings extends MY_Controller {
 
 	/**
 	 * Constructor.
@@ -33,9 +33,6 @@ class Settings extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('program');
-
-		// load language file
-		$this->lang->load(strtolower($this->router->class));
 	}
 
 	/**

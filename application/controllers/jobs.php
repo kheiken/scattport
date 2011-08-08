@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Jobs extends CI_Controller {
+class Jobs extends MY_Controller {
 
 	/**
      * Constructor.
@@ -33,9 +33,6 @@ class Jobs extends CI_Controller {
     public function __construct() {
         parent::__construct();
 		$this->load->model('job');
-
-        // load language file
-        $this->lang->load(strtolower($this->router->class));
     }
 
 	/**
@@ -45,11 +42,11 @@ class Jobs extends CI_Controller {
 		$query = $this->db->order_by('progress', 'desc')
 			->get_where('jobs', array('started_by' => $this->session->userdata('user_id')));
 		$jobs = $query->result_array();
-		
+
 		for($i=0; $i<count($jobs); $i++) {
 			$jobs[$i]['project_name'] = $this->db->select('name')->get_where('projects', array('id' => $jobs[$i]['project_id']))->row()->name;
 			$progress = $jobs[$i]['progress'];
-			
+
 			switch($progress) {
 				case -1:
 					$progress = lang('waiting');
@@ -64,9 +61,9 @@ class Jobs extends CI_Controller {
 					$progress = $progress . "%";
 					break;
 			}
-			
+
 			$jobs[$i]['progress'] = $progress;
-		}		
+		}
 
 		$this->output
 			->set_content_type('application/json')

@@ -20,14 +20,13 @@
 <body>
 
 <div id="header">
-	<h1><a href="<?=base_url()?>"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
-	<div class="menu">Hallo <a href="#"><?=$this->user->profile()->firstname?> <?=$this->user->profile()->lastname?></a>! | <a href="#">Hilfe</a> | <a href="#">Einstellungen</a> | <a href="#">Logout</a></div>
-
+	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
+	<div class="menu">Hallo <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
 </div>
 
 <div id="wrapper">
 <div id="notifications"></div>
-	
+
 	<div id="sidebar">
 
 		<div class="title">
@@ -67,7 +66,7 @@
 ?>
 			</ul>
 		</div>
-		
+
 		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
