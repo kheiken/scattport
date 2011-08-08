@@ -46,4 +46,13 @@ class Ajax extends MY_Controller {
 		$tpl['messages'] = $this->messages->get();
 		$this->load->view('global/notifications', $tpl);
 	}
+
+	/**
+	 * Saves a projects description.
+	 */
+	public function save_project() {
+		$this->load->model('project');
+		$data['description'] = $this->input->post('content');
+		$this->project->update($this->session->userdata('active_project'), $data);
+	}
 }
