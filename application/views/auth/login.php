@@ -55,7 +55,6 @@
 
 			<p><a href="#">Passwort vergessen?</a></p>
 		</div>
-
-
+	</div>
 </body>
 </html>
