@@ -24,7 +24,7 @@
 
 /**
  * Configurations are used to store different variations of the same project.
- * 
+ *
  * @author Karsten Heiken <karsten@disposed.de>
  */
 class Project extends CI_Model {
@@ -35,8 +35,7 @@ class Project extends CI_Model {
 	 * @return array The user's projects.
 	 */
 	public function getOwn() {
-		// TODO: Session: $query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
-		$query = $this->db->where(array('owner' => '215cd70f310ae6ae'))
+		$query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
 		return $query->result_array();
@@ -65,7 +64,7 @@ class Project extends CI_Model {
 		$query = $this->db->where(array('public' => '1'))
 			->order_by('name', 'asc')
 			->get('projects');
-		
+
 		return $query->result_array();
 	}
 
@@ -79,10 +78,10 @@ class Project extends CI_Model {
 		$this->db->where('id', $project_id)->update('projects', array(
 			'lastaccess' => mysql_now(),
 		));
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * Get all projects from the database.
 	 */
@@ -90,8 +89,6 @@ class Project extends CI_Model {
 		$result = $this->db->select('projects.*, users.firstname AS `firstname`, users.lastname AS `lastname`')
 				->join('users', 'users.id = projects.owner', 'left')
 				->get('projects')->result_array();
-
-
 
 		return $result;
 	}
@@ -155,19 +152,33 @@ class Project extends CI_Model {
 		} while ($this->db->where('id', $data['id'])->from('projects')->count_all_results() > 0);
 
 
-		if($this->db->insert('projects', $data))
+		if ($this->db->insert('projects', $data)) {
 			return $data['id'];
-		else
+		} else {
 			return FALSE;
+		}
 	}
 
 	/**
-	 * Delete a project.
+	 * Updates a project.
+	 *
+	 * @param integer $projectId The ID of the project to update
+	 * @param array $data Array with data to update
+	 */
+	public function update($projectId, $data) {
+		return $this->db->where('id', $projectId)->update('projects', $data);
+	}
+
+	/**
+	 * Deletes a project.
 	 *
 	 * There is no security check in here to verify if the user has the
 	 * rights to do so. This needs to be done in the controller!
+	 *
+	 * @param integer $projectId The ID of the project to delete
 	 */
-	public function delete($project_id) {
-		return $this->db->delete('projects', array('id' => $project_id));
+	public function delete($projectId) {
+		return $this->db->delete('projects', array('id' => $projectId));
 	}
+
 }
