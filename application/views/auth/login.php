@@ -5,8 +5,7 @@
 
 <title>ScattPort | Login</title>
 
-<?=link_tag('assets/css/style.css');?>
-<?=link_tag('assets/css/table.css');?>
+<?=link_tag('assets/css/login.css');?>
 <?=link_tag('assets/css/form.css');?>
 
 <?=script_tag('assets/js/minmax.js');?>
@@ -16,50 +15,41 @@
 </head>
 <body>
 
-<div id="header">
-
-	<h1><a href="<?=base_url()?>"><img src="<?=site_url('assets/images/logo.gif')?>" /></a></h1>
-
-</div>
-
 <div id="wrapper">
 
-<?
-	if(isset($error))
-		foreach($error as $e) echo "<div class=\"error\">".$e."</div>";
-	if(isset($notice))
-		foreach($notice as $n) echo "<div class=\"notice\">".$n."</div>";
-	if(isset($success))
-	foreach($success as $s) echo "<div class=\"success\">".$s."</div>";
+<div id="box">
+  <h2>Scattport <span class="light">Login</span></h2>
+
+<p>
+<?php
+if (isset($error))
+  foreach($error as $e) echo "<div class=\"error\">".$e."</div>";
+if (isset($notice))
+  foreach($notice as $n) echo "<div class=\"notice\">".$n."</div>";
+if (isset($success))
+  foreach($success as $s) echo "<div class=\"success\">".$s."</div>";
 ?>
-	<div id="content">
+</p>
 
-	<div class="title">
-		<h2>Login</h2>
-	</div>
+  <form action="<?=site_url('auth/login')?>" method="post" name="loginform">
+    <ul>
+      <li>
+        <label>Benutzername</label>
+        <div><input type="text" name="username" class="text medium" /></div>
+      </li>
+      <li>
+        <label>Passwort</label>
+        <div><input type="password" name="password" class="text medium" /></div>
+      </li>
+      <li>
+        <div>
+          <input type="submit" class="button" name="login" value="Einloggen" />
+        </div>
+      </li>
+    </ul>
+  </form>
 
-	<div class="box">
-		<form action="<?=site_url('auth/login')?>" method="post" name="loginform">
-			<ul>
-				<li>
-					<h4>Benutzername</h4>
-					<input type="text" name="username" />
-				</li>
-				<li>
-					<h4>Passwort</h4>
-					<input type="password" name="password" />
-				</li>
-				<li>
-					<a href="#" onclick="document.forms.loginform.submit()" class="button big">Login</a>
-				</li>
-			</ul>
-		</form>
-	</div>
-	<div id="footer">
-		<span class="left"><a href="#">Dashboard</a> | <a href="#">Link</a> | <a href="#">Link</a> | <a href="#">Link</a></span>
-		<span class="right">© 2011 Karsten Heiken.</span>
-	</div>
-
+  <p><a href="#">Passwort vergessen?</a></p>
 </div>
 
 
