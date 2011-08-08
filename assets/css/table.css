@@ -41,6 +41,11 @@ table .even {
 table .hover {
     background: #f0f0f0;
 }
-/*table tbody tr:nth-child(even) {background: #fff}
-table tbody tr:nth-child(odd) {background: #f6f6f6}*/
+
+table tbody tr:nth-child(even) {
+    background: #fff;
+}
+table tbody tr:nth-child(odd) {
+    background: #f6f6f6;
+}
 
