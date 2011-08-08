@@ -20,13 +20,13 @@
 <body>
 
 <div id="header">
-	<h1><?=anchor('', img('assets/images/logo.gif'))?></h1>
+	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
 	<div class="menu">Hallo <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
 </div>
 
 <div id="wrapper">
 <div id="notifications"></div>
-	
+
 	<div id="sidebar">
 
 		<div class="title">
@@ -66,7 +66,7 @@
 ?>
 			</ul>
 		</div>
-		
+
 		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
