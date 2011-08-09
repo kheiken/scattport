@@ -15,7 +15,7 @@
 				<li>
 					<h4>Projektname <span class="req">*</span></h4>
 					<div>
-						<input type="text" name="name" class="short text" tabindex="1" value="<?=set_value('name') == null ? $this->input->post('name') : set_value('name');?>">
+						<input type="text" name="name" class="short text" tabindex="1" value="<?=set_value('name') == '' ? $this->input->post('name') : set_value('name');?>">
 						<?=form_error('name')?>
 					</div>
 				</li>
@@ -23,7 +23,7 @@
 					<h4>Beschreibung</h4>
 					<label class="note">Eine Beschreibung ist hilfreich, wenn Sie dieses Projekt später für andere Mitarbeiter freigeben möchten.</label>
 					<div>
-						<textarea name="description" rows="6" cols="60" tabindex="2" class="textarea"><?=set_value('description') == null ? $this->input->post('description') : set_value('description');?></textarea>
+						<textarea name="description" rows="6" cols="60" tabindex="2" class="textarea"><?=set_value('description') == '' ? $this->input->post('description') : set_value('description');?></textarea>
 						<?=form_error('description')?>
 					</div>
 				</li>

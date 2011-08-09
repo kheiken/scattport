@@ -77,26 +77,28 @@ class Projects extends MY_Controller {
 
 		$this->form_validation->set_rules($config);
 
-		$config = array();
-		$config['upload_path'] = '/tmp';
-		$config['allowed_types'] = 'zip';
-		$config['max_size']	= '1024';
-		$config['file_name'] = 'defaultmodel';
+		if (count($_POST) > 0) {
+			$config = array();
+			$config['upload_path'] = '/tmp';
+			$config['allowed_types'] = 'txt';
+			$config['max_size']	= '1024';
+			$config['file_name'] = 'defaultmodel';
 
-		$this->upload->initialize($config);
-		$modelUploaded = $this->upload->do_upload('defaultmodel');
-		$modelData = $this->upload->data();
+			$this->upload->initialize($config);
+			$modelUploaded = $this->upload->do_upload('defaultmodel');
+			$modelData = $this->upload->data();
 
-		$config['file_name'] = 'defaultconfig';
+			$config['file_name'] = 'defaultconfig';
 
-		$this->upload->initialize($config);
-		$configUploaded = $this->upload->do_upload('defaultconfig');
-		$configData = $this->upload->data();
+			$this->upload->initialize($config);
+			$configUploaded = $this->upload->do_upload('defaultconfig');
+			$configData = $this->upload->data();
+		}
 
 		// run form validation
-		if ($this->form_validation->run() == false || $modelUploaded == false || $configUploaded == false) {
-			$data['model']['success'] = $modelUploaded;
-			$data['config']['success'] = $configUploaded;
+		if ($this->form_validation->run() == false) {
+			$data['model']['success'] = isset($modelUploaded) && $modelUploaded ? true : false;
+			$data['config']['success'] = isset($configUploaded) && $configUploaded ? true: false;
 
 			$this->load->view('project/new', $data);
 		} else {
@@ -122,8 +124,12 @@ class Projects extends MY_Controller {
 					chmod($projectpath, 0777);
 				}
 
-				copy($modelData['full_path'], $projectpath . $modelData['file_name']);
-				copy($configData['full_path'], $projectpath . $configData['file_name']);
+				if ($modelUploaded) {
+					copy($modelData['full_path'], $projectpath . $modelData['file_name']);
+				}
+				if ($configUploaded) {
+					copy($configData['full_path'], $projectpath . $configData['file_name']);
+				}
 
 				$this->messages->add($projectpath, 'notice');
 				redirect('/projects/detail/' . $data['project_id'], 301);
