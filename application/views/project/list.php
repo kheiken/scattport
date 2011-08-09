@@ -8,7 +8,7 @@
 
 	<div class="box">
 		<h3>Übersicht aller Projekte</h3>
-		<table class="tableList paginated">
+		<table class="tableList paginated sortable">
 			<thead>
 				<tr>
 					<th scope="col">Projekt</th>

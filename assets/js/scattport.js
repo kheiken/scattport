@@ -117,7 +117,7 @@ $(document).ready(function() {
 	 */
 	$('.paginated').each(function() {
 		var currentPage = 0;
-		var numPerPage = 6;
+		var numPerPage = 10;
 		var table = $(this);
 
 		table.bind('repaginate', function() {
@@ -149,6 +149,8 @@ $(document).ready(function() {
 
 		table.trigger('repaginate');
 	});
+
+	$('.sortable').tableDnD();
 
 	/*
 	 * In-place editor
