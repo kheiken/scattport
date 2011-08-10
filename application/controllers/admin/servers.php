@@ -42,7 +42,7 @@ class Servers extends CI_Controller {
 	 * List all servers.
 	 */
 	function index() {
-		$tpl->servers = $this->server->get()->all;
+		$tpl->servers = $this->server->getAll();
 
 		$this->load->view('admin/server/list', $tpl);
 	}
