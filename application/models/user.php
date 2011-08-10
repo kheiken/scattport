@@ -14,6 +14,9 @@ class User extends CI_Model {
 	 */
 	public $forgottenPasswordCode;
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		parent::__construct();
 		$this->load->config('auth', true);
@@ -314,6 +317,15 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Gets all users.
+	 *
+	 * @return array
+	 */
+	public function getAll() {
+		return $this->get()->result_array();
+	}
+
+	/**
 	 * Returns the number of users.
 	 *
 	 * @return integer The number of users
@@ -427,7 +439,7 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * delete
+	 * Deletes the specified user.
 	 *
 	 * @return boolean
 	 */

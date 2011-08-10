@@ -21,7 +21,7 @@
 	<div class="box">
 		<h3><?=lang('administration');?></h3>
 		<p>
-			<a class="button left big" href="#"><?=lang('servers_manage');?></a><a class="button middle big" href="#"><?=lang('programs_manage');?></a><a class="button right big" href="#"><?=lang('users_manage');?></a>
+			<a class="button left big" href="#"><?=lang('servers_manage');?></a><a class="button middle big" href="#"><?=lang('programs_manage');?></a><a class="button right big" href="<?=site_url('users');?>"><?=lang('users_manage');?></a>
 		</p>
 	</div>
 
