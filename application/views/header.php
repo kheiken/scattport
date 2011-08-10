@@ -59,9 +59,14 @@
 						<li><a href="<?=site_url('/projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
 					</ul>
 				</li>
+			</ul>
+		</div>
+
 <?
 	if($this->session->userdata('group') == 'admins'):
 ?>
+		<div class="navigation">
+			<ul>
 				<li>Administration
 					<ul>
 						<li><a href="<?=site_url('servers')?>" title="Manage servers">Calculation servers</a></li>
@@ -70,12 +75,11 @@
 						<li><a href="<?=site_url('users')?>" title="Manage users">Users</a></li>
 					</ul>
 				</li>
+			</ul>
+		</div>
 <?
 	endif;
 ?>
-			</ul>
-		</div>
-
 		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
