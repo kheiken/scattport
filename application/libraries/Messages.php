@@ -8,18 +8,22 @@
  * See the enclosed file COPYING for license information (LGPL).  If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * @author  Vijay Mahrra & Sheikh Ahmed <webmaster@designbyfail.com>
- * @url http://www.designbyfail.com/
+ * @author Vijay Mahrra & Sheikh Ahmed <webmaster@designbyfail.com>
+ * @author Eike Foken <kontakt@eikefoken>
+ * @link http://www.designbyfail.com/
  * @version 1.0
  */
+class Messages {
 
-class Messages
-{
 	var $_ci;
 	var $_types = array('success', 'error', 'notice');
 
-	function Messages($params = array())
-	{
+	/**
+	 * Constructor.
+	 *
+	 * @param array $params
+	 */
+	public function __construct($params = array()) {
 		$this->_ci =& get_instance();
 		$this->_ci->load->library('session');
 		// check if theres already messages, if not, initialise the messages array in the session
@@ -29,9 +33,10 @@ class Messages
 		}
 	}
 
-	// clear all messages
-	function clear()
-	{
+	/**
+	 * Clears all messages
+	 */
+	public function clear() {
 		$messages = array();
 		foreach ($this->_types as $type) {
 			$messages[$type] = array();
@@ -39,9 +44,10 @@ class Messages
 		$this->_ci->session->set_userdata('messages', $messages);
 	}
 
-	// add a message, default type is message
-	function add($message, $type = 'message')
-	{
+	/**
+	 * Adds a message (default type is 'notice').
+	 */
+	public function add($message, $type = 'notice') {
 		$messages = $this->_ci->session->userdata('messages');
 		// handle PEAR errors gracefully
 		if (is_a($message, 'PEAR_Error')) {
@@ -49,7 +55,7 @@ class Messages
 			$type = 'error';
 		} else if (!in_array($type, $this->_types)) {
 			// set the type to message if the user specified a type that's unknown
-			$type = 'message';
+			$type = 'notice';
 		}
 		// don't repeat messages!
 		if (!in_array($message, $messages[$type]) && is_string($message)) {
@@ -58,9 +64,13 @@ class Messages
 		$messages = $this->_ci->session->set_userdata('messages', $messages);
 	}
 
-	// return messages of given type or all types, return false if none
-	function sum($type = null)
-	{
+	/**
+	 * Returns messages of given type or all types, return false if none.
+	 *
+	 * @param string $type
+	 * @return boolean|integer
+	 */
+	public function sum($type = null) {
 		$messages = $this->_ci->session->userdata('messages');
 		if (!empty($type)) {
 			$i = count($messages[$type]);
@@ -70,12 +80,16 @@ class Messages
 		foreach ($this->_types as $type) {
 			$i += count($messages[$type]);
 		}
-		return $i;
+		return $i > 0 ? $i : false;
 	}
 
-	// return messages of given type or all types, return false if none, clearing stack
-	function get($type = null)
-	{
+	/**
+	 * Returns messages of given type or all types, return false if none, clearing stack.
+	 *
+	 * @param string $type
+	 * @return mixed
+	 */
+	public function get($type = null) {
 		$messages = $this->_ci->session->userdata('messages');
 		if (!empty($type)) {
 			if (count($messages[$type]) == 0) {
@@ -101,3 +115,6 @@ class Messages
 		return $return;
 	}
 }
+
+/* End of file Messages.php */
+/* Location: ./application/libraries/Messages.php */
