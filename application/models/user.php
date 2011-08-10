@@ -82,7 +82,7 @@ class User extends CI_Model {
 	 * @return string
 	 */
 	private function salt() {
-		return substr(md5(uniqid(rand(), true)), 0, $this->saltLength);
+		return substr(sha1(uniqid(rand(), true)), 0, $this->saltLength);
 	}
 
 	/**
@@ -211,32 +211,37 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * register
+	 * Registers a new user.
 	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param string $email
+	 * @param array $additionalData
+	 * @param string $groupName
 	 * @return boolean
 	 */
-	public function register($username, $password, $email, $additionalData = false, $groupName = false) {
+	public function register($username, $password, $email, $additionalData = array(), $groupName = '') {
 		if ($this->checkUsername($username)) {
 			$this->access->setError('account_creation_duplicate_username');
 			return false;
 		}
+		print_r($additionalData);
 
 		// if a groupID was passed, use it
-		if (isset($additional_data['group_id'])) {
-			$groupID = $additional_data['group_id'];
-			unset($additional_data['group_id']);
+		if (isset($additionalData['group_id'])) {
+			$groupID = $additionalData['group_id'];
+			unset($additionalData['group_id']);
 		} else { // otherwise get default groupID
-			$groupName = !$groupName ? 'users' : $groupName;
+			$groupName = ($groupName == '') ? 'users' : $groupName;
 			$groupID = $this->db->select('id')->where('name', $groupName)->get('groups')->row()->id;
 		}
 
-		// IP Address
-		$ipAddress = $this->input->ip_address();
 		$salt = $this->storeSalt ? $this->salt() : false;
 		$password = $this->hashPassword($password, $salt);
 
-		// Users table.
+		// users table
 		$data = array(
+			'id' => random_hash(16),
 			'username' => $username,
 			'password' => $password,
 			'email' => $email,
@@ -247,11 +252,11 @@ class User extends CI_Model {
 		if ($this->storeSalt) {
 			$data['salt'] = $salt;
 		}
+		print_r($data);
 
-		$this->db->insert('users', $data);
-		$id = $this->db->insert_id();
+		$this->db->insert('users', array_merge($data, $additionalData));
 
-		return $this->db->affected_rows() > 0 ? $id : false;
+		return $this->db->affected_rows() > 0 ? $data['id'] : false;
 	}
 
 	/**
@@ -340,20 +345,19 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * getUserByID
+	 * Gets a user by ID.
 	 *
-	 * @return object
+	 * @return array
 	 */
 	public function getUserByID($id = false) {
-		// if no ID was passed use the current users ID
 		if (empty($id)) {
-			$id = $this->session->userdata('user_id');
+			return false;
 		}
 
 		$this->db->where('users.id', $id);
 		$this->db->limit(1);
 
-		return $this->get();
+		return $this->get()->row_array();
 	}
 
 	/**
@@ -411,11 +415,11 @@ class User extends CI_Model {
 	 * @return boolean
 	 */
 	public function update($id, $data) {
-		$user = $this->getUserByID($id)->row();
+		$user = $this->getUserByID($id);
 
 		$this->db->trans_begin();
 
-		if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user->username !== $data['username']) {
+		if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user['username'] !== $data['username']) {
 			$this->db->trans_rollback();
 			$this->access->setError('account_creation_duplicate_username');
 			return false;
@@ -423,7 +427,7 @@ class User extends CI_Model {
 
 		if (array_key_exists('username', $data) || array_key_exists('password', $data) || array_key_exists('email', $data)) {
 			if (array_key_exists('password', $data)) {
-				$data['password'] = $this->hashPassword($data['password'], $user->salt);
+				$data['password'] = $this->hashPassword($data['password'], $user['salt']);
 			}
 
 			$this->db->update('users', $data, array('id' => $id));
@@ -518,16 +522,16 @@ class User extends CI_Model {
 			return false;
 		}
 
-		$user = $this->getUserByID($id)->row();
+		$user = $this->getUserByID($id);
 
-		$salt = sha1($user->password);
+		$salt = sha1($user['password']);
 
 		$this->db->update('users', array('remember_code' => $salt), array('id' => $id));
 
 		if ($this->db->affected_rows() > -1) {
 			set_cookie(array(
 				'name' => 'username',
-				'value' => $user->username,
+				'value' => $user['username'],
 				'expire' => $this->config->item('user_expire', 'auth'),
 			));
 			set_cookie(array(
