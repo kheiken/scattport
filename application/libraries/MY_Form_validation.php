@@ -12,6 +12,9 @@ class MY_Form_validation extends CI_Form_validation {
      */
     public function __construct() {
         parent::__construct();
+
+        // overwrite default error delimiters
+        $this->set_error_delimiters('<p class="error">', '</p>');
     }
 
     /**
