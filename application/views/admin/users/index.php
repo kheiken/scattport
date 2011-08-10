@@ -22,7 +22,7 @@ foreach ($users as $user):
 				<tr>
 					<td><?=$user['username'];?></td>
 					<td><?=$user['firstname'];?> <?=$user['lastname'];?></td>
-					<td><?=anchor('users/edit/' . $user['id'], lang('user_edit'));?> | <?=anchor('users/delete/' . $user['id'], lang('user_delete'));?></td>
+					<td><?=anchor('users/edit/' . $user['id'], lang('user_edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('users/delete/' . $user['id']);?>');" title="User"><?=lang('user_delete');?></a></td>
 				</tr>
 <?php
 endforeach;

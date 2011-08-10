@@ -1,5 +1,5 @@
 /**
- *
+ * Gets the queued notifications.
  */
 function getNotifications() {
 	$.get(SITE_URL + 'ajax/get_notifications', function(data) {
@@ -7,6 +7,19 @@ function getNotifications() {
 			$('#notifications').append(data).slideDown();
 		}
 	});
+}
+
+/**
+ * Asks the user if he is sure to delete an item.
+ *
+ * @param url
+ */
+function deleteConfirm(url) {
+	var answer = confirm('Are you sure?');
+
+	if (answer) {
+		window.location = url;
+	}
 }
 
 /**

@@ -156,12 +156,14 @@ class Users extends MY_Controller {
 	 * @param integer $id
 	 */
 	public function delete($id = '') {
-		if (!is_array($this->user->getUserByID())) {
-			show_404();
-		}
+		$user = $this->user->getUserByID($id);
 
-		$this->user->delete($id);
-		$this->messages->add('The selected user was deleted', 'success');
-		redirect('users', 200);
+		if (!isset($user) || !is_array($user) || !isset($user['id'])) {
+			show_404();
+		} else {
+			$this->user->delete($user['id']);
+			$this->messages->add('The selected user was deleted', 'success');
+			redirect('users', 200);
+		}
 	}
 }
