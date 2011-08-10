@@ -64,7 +64,10 @@
 ?>
 				<li>Administration
 					<ul>
-						<li><a href="<?=site_url('/servers/')?>" title="Berechnungsserver verwalten">Berechnungsserver</a></li>
+						<li><a href="<?=site_url('servers')?>" title="Manage servers">Calculation servers</a></li>
+					</ul>
+					<ul>
+						<li><a href="<?=site_url('users')?>" title="Manage users">Users</a></li>
 					</ul>
 				</li>
 <?
