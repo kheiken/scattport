@@ -7,11 +7,47 @@
  */
 class MY_Lang extends CI_Lang {
 
+	var $_gettext_language;
+	var $_gettext_domain;
+	var $_gettext_path;
+
 	/**
 	 * Calls the parent constructor.
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->_gettext_domain = 'lang';
+		log_message('debug', "Gettext Class Initialized");
+
+		$this->load_gettext();
+	}
+
+	/**
+	 * This method overides the original load method. It's duty is loading the
+	 * domain files by config or by default internal settings.
+	 *
+	 * @param string $user_lang
+	 */
+	public function load_gettext($user_lang = false) {
+		if ($user_lang) {
+			$this->_gettext_language = $user_lang;
+		} else {
+			$this->_gettext_language = 'en_EN';
+		}
+		log_message('debug', 'The gettext language was set by parameter: ' . $this->_gettext_language);
+
+		putenv("LANG=$this->_gettext_language");
+		setlocale(LC_ALL, $this->_gettext_language);
+
+		// set the path of .po files
+		$this->_gettext_path = APPPATH . 'language/locale';
+		log_message('debug', 'Gettext Class path chosen is: ' . $this->_gettext_path);
+
+		bindtextdomain($this->_gettext_domain, $this->_gettext_path);
+		textdomain($this->_gettext_domain);
+		log_message('debug', 'The gettext domain chosen is: '. $this->_gettext_domain);
+
+		return  true;
 	}
 
 	/**
