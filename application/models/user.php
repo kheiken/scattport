@@ -350,9 +350,8 @@ class User extends CI_Model {
 	 * @return array
 	 */
 	public function getUserByID($id = false) {
-		// if no ID was passed use the current users ID
 		if (empty($id)) {
-			$id = $this->session->userdata('user_id');
+			return false;
 		}
 
 		$this->db->where('users.id', $id);
