@@ -55,11 +55,11 @@ input.medium { width: 45%;}
 input.long { width:70%;}
 input.max { width: 95%;}
 
-.success {
+p.success {
 	color: #008000;
 }
 
-.error, .req {
+p.error, p.req {
 	color: #d8122d;
 	font-weight: normal;
 }
