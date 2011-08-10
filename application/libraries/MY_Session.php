@@ -47,6 +47,12 @@ class MY_Session extends CI_Session {
      * Updates an existing session.
      */
     public function sess_update() {
+    	// skip the session update in case of an ajax call
+    	if ($this->CI->input->is_ajax_request()) {
+    		return;
+    	}
+
+    	// we only update the session every five minutes by default
         if ($this->userdata['last_activity'] + $this->sess_time_to_update >= $this->now) {
             return;
         }
