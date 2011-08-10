@@ -173,4 +173,11 @@ $(document).ready(function() {
 	}).mouseout(function() {
 		$(this).removeClass('editable');
 	});
+
+	$('select[name="activeProject"]').bind('change', function () {
+		var url = $(this).val();
+		if (url) {
+			window.location = url;
+		}
+	});
 });

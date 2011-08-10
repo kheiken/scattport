@@ -75,6 +75,12 @@ li { margin-left: 20px;}
 	text-decoration: none;
 }
 
+#header .status {
+	float: left;
+	line-height: 45px;
+	padding: 12px 20px;
+}
+
 #header .menu {
 	float: right;
 	line-height: 45px;

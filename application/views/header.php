@@ -16,12 +16,17 @@
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
 </script>
-
 </head>
 <body>
 
 <div id="header">
 	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
+	<div class="status">
+		<select name="activeProject">
+			<option value="<?=site_url('');?>">Beispielprojekt</option>
+			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
+		</select>
+	</div>
 	<div class="menu">Hallo <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
 </div>
 
