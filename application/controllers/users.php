@@ -67,7 +67,7 @@ class Users extends MY_Controller {
 			array(
 				'field' => 'phone',
 				'label' => 'lang:field_phone',
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\w\d{2,4}\w\d{3,10}+$/i]',
+				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
 		$this->form_validation->set_rules($config);
@@ -127,7 +127,7 @@ class Users extends MY_Controller {
 			array(
 				'field' => 'phone',
 				'label' => 'lang:field_phone',
-				//'rules' => 'trim|regex_match[/^\+\d{2,4}\w\d{2,4}\w\d{3,10}+$/i]',
+				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
 		$this->form_validation->set_rules($config);
