@@ -49,13 +49,13 @@ class Jobs extends CI_Controller {
 
 			switch($progress) {
 				case -1:
-					$progress = lang('waiting');
+					$progress = _('waiting');
 					break;
 				case -2:
-					$progress = lang('failed');
+					$progress = _('failed');
 					break;
 				case 100:
-					$progress = lang('done');
+					$progress = _('done');
 					break;
 				default:
 					$progress = $progress . "%";
