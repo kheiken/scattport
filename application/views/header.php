@@ -3,7 +3,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<title>ScattPort | Dashboard</title>
+<title>ScattPort</title>
 
 <?=link_tag('assets/css/style.css');?>
 <?=link_tag('assets/css/table.css');?>
@@ -27,7 +27,7 @@
 			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
 		</select>
 	</div>
-	<div class="menu">Hallo <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#">Hilfe</a> | <?=anchor('settings', "Einstellungen");?> | <?=anchor('auth/logout', "Logout");?></div>
+	<div class="menu"><?=_('Hello');?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <?=anchor('', _('Help'));?> | <?=anchor('settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">
