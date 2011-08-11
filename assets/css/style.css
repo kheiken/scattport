@@ -21,38 +21,46 @@ p { margin: 0px 0px 20px 0px; line-height: 18px;}
 ul { margin: 5px 0px 15px 0px; padding: 0px;}
 li { margin-left: 20px;}
 
-div.notice {
-	margin: 0 0 15px;
-	padding: 0 10px;
-	background: #fffbcc;
-	border: 1px solid #e6db55;
-	line-height: 25px;
-	color: #222;
-}
-
-div.success {
-	margin: 0 0 15px;
-	padding: 0 10px;
-	background: #d1ecb8;
-	border: 1px solid #81c445;
-	line-height: 25px;
-	color: #222;
-}
-
-div.error {
-	margin: 0 0 15px;
-	padding: 0 10px;
-	background: #ffebe8;
-	border: 1px solid #f0baa2;
-	line-height: 25px;
-	color: #222;
-}
-
 .editable {
     background: #fffbcc;
 }
 
 .clear { clear:both;}
+
+/* Notifications */
+
+#notifications div {
+	margin: 0 0 15px;
+	padding: 0 10px;
+	line-height: 25px;
+	color: #222;
+}
+
+#notifications div a.cross {
+	float: right;
+	background: url(../images/icons/cross-small.png) right center no-repeat;
+	width: 16px;
+	height: 25px;
+}
+
+#notifications div a.cross span {
+	display: none;
+}
+
+div.notice {
+	background: #fffbcc;
+	border: 1px solid #e6db55;
+}
+
+div.success {
+	background: #d1ecb8;
+	border: 1px solid #81c445;
+}
+
+div.error {
+	background: #ffebe8;
+	border: 1px solid #f0baa2;
+}
 
 /* Header */
 
