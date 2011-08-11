@@ -24,12 +24,15 @@
 		<h2>Scattport <span class="light"><?=_('Login');?></span></h2>
 
 <?php
-	if (isset($error))
-		foreach ($error as $e)
-			echo "<p class=\"error\">" . $e . "</p>";
-	if (isset($notice))
-		foreach ($notice as $n)
-			echo "<p class=\"notice\">" . $n . "</p>";
+	if (isset($errors)) {
+		foreach ($errors as $e) {
+			echo "<p class=\"error\"><strong>" . _('Error') . ":</strong> " . $e . "</p>";
+		}
+	} else if (isset($messages) && is_array($messages)) {
+		foreach ($messages as $m) {
+			echo "<p class=\"success\"><strong>" . _('Success') . ":</strong> " . $m . "</p>";
+		}
+	}
 ?>
 		<form action="<?= site_url('auth/login') ?>" method="post" name="loginform">
 			<ul>
@@ -45,6 +48,12 @@
 					<div>
 						<input type="password" name="password" id="password" class="text max" />
 						<?=form_error('password');?>
+					</div>
+				</li>
+				<li>
+					<div>
+						<input type="checkbox" name="remember" id="remember" class="radio" value="1"<?=set_checkbox('remember', 1);?> />
+						<label for="remember" class="choice"><?=_('Remember me on this computer')?></label>
 					</div>
 				</li>
 				<li>

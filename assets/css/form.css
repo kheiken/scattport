@@ -63,3 +63,7 @@ p.error, p.req {
 	color: #d8122d;
 	font-weight: normal;
 }
+
+p.success strong, p.error strong, p.req strong {
+	text-transform: uppercase;
+}

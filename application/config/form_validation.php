@@ -1,6 +1,42 @@
 <?php defined('BASEPATH') || exit("No direct script access allowed");
 
 /**
+ * Rules for login page.
+ *
+ * @var array
+ */
+$config['auth/login'] = array(
+	array(
+		'field' => 'username',
+		'label' => _('Username'),
+		'rules' => 'required|trim',
+	),
+	array(
+		'field' => 'password',
+		'label' => _('Password'),
+		'rules' => 'required|trim',
+	),
+	array(
+		'field' => 'remember',
+		'label' => _('Remember me on this computer'),
+		'rules' => 'integer',
+	),
+);
+
+/**
+ * Rules for forgotten password page.
+ *
+ * @var array
+ */
+$config['auth/forgot_password'] = array(
+	array(
+		'field' => 'email',
+		'label' => _('Email address'),
+		'rules' => 'required|valid_email|trim',
+	),
+);
+
+/**
  * Rules for creating users.
  *
  * @var array
@@ -24,6 +60,7 @@ $config['users/create'] = array(
 	array(
 		'field' => 'password_confirm',
 		'label' => _('Confirm password'),
+		'rules' => 'required',
 	),
 	array(
 		'field' => 'firstname',
@@ -44,7 +81,7 @@ $config['users/create'] = array(
 		'field' => 'phone',
 		'label' => _('Phone number'),
 		'rules' => 'regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]|trim',
-	)
+	),
 );
 
 /**
@@ -77,7 +114,7 @@ $config['users/edit'] = array(
 		'field' => 'phone',
 		'label' => _('Phone number'),
 		'rules' => 'regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]|trim',
-	)
+	),
 );
 
 /**
@@ -110,7 +147,7 @@ $config['settings/index'] = array(
 			'field' => 'phone',
 			'label' => _('Phone number'),
 			'rules' => 'regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]|trim',
-	)
+	),
 );
 
 /* End of file form_validation.php */
