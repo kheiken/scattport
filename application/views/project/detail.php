@@ -3,21 +3,21 @@
 <div id="content">
 
 	<div class="title">
-		<h2>Projektinformationen</h2>
+		<h2><?= _('Project details') ?></h2>
 	</div>
 
 	<div class="box">
-		<h3>Beschreibung</h3>
+		<h3><?= _('Description') ?></h3>
 		<div class="editInPlace"><?=nl2br($project['description']);?></div>
 		<p></p>
 
-		<h3>Versuche</h3>
+		<h3><?= _('Trials') ?></h3>
 		<table class="tableList">
 			<thead>
 				<tr>
-					<th scope="col">Versuch</th>
-					<th scope="col">Berechnungen</th>
-					<th scope="col">Aktionen</th>
+					<th scope="col"><?= _('Trial') ?></th>
+					<th scope="col"><?= _('Jobs') ?></th>
+					<th scope="col"><?= _('Actions') ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,19 +26,19 @@
 		foreach($trials as $trial):
 ?>
 				<tr>
-					<td><a href="<?=site_url('trials/'.$trial['id'])?>"title="Versuch &quot;<?=$trial['name']?>&quot; anzeigen"><?=$trial['name']?></a></td>
-					<td><span class="active">Erfolgreich abgeschlossen</span></td>
+					<td><a href="<?=site_url('trials/'.$trial['id'])?>"title="<?= sprintf(_('Show trial &quot;%s&quot'), $trial['name'])?>"><?=$trial['name']?></a></td>
+					<td><span class="active"><?= _('Completed') ?></span></td>
 					<td>
-						<a href="<?=site_url('trials/results/'.$trial['id'])?>" title="Ergebnisse zum Versuch &quot;<?=$trial['name']?>&quot; anzeigen">Ergebnisse anzeigen</a> |
-						<a href="<?=site_url('trials/edit/'.$trial['id'])?>" title="Versuch &quot;<?=$trial['name']?>&quot; bearbeiten">Bearbeiten</a> |
-						<a href="<?=site_url('trials/delete/'.$trial['id'])?>" title="Versuch &quot;<?=$trial['name']?>&quot; entfernen">Entfernen</a></td>
+						<a href="<?=site_url('trials/results/'.$trial['id'])?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot'), $trial['name'])?>"><?= _('Show results') ?></a> |
+						<a href="<?=site_url('trials/edit/'.$trial['id'])?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $trial['name']) ?>"><?= _('Edit') ?></a> |
+						<a href="<?=site_url('trials/delete/'.$trial['id'])?>" title="<?= sprintf(_('Delete trial &quot;%s&quot;'), $trial['name']) ?>"><?= _('Delete') ?></a></td>
 				</tr>
 <?
 		endforeach;
 	else:
 ?>
 				<tr>
-					<td colspan="3">Keine Versuche vorhanden.</td>
+					<td colspan="3"><?= _('No trials available.') ?></td>
 				</tr>
 <?
 	endif;
@@ -46,20 +46,20 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('trials/create/'.$project['id'])?>">Neuen Versuch erstellen</a>
+		<p><a class="button add" href="<?=site_url('trials/create/'.$project['id'])?>"><?= _('Create a new trial') ?></a>
 	</div>
 
 	<div class="title">
-		<h2>Letzte Berechnungen</h2>
+		<h2><?= _('Recent jobs') ?></h2>
 	</div>
 
 	<div class="box">
 		<table class="tableList">
 			<thead>
 				<tr>
-					<th scope="col">Versuch</th>
-					<th scope="col">Fertiggestellt</th>
-					<th scope="col">Aktionen</th>
+					<th scope="col"><?= _('Trial') ?></th>
+					<th scope="col"><?= _('Finished') ?></th>
+					<th scope="col"><?= _('Actions') ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -71,15 +71,15 @@
 					<td>Versuchsname</td>
 					<td>Heute, 09:32</td>
 					<td>
-						<a href="<?=site_url('trials/results/'.$trial['id'])?>" title="Ergebnisse zum Versuch &quot;<?=$trial['name']?>&quot; anzeigen">Ergebnisse anzeigen</a> |
-						<a href="<?=site_url('trials/edit/'.$trial['id'])?>" title="Versuch &quot;<?=$trial['name']?>&quot; bearbeiten">Bearbeiten</a></td>
+						<a href="<?=site_url('trials/results/'.$trial['id'])?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot'), $trial['name'])?>"><?= _('Show results') ?></a> |
+						<a href="<?=site_url('trials/edit/'.$trial['id'])?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $trial['name']) ?>"><?= _('Edit') ?></td>
 				</tr>
 <?
 		endforeach;
 	else:
 ?>
 				<tr>
-					<td colspan="3">Es wurden noch keine Berechnungen durchgeführt.</td>
+					<td colspan="3"><?= _('No jobs found.') ?></td>
 				</tr>
 <?
 	endif;

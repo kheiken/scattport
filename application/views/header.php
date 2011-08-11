@@ -27,7 +27,7 @@
 			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
 		</select>
 	</div>
-	<div class="menu"><?=_('Hello');?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <?=anchor('', _('Help'));?> | <?=anchor('settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
+	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">
@@ -36,7 +36,7 @@
 	<div id="sidebar">
 
 		<div class="title">
-			<h2>Aktionen</h2>
+			<h2><?=_('Actions')?></h2>
 		</div>
 		<div class="navigation">
 			<ul>
@@ -44,30 +44,30 @@
 	if($this->session->userdata('active_project')):
 		$active_project = $this->project->getById($this->session->userdata('active_project'));
 ?>
-				<li>Projekt <?=$active_project['name']?>
+				<li><?=_('Project')?> <?=$active_project['name']?>
 					<ul>
-						<li><a href="<?=site_url('projects/detail'.$active_project['id'])?>" title="Projektübersicht öffnen">Übersicht</a></li>
-						<li><a href="<?=site_url('trials/create'.$active_project['id'])?>" title="Neuen Versuch für das Projekt &quot;<?=$active_project['name']?>&quot; anlegen">Neuer Versuch</a></li>
-						<li><a href="<?=site_url('results/project'.$active_project['id'])?>" title="Alle Ergebnisse für das Projekt &quot;<?=$active_project['name']?>&quot; öffnen">Ergebnisse</a></li>
+						<li><a href="<?=site_url('projects/detail'.$active_project['id'])?>" title="<?=_('Show overview')?>"><?=_('Overview')?></a></li>
+						<li><a href="<?=site_url('trials/create'.$active_project['id'])?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
+						<li><a href="<?=site_url('results/project'.$active_project['id'])?>" title="Show results for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
 					</ul>
 				</li>
 <?
 	endif;
 ?>
-				<li>Global
+				<li><?=_('Global')?>
 					<ul>
-						<li><a href="<?=site_url('projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
+						<li><a href="<?=site_url('projects/create')?>" title="<?=_('Create a new project')?>"><?=_('New project')?></a></li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 
 		<div class="title">
-			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
+			<h2><a href="<?=site_url('projects')?>" title="<?=_('Show all projects')?>"><?=_('Projects')?></a></h2>
 		</div>
 		<div class="navigation">
 			<ul>
-				<li><a href="#">Eigene Projekte</a>
+				<li><a href="#"><?=_('Own projects')?></a>
 					<ul>
 <?
 	$projects = $this->project->getOwn();
@@ -79,12 +79,12 @@
 ?>
 					</ul>
 				</li>
-				<li><a href="#">Freigegebene Projekte</a>
+				<li><a href="#"><?=_('Projects shared with me')?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
-				<li><a href="#">Öffentliche Projekte</a>
+				<li><a href="#"><?=_('Public projects')?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
 					</ul>
@@ -93,7 +93,7 @@
 		</div>
 
 		<div class="title">
-			<h2>Suche</h2>
+			<h2><?=_('Search')?></h2>
 		</div>
 
 		<div class="box">
@@ -104,14 +104,14 @@
 		</div>
 
 		<div class="title">
-			<h2>Ereignisse</h2>
+			<h2><?=_('Recent events')?></h2>
 		</div>
 
 		<div class="box">
 			<ul id="blog">
-				<li><h4><a href="#" title="Berechnung fertig">Berechnung fertig</a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p>Berechnung für &quot;Gerstenkorn&quot; erfolgreich beendet.</i></p></li>
-				<li><h4><a href="#" title="Berechnung fertig">Berechnung fertig</a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p>Berechnung für &quot;Gerstenkorn&quot; erfolgreich beendet.</i></p></li>
-				<li><h4><a href="#" title="Berechnung fertig">Berechnung fertig</a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p>Berechnung für &quot;Gerstenkorn&quot; erfolgreich beendet.</i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
 			</ul>
 		</div>
 

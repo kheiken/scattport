@@ -37,8 +37,8 @@ class Auth extends CI_Controller {
 		}
 
 		// validate form input
-		$this->form_validation->set_rules('username', "Benutzername", 'required');
-		$this->form_validation->set_rules('password', "Passwort", 'required');
+		$this->form_validation->set_rules('username', _('Username'), 'required');
+		$this->form_validation->set_rules('password', _('Password'), 'required');
 
 		if ($this->form_validation->run() == true) {
 			// check for "remember me"
@@ -77,11 +77,12 @@ class Auth extends CI_Controller {
 		}
 
 		// validate form input
-		$this->form_validation->set_rules('username', "Username", 'required');
-		$this->form_validation->set_rules('realname', "Realname", 'required');
-		$this->form_validation->set_rules('email', "Email address", 'required|valid_email');
-		$this->form_validation->set_rules('password', "Password", 'required|min_length[' . $this->config->item('min_password_length', 'access') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[password_confirm]');
-		$this->form_validation->set_rules('password_confirm', "Password confirmation", 'required');
+		$this->form_validation->set_rules('username', _('Username'), 'required');
+		$this->form_validation->set_rules('realname', _('Real name'), 'required');
+		$this->form_validation->set_rules('lastname', _('Last name'), 'required');
+		$this->form_validation->set_rules('email', _('eMail address'), 'required|valid_email');
+		$this->form_validation->set_rules('password', _('Password'), 'required|min_length[' . $this->config->item('min_password_length', 'access') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[password_confirm]');
+		$this->form_validation->set_rules('password_confirm', _('Password confirmation'), 'required');
 
 		if ($this->form_validation->run() == true) {
 			$username = $this->input->post('username');
@@ -95,7 +96,7 @@ class Auth extends CI_Controller {
 
 		if ($this->form_validation->run() == true && $this->access->register($username, $password, $email, $additional_data))  {
 			// redirect them to the login page
-			$this->session->set_flashdata('message', "Registration successful");
+			$this->session->set_flashdata('message', _('Registration successful'));
 			redirect('auth/register_success');
 		} else {
 			// set the flash data error message if there is one
@@ -118,7 +119,7 @@ class Auth extends CI_Controller {
 		}
 
 		// validate the form
-		$this->form_validation->set_rules('new_password', 'New Password', 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_password_confirm]');
+		$this->form_validation->set_rules('new_password', _('New password'), 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_password_confirm]');
 
 		if ($this->form_validation->run() == true) {
 			// change password if needed
@@ -158,7 +159,7 @@ class Auth extends CI_Controller {
 	 * Allows users to request a new password.
 	 */
 	public function forgot_password() {
-		$this->form_validation->set_rules('email', 'Email Address', 'required');
+		$this->form_validation->set_rules('email', _('eMail address'), 'required');
 		if ($this->form_validation->run() == false) {
 			//setup the input
 			$this->data['email'] = array('name' => 'email',

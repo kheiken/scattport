@@ -2,11 +2,11 @@
 <?
 	if($this->session->userdata('group') == 'admins'):
 ?>
-		<span class="left"><strong>Administration - </strong>
-			<a href="<?=site_url('admin/settings')?>">Globale Einstellungen</a> |
-			<a href="<?=site_url('admin/servers')?>">Berechnungsserver verwalten</a> |
-			<a href="<?=site_url('admin/users')?>">Benutzer verwalten</a> |
-			<a href="<?=site_url('admin/programs')?>">Programme verwalten</a>
+		<span class="left"><strong><?=_('Administration')?> - </strong>
+			<a href="<?=site_url('admin/settings')?>"><?=_('Global settings')?></a> |
+			<a href="<?=site_url('admin/servers')?>"><?=_('Manage calculation servers')?></a> |
+			<a href="<?=site_url('admin/users')?>"><?=_('Manage users')?></a> |
+			<a href="<?=site_url('admin/programs')?>"><?=_('Manage applications')?></a>
 		</span>
 <?
 	endif;

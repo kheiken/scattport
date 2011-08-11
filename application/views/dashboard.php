@@ -9,7 +9,7 @@
 	<div class="box">
 		<h3><?=_('Projects');?></h3>
 		<p>
-			<a class="button left big" href="projects/create"><?=_('Create project');?></a><a class="button middle big" href="projects"><?=_('Manage projects');?></a><a class="button right big" href="#"><?=_('Search projects');?></a>
+			<a class="button left big" href="projects/create"><?=_('Create a project');?></a><a class="button middle big" href="projects"><?=_('Show projects');?></a><a class="button right big" href="#"><?=_('Search projects');?></a>
 		</p>
 	</div>
 	<div class="box">
@@ -21,7 +21,7 @@
 	<div class="box">
 		<h3><?=_('Administration');?></h3>
 		<p>
-			<a class="button left big" href="#"><?=_('Manage servers');?></a><a class="button middle big" href="#"><?=_('Manage programs');?></a><a class="button right big" href="<?=site_url('users');?>"><?=_('Manage users');?></a>
+			<a class="button left big" href="#"><?=_('Manage servers');?></a><a class="button middle big" href="#"><?=_('Manage applications');?></a><a class="button right big" href="<?=site_url('users');?>"><?=_('Manage users');?></a>
 		</p>
 	</div>
 
