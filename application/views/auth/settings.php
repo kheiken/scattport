@@ -1,7 +1,7 @@
 <?php $this->load->view('header');?>
 
 <div id="content">
-	<form name="settings" action="<?=('settings');?>" method="post">
+	<form name="settings" action="<?=site_url('auth/settings');?>" method="post">
 		<div class="title">
 			<h2><?=_('Settings');?></h2>
 		</div>

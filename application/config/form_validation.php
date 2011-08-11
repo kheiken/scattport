@@ -122,31 +122,36 @@ $config['users/edit'] = array(
  *
  * @var array
  */
-$config['settings/index'] = array(
+$config['auth/settings'] = array(
 	array(
-			'field' => 'firstname',
-			'label' => _('First name'),
-			'rules' => 'required|max_length[50]|trim',
+		'field' => 'firstname',
+		'label' => _('First name'),
+		'rules' => 'required|max_length[50]|trim',
 	),
 	array(
-			'field' => 'lastname',
-			'label' => _('Last name'),
-			'rules' => 'required|max_length[50]|trim',
+		'field' => 'lastname',
+		'label' => _('Last name'),
+		'rules' => 'required|max_length[50]|trim',
 	),
 	array(
-			'field' => 'email',
-			'label' => _('Email address'),
-			'rules' => 'required|valid_email|trim',
+		'field' => 'email',
+		'label' => _('Email address'),
+		'rules' => 'required|valid_email|trim',
 	),
 	array(
-			'field' => 'institution',
-			'label' => _('Institution'),
-			'rules' => 'max_length[100]|trim',
+		'field' => 'institution',
+		'label' => _('Institution'),
+		'rules' => 'max_length[100]|trim',
 	),
 	array(
-			'field' => 'phone',
-			'label' => _('Phone number'),
-			'rules' => 'regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]|trim',
+		'field' => 'phone',
+		'label' => _('Phone number'),
+		'rules' => 'regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]|trim',
+	),
+	array(
+		'field' => 'new_password',
+		'label' => _('New password'),
+		'rules' => 'min_length[6]|matches[new_password_confirm]',
 	),
 );
 

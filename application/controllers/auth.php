@@ -106,14 +106,9 @@ class Auth extends CI_Controller {
 	 * Allows users to edit their settings.
 	 */
 	public function settings() {
-		if (!$this->access->loggedIn()) {
-			redirect('auth/login', 'refresh');
-		}
+		$user = $this->access->getCurrentUser();
 
-		// validate the form
-		$this->form_validation->set_rules('new_password', _('New password'), 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_password_confirm]');
-
-		if ($this->form_validation->run() == true) {
+		if ($this->form_validation->run() === true) {
 			// change password if needed
 			if ($this->input->post('new_password') != '') {
 				$username = $this->session->userdata('username');
@@ -124,27 +119,22 @@ class Auth extends CI_Controller {
 				}
 			}
 
-			// update user
-			$updateData = array(
-                'firstname' => $this->input->post('firstname'),
-                'lastname' => $this->input->post('lastname'),
-                'institution' => $this->input->post('institution'),
-            	'phone' => $this->input->post('phone'),
-                'email' => $this->input->post('email'),
+			// update users table
+			$data = array(
+				'email' => $this->input->post('email'),
+				'firstname' => $this->input->post('firstname'),
+				'lastname' => $this->input->post('lastname'),
+				'institution' => $this->input->post('institution'),
+				'phone' => $this->input->post('phone')
 			);
-			$this->access->updateUser($this->session->userdata('user_id'), $updateData);
 
-			// output JSON data
-			$this->output->set_content_type('application/json')
-				->set_output(json_encode(array('success' => true)));
-		} else {
-			$data['success'] = true;
-			$data['data'] = $this->access->getCurrentUser();
-
-			// output JSON data
-			$this->output->set_content_type('application/json')
-					->set_output(json_encode($data));
+			if ($this->user->update($user['id'], $data)) {
+				$this->messages->add(_("Settings saved successfully"), 'success');
+				redirect('auth/settings', 303);
+			}
 		}
+
+		$this->load->view('auth/settings', $user);
 	}
 
 	/**
