@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="box">
-		<form name="createUser" method="post" action="<?=site_url('users/edit/' . $user['id'])?>">
+		<form name="createUser" method="post" action="<?=site_url('admin/users/edit/' . $user['id'])?>">
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
@@ -59,7 +59,7 @@
 			</ul>
 			<p>
 				<a class="button save" href="javascript:void(0);" onclick="$('form[name=createUser]').submit();"><?=_('Save');?></a>
-				<a class="button cancel" href="<?=site_url('users');?>"><?=_('Cancel');?></a>
+				<a class="button cancel" href="<?=site_url('admin/users');?>"><?=_('Cancel');?></a>
 			</p>
 		</form>
 	</div>

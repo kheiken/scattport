@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="box">
-		<form name="createUser" method="post" action="<?=site_url('users/create')?>">
+		<form name="createUser" method="post" action="<?=site_url('admin/users/create')?>">
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>

@@ -22,7 +22,7 @@
 				<tr>
 					<td><?=$user['username'];?></td>
 					<td><?=$user['firstname'];?> <?=$user['lastname'];?></td>
-					<td><?=anchor('users/edit/' . $user['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('users/delete/' . $user['id']);?>');"><?=_('Delete');?></a></td>
+					<td><?=anchor('admin/users/edit/' . $user['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/users/delete/' . $user['id']);?>');"><?=_('Delete');?></a></td>
 				</tr>
 <?php
 	endforeach;
@@ -31,7 +31,7 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('users/create')?>"><?=_('Create new user')?></a>
+		<p><a class="button add" href="<?=site_url('admin/users/create')?>"><?=_('Create new user')?></a>
 	</div>
 </div>
 
