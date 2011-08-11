@@ -3,11 +3,11 @@
 <div id="content">
 	<form action="#" method="post">
 		<div class="title">
-			<h2><?=lang('settings');?></h2>
+			<h2><?=_('Settings');?></h2>
 		</div>
 		<ul class="tabs">
-			<li class="active"><a href="#personal"><?=lang('tab_personal');?></a></li>
-			<li><a href="#settings"><?=lang('tab_settings');?></a></li>
+			<li class="active"><a href="#personal"><?=_('Personal Information');?></a></li>
+			<li><a href="#settings"><?=_('Settings');?></a></li>
 		</ul>
 
 		<div class="tab_container">
@@ -26,7 +26,7 @@
 			<div id="settings" class="tab_content">
 				<ul>
 					<li>
-						<label><?=lang('language_select');?></label>
+						<label><?=_('Language');?></label>
 						<div>
 							<select id="language_select" name="language_select" class="drop">
 								<option value="de">Deutsch</option>
@@ -36,8 +36,8 @@
 					</li>
 					<li>
 						<input type="checkbox" id="projects_sortrecently" name="projects_sortrecently" value="1" class="checkbox"/>
-						<label for="projects_sortrecently"><?=lang('projects_sortrecently');?></label><br />
-						<label class="note"><?=lang('projects_sortrecently_note');?></label>
+						<label for="projects_sortrecently"><?=_('Sort projects by date of the last access');?></label><br />
+						<label class="note"><?=_('If the projects are sorted by the data of the last access, the rarely used projects &quot;slip&quot; to the end of the list.');?></label>
 					</li>
 				</ul>
 			</div>
