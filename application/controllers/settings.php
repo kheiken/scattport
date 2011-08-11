@@ -33,20 +33,30 @@ class Settings extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('program');
+		$this->load->library('form_validation');
 	}
 
 	/**
 	 * Show a list of all available programs.
 	 */
 	public function index() {
-		$profile = $this->user->profile();
-		$profile_fields = array(
-			array('firstname', _('First name'), 'text'),
-			array('lastname', _('Last name'), 'text'),
-			array('intitution', _('Institution'), 'text'),
-		);
-		$tpl['profile'] = $profile;
-		$tpl['profile_fields'] = $profile_fields;
-		$this->load->view('user/settings', $tpl);
+		$user = $this->access->getCurrentUser();
+
+		if ($this->form_validation->run() === true) {
+			$data = array(
+				'email' => $this->input->post('email'),
+				'firstname' => $this->input->post('firstname'),
+				'lastname' => $this->input->post('lastname'),
+				'institution' => $this->input->post('institution'),
+				'phone' => $this->input->post('phone')
+			);
+
+			if ($this->user->update($user['id'], $data)) {
+				$this->messages->add(_("Settings saved successfully"), 'success');
+				redirect('settings', 303);
+			}
+		}
+
+		$this->load->view('user/settings', $user);
 	}
 }

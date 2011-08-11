@@ -15,6 +15,7 @@ class Users extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('user');
+		$this->load->config('form_validation');
 	}
 
 	/**
@@ -29,49 +30,6 @@ class Users extends CI_Controller {
 	 * Allows admins to create a new user.
 	 */
 	public function create() {
-		$config = array(
-			array(
-				'field' => 'username',
-				'label' => _('Username'),
-				'rules' => 'trim|required|min_length[4]|max_length[20]|unique[users.username]',
-			),
-			array(
-				'field' => 'password',
-				'label' => _('Password'),
-				'rules' => 'required|min_length[6]|matches[password_confirm]',
-			),
-			array(
-				'field' => 'password_confirm',
-				'label' => _('Confirm password'),
-			),
-			array(
-				'field' => 'firstname',
-				'label' => _('First name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'lastname',
-				'label' => _('Last name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'email',
-				'label' => _('Email address'),
-				'rules' => 'trim|required|valid_email',
-			),
-			array(
-				'field' => 'institution',
-				'label' => _('Institution'),
-				'rules' => 'trim|max_length[100]',
-			),
-			array(
-				'field' => 'phone',
-				'label' => _('Phone number'),
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
-			)
-		);
-		$this->form_validation->set_rules($config);
-
 		if ($this->form_validation->run() === true) {
 			$username = $this->input->post('username');
 
@@ -103,36 +61,7 @@ class Users extends CI_Controller {
 			show_404();
 		}
 
-		$config = array(
-			array(
-				'field' => 'firstname',
-				'label' => _('First name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'lastname',
-				'label' => _('Last name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'email',
-				'label' => _('Email address'),
-				'rules' => 'trim|required|valid_email',
-			),
-			array(
-				'field' => 'institution',
-				'label' => _('Institution'),
-				'rules' => 'trim|max_length[100]',
-			),
-			array(
-				'field' => 'phone',
-				'label' => _('Phone number'),
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
-			)
-		);
-		$this->form_validation->set_rules($config);
-
-		if ($this->form_validation->run() === true) {
+		if ($this->form_validation->run('users/edit') === true) {
 			$data = array(
 				'email' => $this->input->post('email'),
 				'firstname' => $this->input->post('firstname'),

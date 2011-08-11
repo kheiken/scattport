@@ -1,7 +1,7 @@
 <?php $this->load->view('header');?>
 
 <div id="content">
-	<form action="#" method="post">
+	<form name="settings" action="<?=('settings');?>" method="post">
 		<div class="title">
 			<h2><?=_('Settings');?></h2>
 		</div>
@@ -13,33 +13,56 @@
 		<div class="tab_container">
 			<div id="personal" class="tab_content">
 				<ul>
-				<?php foreach($profile_fields as $field):?>
 					<li>
-						<label><?=$field[1]?></label>
+						<?=form_label(_('First name'), 'firstname');?>
 						<div>
-						  <input type="<?=$field[2]?>" name="<?=$field[0]?>" class="short text" />
+							<input type="text" name="firstname" id="firstname" class="short text" value="<?=set_value('firstname', $firstname);?>" />
+							<?=form_error('firstname');?>
 						</div>
 					</li>
-				<?php endforeach;?>
+					<li>
+						<?=form_label(_('Last name'), 'lastname');?>
+						<div>
+							<input type="text" name="lastname" id="lastname" class="short text" value="<?=set_value('lastname', $lastname);?>" />
+							<?=form_error('lastname');?>
+						</div>
+					</li>
+					<li>
+						<?=form_label(_('Email address'), 'email');?>
+						<div>
+							<input type="text" name="email" id="email" class="medium text" value="<?=set_value('email', $email);?>" />
+							<?=form_error('email');?>
+						</div>
+					</li>
+					<li>
+						<?=form_label(_('Institution'), 'institution');?>
+						<div>
+							<input type="text" name="institution" id="institution" class="medium text" value="<?=set_value('institution', $institution);?>" />
+							<?=form_error('institution');?>
+						</div>
+					</li>
+					<li>
+						<?=form_label(_('Phone number'), 'phone');?>
+						<div>
+							<input type="text" name="phone" id="phone" class="short text" value="<?=set_value('phone', $phone);?>" />
+							<?=form_error('phone');?>
+						</div>
+					</li>
 				</ul>
 			</div>
 			<div id="settings" class="tab_content">
 				<ul>
-					<li>
-						<label><?=_('Language');?></label>
-						<div>
-							<select id="language_select" name="language_select" class="drop">
-								<option value="de">Deutsch</option>
-								<option value="en">Englisch</option>
-							</select>
-						</div>
-					</li>
 					<li>
 						<input type="checkbox" id="projects_sortrecently" name="projects_sortrecently" value="1" class="checkbox"/>
 						<label for="projects_sortrecently"><?=_('Sort projects by date of the last access');?></label><br />
 						<label class="note"><?=_('If the projects are sorted by the data of the last access, the rarely used projects &quot;slip&quot; to the end of the list.');?></label>
 					</li>
 				</ul>
+			</div>
+			<div class="tab_buttons">
+				<p>
+					<a class="button save" href="javascript:void(0);" onclick="$('form[name=settings]').submit();"><?=_('Save');?></a>
+				</p>
 			</div>
 		</div>
 	</form>

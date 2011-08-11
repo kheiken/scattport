@@ -470,11 +470,16 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 
 .tab_container {
+	margin: 0 0 20px;
+	padding: 15px 15px 0 15px;
 	border: 1px solid #e8e8e8;
 	border-top: none;
 	overflow: hidden;
 	background: #fff;
 }
 .tab_content {
-	padding: 20px;
+	padding: 0;
+}
+.tab_buttons {
+	padding: 0;
 }
