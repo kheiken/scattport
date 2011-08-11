@@ -27,7 +27,7 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Ajax extends MY_Controller {
+class Ajax extends CI_Controller {
 
 	/**
 	 * Constructor.

@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Dashboard extends MY_Controller {
+class Dashboard extends CI_Controller {
 
 	/**
 	* Constructor.

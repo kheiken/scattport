@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Jobs extends MY_Controller {
+class Jobs extends CI_Controller {
 
 	/**
      * Constructor.

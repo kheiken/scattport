@@ -27,7 +27,7 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Results extends MY_Controller {
+class Results extends CI_Controller {
 
 	/**
 	 * Constructor.

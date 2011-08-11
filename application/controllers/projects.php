@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
 */
-class Projects extends MY_Controller {
+class Projects extends CI_Controller {
 
 	/**
 	 * Constructor.

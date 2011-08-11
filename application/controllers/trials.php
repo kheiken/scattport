@@ -27,7 +27,7 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Trials extends MY_Controller {
+class Trials extends CI_Controller {
 
 	/**
 	 * Constructor.

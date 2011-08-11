@@ -25,7 +25,7 @@
 /**
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Settings extends MY_Controller {
+class Settings extends CI_Controller {
 
 	/**
 	 * Constructor.
