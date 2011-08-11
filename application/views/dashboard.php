@@ -3,25 +3,25 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=lang('dashboard');?></h2>
+		<h2><?=_('Dashboard');?></h2>
 	</div>
 
 	<div class="box">
-		<h3><?=lang('projects');?></h3>
+		<h3><?=_('Projects');?></h3>
 		<p>
-			<a class="button left big" href="projects/create"><?=lang('projects_create');?></a><a class="button middle big" href="projects"><?=lang('projects_manage');?></a><a class="button right big" href="#"><?=lang('projects_search');?></a>
+			<a class="button left big" href="projects/create"><?=_('Create a project');?></a><a class="button middle big" href="projects"><?=_('Show projects');?></a><a class="button right big" href="#"><?=_('Search projects');?></a>
 		</p>
 	</div>
 	<div class="box">
-		<h3><?=lang('calculations');?></h3>
+		<h3><?=_('Calculations');?></h3>
 		<p>
-			<a class="button left big" href="#"><?=lang('newest_results');?></a><a class="button middle big" href="#"><?=lang('calculations_running');?></a>
+			<a class="button left big" href="#"><?=_('Newest results');?></a><a class="button middle big" href="#"><?=_('Running calculations');?></a>
 		</p>
 	</div>
 	<div class="box">
-		<h3><?=lang('administration');?></h3>
+		<h3><?_('Administration');?></h3>
 		<p>
-			<a class="button left big" href="#"><?=lang('servers_manage');?></a><a class="button middle big" href="#"><?=lang('programs_manage');?></a><a class="button right big" href="<?=site_url('users');?>"><?=lang('users_manage');?></a>
+			<a class="button left big" href="#"><?=_('Manage servers');?></a><a class="button middle big" href="#"><?=_('Manage applications');?></a><a class="button right big" href="<?=site_url('users');?>"><?=_('Manage users');?></a>
 		</p>
 	</div>
 
