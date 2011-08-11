@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title>ScattPort | Dashboard</title>
 
@@ -46,9 +46,9 @@
 ?>
 				<li>Projekt <?=$active_project['name']?>
 					<ul>
-						<li><a href="<?=site_url('/projects/detail/'.$active_project['id'])?>" title="Projektübersicht öffnen">Übersicht</a></li>
-						<li><a href="<?=site_url('/trials/create/'.$active_project['id'])?>" title="Neuen Versuch für das Projekt &quot;<?=$active_project['name']?>&quot; anlegen">Neuer Versuch</a></li>
-						<li><a href="<?=site_url('/results/project/'.$active_project['id'])?>" title="Alle Ergebnisse für das Projekt &quot;<?=$active_project['name']?>&quot; öffnen">Ergebnisse</a></li>
+						<li><a href="<?=site_url('projects/detail'.$active_project['id'])?>" title="Projektübersicht öffnen">Übersicht</a></li>
+						<li><a href="<?=site_url('trials/create'.$active_project['id'])?>" title="Neuen Versuch für das Projekt &quot;<?=$active_project['name']?>&quot; anlegen">Neuer Versuch</a></li>
+						<li><a href="<?=site_url('results/project'.$active_project['id'])?>" title="Alle Ergebnisse für das Projekt &quot;<?=$active_project['name']?>&quot; öffnen">Ergebnisse</a></li>
 					</ul>
 				</li>
 <?
@@ -56,30 +56,12 @@
 ?>
 				<li>Global
 					<ul>
-						<li><a href="<?=site_url('/projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
+						<li><a href="<?=site_url('projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 
-<?
-	if($this->session->userdata('group') == 'admins'):
-?>
-		<div class="navigation">
-			<ul>
-				<li>Administration
-					<ul>
-						<li><a href="<?=site_url('servers')?>" title="Manage servers">Calculation servers</a></li>
-					</ul>
-					<ul>
-						<li><a href="<?=site_url('users')?>" title="Manage users">Users</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-<?
-	endif;
-?>
 		<div class="title">
 			<h2><a href="<?=site_url('projects')?>" title="Alle Projekte anzeigen">Projekte</a></h2>
 		</div>
