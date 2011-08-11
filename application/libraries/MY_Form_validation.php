@@ -10,8 +10,8 @@ class MY_Form_validation extends CI_Form_validation {
     /**
      * Calls the parent constructor.
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct($rules = array()) {
+        parent::__construct($rules);
 
         // overwrite default error delimiters
         $this->set_error_delimiters('<p class="error">', '</p>');
