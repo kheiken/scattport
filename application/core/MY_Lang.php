@@ -44,28 +44,32 @@ class MY_Lang extends CI_Lang {
 		log_message('debug', 'Gettext Class path chosen is: ' . $this->_gettext_path);
 
 		$filename = $this->_gettext_path . '/' . $this->_gettext_language . '/LC_MESSAGES/' . $this->_gettext_domain . '.mo';
-		$mtime = filemtime($filename);
 
-		$newFilename = $this->_gettext_path . '/' . $this->_gettext_language . '/LC_MESSAGES/' . $this->_gettext_domain . '_' . $mtime . '.mo';
+		// if there is no language file, we can't load anything
+		if (file_exists($filename)) {
+			$mtime = filemtime($filename);
 
-		if (!file_exists($newFilename)) {
-			$dir = scandir(dirname($filename));
-			foreach ($dir as $file) {
-				// remove all the old files
-				if (!in_array($file, array('.', '..', $this->_gettext_domain . '.po', $this->_gettext_domain . '.mo'))) {
-					@unlink(dirname($filename) . '/' . $file);
+			$newFilename = $this->_gettext_path . '/' . $this->_gettext_language . '/LC_MESSAGES/' . $this->_gettext_domain . '_' . $mtime . '.mo';
+
+			if (!file_exists($newFilename)) {
+				$dir = scandir(dirname($filename));
+				foreach ($dir as $file) {
+					// remove all the old files
+					if (!in_array($file, array('.', '..', $this->_gettext_domain . '.po', $this->_gettext_domain . '.mo'))) {
+						@unlink(dirname($filename) . '/' . $file);
+					}
 				}
+
+				@copy($filename, $newFilename);
 			}
 
-			@copy($filename, $newFilename);
+			$newDomain = $this->_gettext_domain . '_' . $mtime;
+
+			bindtextdomain($newDomain, $this->_gettext_path);
+			bind_textdomain_codeset($newDomain, "UTF-8");
+			textdomain($newDomain);
 		}
-
-		$newDomain = $this->_gettext_domain . '_' . $mtime;
-
-		bindtextdomain($newDomain, $this->_gettext_path);
-		bind_textdomain_codeset($newDomain, "UTF-8");
-		textdomain($newDomain);
-
+		
 		log_message('debug', 'The gettext domain chosen is: '. $this->_gettext_domain);
 
 		return true;
