@@ -18,8 +18,6 @@ class MY_Lang extends CI_Lang {
 		parent::__construct();
 		$this->_gettext_domain = 'lang';
 		log_message('debug', "Gettext Class Initialized");
-
-		$this->load_gettext();
 	}
 
 	/**
@@ -69,7 +67,7 @@ class MY_Lang extends CI_Lang {
 			bind_textdomain_codeset($newDomain, "UTF-8");
 			textdomain($newDomain);
 		}
-		
+
 		log_message('debug', 'The gettext domain chosen is: '. $this->_gettext_domain);
 
 		return true;
