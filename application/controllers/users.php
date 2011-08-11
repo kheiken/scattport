@@ -67,7 +67,7 @@ class Users extends MY_Controller {
 			array(
 				'field' => 'phone',
 				'label' => 'lang:field_phone',
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\w\d{2,4}\w\d{3,10}+$/i]',
+				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
 		$this->form_validation->set_rules($config);
@@ -127,7 +127,7 @@ class Users extends MY_Controller {
 			array(
 				'field' => 'phone',
 				'label' => 'lang:field_phone',
-				//'rules' => 'trim|regex_match[/^\+\d{2,4}\w\d{2,4}\w\d{3,10}+$/i]',
+				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
 		$this->form_validation->set_rules($config);
@@ -156,12 +156,14 @@ class Users extends MY_Controller {
 	 * @param integer $id
 	 */
 	public function delete($id = '') {
-		if (!is_array($this->user->getUserByID())) {
-			show_404();
-		}
+		$user = $this->user->getUserByID($id);
 
-		$this->user->delete($id);
-		$this->messages->add('The selected user was deleted', 'success');
-		redirect('users', 200);
+		if (!isset($user) || !is_array($user) || !isset($user['id'])) {
+			show_404();
+		} else {
+			$this->user->delete($user['id']);
+			$this->messages->add('The selected user was deleted', 'success');
+			redirect('users', 200);
+		}
 	}
 }

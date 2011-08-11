@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-10 21:25+0200\n"
+"PO-Revision-Date: 2011-08-10 22:00+0200\n"
+"Last-Translator: Karsten Heiken <karsten@disposed.de>\n"
+"Language-Team: German <>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Available users"
+msgstr "Alle verfügbaren Benutzer"
+
+msgid "Username"
+msgstr "Benutzername"
+
+msgid "Full name"
+msgstr "Vollständiger Name"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Create new user"
+msgstr "Neuen Benutzer erstellen"
+
+msgid "Edit user '%s'"
+msgstr "Benutzer »%s« bearbeiten"
+
+msgid "Required information"
+msgstr "Erforderliche Angaben"
+
+msgid "Optional information"
+msgstr "Optionale Angaben"
+
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+msgid "First name"
+msgstr "Vorname"
+
+msgid "Last name"
+msgstr "Nachname"
+
+msgid "Institution"
+msgstr "Institution"
+
+msgid "Phone number"
+msgstr "Telefonnummer"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Example"
+msgstr "Beispiel"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+

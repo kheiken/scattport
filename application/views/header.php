@@ -59,17 +59,6 @@
 						<li><a href="<?=site_url('projects/create')?>" title="Neues Projekt anlegen">Neues Projekt</a></li>
 					</ul>
 				</li>
-<?
-	if($this->session->userdata('group') == 'admins'):
-?>
-				<li>Administration
-					<ul>
-						<li><a href="<?=site_url('admin/servers')?>" title="Berechnungsserver verwalten">Berechnungsserver</a></li>
-					</ul>
-				</li>
-<?
-	endif;
-?>
 			</ul>
 		</div>
 
