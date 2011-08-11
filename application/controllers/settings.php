@@ -41,9 +41,9 @@ class Settings extends CI_Controller {
 	public function index() {
 		$profile = $this->user->profile();
 		$profile_fields = array(
-			array('firstname', 'Vorname', 'text'),
-			array('lastname', 'Nachname', 'text'),
-			array('intitution', 'Institution', 'text'),
+			array('firstname', _('First name'), 'text'),
+			array('lastname', _('Last name'), 'text'),
+			array('intitution', _('Institution'), 'text'),
 		);
 		$tpl['profile'] = $profile;
 		$tpl['profile_fields'] = $profile_fields;

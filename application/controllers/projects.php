@@ -134,7 +134,7 @@ class Projects extends CI_Controller {
 				$this->messages->add($projectpath, 'notice');
 				redirect('/projects/detail/' . $data['project_id'], 301);
 			} else {
-				$this->messages->add('Das Projekt konnte nicht gespeichert werden.', 'error');
+				$this->messages->add(_('The project could not be created.'), 'error');
 				$this->load->view('project/new');
 			}
 		}
@@ -148,7 +148,7 @@ class Projects extends CI_Controller {
 	public function detail($prj_id) {
 		$project = $this->project->getById($prj_id);
 		if (!$project) {
-			$this->messages->add('Das Projekt konnte nicht geladen werden.', 'error');
+			$this->messages->add(_('The project could not be loaded.'), 'error');
 			redirect('projects', 301);
 		}
 
@@ -169,7 +169,7 @@ class Projects extends CI_Controller {
 	public function delete($projectId) {
 		$this->project->delete($projectId);
 		$this->session->unset_userdata('active_project');
-		$this->messages->add("Das Projekt wurde gelöscht.", 'notice');
+		$this->messages->add(_('The project was deleted.'), 'success');
 		redirect('projects');
 	}
 
