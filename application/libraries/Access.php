@@ -52,11 +52,11 @@ class Access {
      */
     public function changePassword($username, $old, $new) {
         if ($this->ci->user->changePassword($username, $old, $new)) {
-            $this->setMessage('password_change_successful');
+            $this->setMessage(_('Password successfully changed'));
             return true;
         }
 
-        $this->setError('password_change_unsuccessful');
+        $this->setError(_('Unable to change password'));
         return false;
     }
 
@@ -86,14 +86,14 @@ class Access {
             $this->ci->email->message($message);
 
             if ($this->ci->email->send()) {
-                $this->setMessage('forgot_password_successful');
+                $this->setMessage(_('Password reset email sent'));
                 return true;
             } else {
-                $this->setError('forgot_password_unsuccessful');
+                $this->setError(_('Unable to reset password'));
                 return false;
             }
         } else {
-            $this->setError('forgot_password_unsuccessful');
+            $this->setError(_('Unable to reset password'));
             return false;
         }
     }
@@ -107,7 +107,7 @@ class Access {
         $profile  = $this->ci->user->profile($code, true); // pass the code to profile
 
         if (!is_object($profile)) {
-            $this->setError('password_change_unsuccessful');
+            $this->setError(_('Unable to change password'));
             return false;
         }
 
@@ -131,33 +131,16 @@ class Access {
             $this->ci->email->message($message);
 
             if ($this->ci->email->send()) {
-                $this->setMessage('password_change_successful');
+                $this->setMessage(_('Password successfully changed'));
                 return true;
             } else {
-                $this->setError('password_change_unsuccessful');
+                $this->setError(_('Unable to change password'));
                 return false;
             }
         }
 
-        $this->setError('password_change_unsuccessful');
+        $this->setError(_('Unable to change password'));
         return false;
-    }
-
-    /**
-     * Registers a new user.
-     *
-     * @return integer|boolean
-     */
-    public function register($username, $password, $email, $additionalData, $groupName = false) {
-        $id = $this->ci->user->register($username, $password, $email, $additionalData, $groupName);
-
-        if ($id !== false) {
-            $this->setMessage('account_creation_successful');
-            return $id;
-        } else {
-            $this->setError('account_creation_unsuccessful');
-            return false;
-        }
     }
 
     /**
@@ -167,10 +150,10 @@ class Access {
      */
     public function login($username, $password, $remember = false) {
         if ($this->ci->user->login($username, $password, $remember)) {
-            $this->setMessage('login_successful');
+            $this->setMessage(_('Logged in successfully'));
             return true;
         } else {
-            $this->setError('login_unsuccessful');
+            $this->setError(_('Incorrect username or password'));
             return false;
         }
     }
@@ -194,7 +177,7 @@ class Access {
 
         $this->ci->session->sess_destroy();
 
-        $this->setMessage('logout_successful');
+        $this->setMessage(_('Logged out successfully'));
         return true;
     }
 
@@ -251,36 +234,6 @@ class Access {
     }
 
     /**
-     * Updates a specified user.
-     *
-     * @return boolean
-     */
-    public function updateUser($id, $data) {
-        if ($this->ci->user->update($id, $data)) {
-            $this->setMessage('update_successful');
-            return true;
-        }
-
-        $this->setError('update_unsuccessful');
-        return false;
-    }
-
-    /**
-     * Deletes a specified user.
-     *
-     * @return boolean
-     */
-    public function deleteUser($id) {
-        if ($this->ci->user->delete($id)) {
-            $this->setMessage('delete_successful');
-            return true;
-        }
-
-        $this->setError('delete_unsuccessful');
-        return false;
-    }
-
-    /**
      * Sets a message.
      *
      * @return string
@@ -298,7 +251,7 @@ class Access {
     public function messages() {
         $output = '';
         foreach ($this->messages as $message) {
-            $output .= lang($message) . '<br />';
+            $output .= $message . '<br />';
         }
 
         return $output;
@@ -322,7 +275,7 @@ class Access {
     public function errors() {
         $output = '';
         foreach ($this->errors as $error) {
-            $output .= lang($error) . '<br />';
+            $output .= $error . '<br />';
         }
 
         return $output;

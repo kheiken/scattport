@@ -225,7 +225,6 @@ class User extends CI_Model {
 			$this->access->setError('account_creation_duplicate_username');
 			return false;
 		}
-		print_r($additionalData);
 
 		// if a groupID was passed, use it
 		if (isset($additionalData['group_id'])) {
