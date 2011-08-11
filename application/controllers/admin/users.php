@@ -84,7 +84,7 @@ class Users extends CI_Controller {
 
 			if ($this->user->register($username, $this->input->post('password'), $this->input->post('email'), $data)) {
 				$this->messages->add(sprintf(_("The user '%s' was created"), $username), 'success');
-				redirect('users', 201);
+				redirect('admin/users', 303);
 			}
 		}
 
@@ -143,7 +143,7 @@ class Users extends CI_Controller {
 
 			if ($this->user->update($user['id'], $data)) {
 				$this->messages->add(sprintf(_("The user '%s' was updated"), $user['username']), 'success');
-				redirect('users', 200);
+				redirect('admin/users', 303);
 			}
 		}
 
@@ -163,7 +163,7 @@ class Users extends CI_Controller {
 		} else {
 			$this->user->delete($user['id']);
 			$this->messages->add(_("The selected user was deleted"), 'success');
-			redirect('users', 200);
+			redirect('admin/users', 303);
 		}
 	}
 
