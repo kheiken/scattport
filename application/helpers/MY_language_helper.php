@@ -19,26 +19,22 @@ if (!function_exists('lang_select')) {
 
 		$link = '<a';
 
-		if ($CI->config->item('lang_selected') == 'en') {
+		if ($CI->config->item('language') == 'en_US') {
 			$link .= ' href="' . $CI->config->site_url('de') . '">';
 
-			if (isset($img_folder) && $img_folder != '') {
-				if ($index_page === true) {
-					$link .= '<img src="' . $CI->config->site_url($img_folder . '/lang_en.png') . '" />';
-				} else {
-					$link .= '<img src="' . $CI->config->slash_item('base_url') . $img_folder . '/lang_en.png" />';
-				}
+			if ($index_page === true) {
+				$link .= '<img src="' . $CI->config->site_url('assets/images/languages/en.png') . '" />';
+			} else {
+				$link .= '<img src="' . $CI->config->slash_item('base_url') . 'assets/images/languages/en.png" />';
 			}
 			$link .= ' English';
-		} else if ($CI->config->item('lang_selected') == 'de') {
+		} else if ($CI->config->item('language') == 'de_DE') {
 			$link .= ' href="' . $CI->config->site_url('en') . '" >';
 
-			if (isset($img_folder) && $img_folder != '') {
-				if ($index_page === true) {
-					$link .= '<img src="' . $CI->config->site_url($img_folder . '/lang_de.png') . '" />';
-				} else {
-					$link .= '<img src="' . $CI->config->slash_item('base_url') . $img_folder . '/lang_de.png" />';
-				}
+			if ($index_page === true) {
+				$link .= '<img src="' . $CI->config->site_url('assets/images/languages/de.png') . '" />';
+			} else {
+				$link .= '<img src="' . $CI->config->slash_item('base_url') . 'assets/images/languages/de.png" />';
 			}
 			$link .= ' Deutsch';
 		}
