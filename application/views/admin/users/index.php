@@ -3,17 +3,17 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=_('users');?></h2>
+		<h2><?=_('Users');?></h2>
 	</div>
 
 	<div class="box">
-		<h3><?=lang('available_users');?></h3>
+		<h3><?=_('Available users');?></h3>
 		<table class="tableList paginated">
 			<thead>
 				<tr>
-					<th scope="col"><?=lang('username');?></th>
-					<th scope="col"><?=lang('realname');?></th>
-					<th scope="col"><?=lang('options');?></th>
+					<th scope="col"><?=_('Username');?></th>
+					<th scope="col"><?=_('Full name');?></th>
+					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
 <?php
@@ -22,7 +22,7 @@
 				<tr>
 					<td><?=$user['username'];?></td>
 					<td><?=$user['firstname'];?> <?=$user['lastname'];?></td>
-					<td><?=anchor('users/edit/' . $user['id'], lang('user_edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('users/delete/' . $user['id']);?>');"><?=lang('user_delete');?></a></td>
+					<td><?=anchor('users/edit/' . $user['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('users/delete/' . $user['id']);?>');"><?=_('Delete');?></a></td>
 				</tr>
 <?php
 	endforeach;
@@ -31,7 +31,7 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('users/create')?>"><?=lang('user_create');?></a>
+		<p><a class="button add" href="<?=site_url('users/create')?>"><?=_('Create new user')?></a>
 	</div>
 </div>
 

@@ -6,7 +6,7 @@
  * @author Eike Foken <kontakt@eikefoken.de>
  *
  */
-class Users extends MY_Controller {
+class Users extends CI_Controller {
 
 	/**
 	 * Constructor.
@@ -32,41 +32,41 @@ class Users extends MY_Controller {
 		$config = array(
 			array(
 				'field' => 'username',
-				'label' => 'lang:field_username',
+				'label' => _('Username'),
 				'rules' => 'trim|required|min_length[4]|max_length[20]|unique[users.username]',
 			),
 			array(
 				'field' => 'password',
-				'label' => 'lang:field_password',
+				'label' => _('Password'),
 				'rules' => 'required|min_length[6]|matches[password_confirm]',
 			),
 			array(
 				'field' => 'password_confirm',
-				'label' => 'lang:field_password_confirm',
+				'label' => _('Confirm password'),
 			),
 			array(
 				'field' => 'firstname',
-				'label' => 'lang:field_firstname',
+				'label' => _('First name'),
 				'rules' => 'trim|required|max_length[50]',
 			),
 			array(
 				'field' => 'lastname',
-				'label' => 'lang:field_lastname',
+				'label' => _('Last name'),
 				'rules' => 'trim|required|max_length[50]',
 			),
 			array(
 				'field' => 'email',
-				'label' => 'lang:field_email',
+				'label' => _('Email address'),
 				'rules' => 'trim|required|valid_email',
 			),
 			array(
 				'field' => 'institution',
-				'label' => 'lang:field_institution',
+				'label' => _('Institution'),
 				'rules' => 'trim|max_length[100]',
 			),
 			array(
 				'field' => 'phone',
-				'label' => 'lang:field_phone',
+				'label' => _('Phone number'),
 				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
@@ -83,7 +83,7 @@ class Users extends MY_Controller {
 			);
 
 			if ($this->user->register($username, $this->input->post('password'), $this->input->post('email'), $data)) {
-				$this->messages->add("The user '" . $username . "' was created", 'success');
+				$this->messages->add(sprintf(_("The user '%s' was created"), $username), 'success');
 				redirect('users', 201);
 			}
 		}
@@ -106,27 +106,27 @@ class Users extends MY_Controller {
 		$config = array(
 			array(
 				'field' => 'firstname',
-				'label' => 'lang:field_firstname',
+				'label' => _('First name'),
 				'rules' => 'trim|required|max_length[50]',
 			),
 			array(
 				'field' => 'lastname',
-				'label' => 'lang:field_lastname',
+				'label' => _('Last name'),
 				'rules' => 'trim|required|max_length[50]',
 			),
 			array(
 				'field' => 'email',
-				'label' => 'lang:field_email',
+				'label' => _('Email address'),
 				'rules' => 'trim|required|valid_email',
 			),
 			array(
 				'field' => 'institution',
-				'label' => 'lang:field_institution',
+				'label' => _('Institution'),
 				'rules' => 'trim|max_length[100]',
 			),
 			array(
 				'field' => 'phone',
-				'label' => 'lang:field_phone',
+				'label' => _('Phone number'),
 				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
 			)
 		);
@@ -142,7 +142,7 @@ class Users extends MY_Controller {
 			);
 
 			if ($this->user->update($user['id'], $data)) {
-				$this->messages->add("The user '" . $user['username'] . "' was updated", 'success');
+				$this->messages->add(sprintf(_("The user '%s' was updated"), $user['username']), 'success');
 				redirect('users', 200);
 			}
 		}
@@ -162,8 +162,12 @@ class Users extends MY_Controller {
 			show_404();
 		} else {
 			$this->user->delete($user['id']);
-			$this->messages->add('The selected user was deleted', 'success');
+			$this->messages->add(_("The selected user was deleted"), 'success');
 			redirect('users', 200);
 		}
 	}
+
 }
+
+/* End of file users.php */
+/* Location: ./application/constrollers/users.php */

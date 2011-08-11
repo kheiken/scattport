@@ -3,76 +3,76 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=lang('create_user');?></h2>
+		<h2><?=_('Create new user');?></h2>
 	</div>
 
 	<div class="box">
 		<form name="createUser" method="post" action="<?=site_url('users/create')?>">
-			<h3>Required information</h3>
+			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
-					<?=form_label(lang('field_username'), 'username');?>
+					<?=form_label(_('Username'), 'username');?>
 					<div>
 						<input type="text" name="username" id="username" class="short text" value="<?=set_value('username');?>" />
 						<?=form_error('username')?>
 					</div>
-					<label class="note">Must be between 4 and 20 characters long</label>
+					<label class="note"><?=_('Must be between 4 and 20 characters long');?></label>
 				</li>
 				<li>
-					<?=form_label(lang('field_email'), 'email');?>
+					<?=form_label(_('Email address'), 'email');?>
 					<div>
 						<input type="text" name="email" id="email" class="medium text" value="<?=set_value('email');?>" />
 						<?=form_error('email')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(lang('field_password'), 'password');?>
+					<?=form_label(_('Password'), 'password');?>
 					<div>
 						<input type="password" name="password" id="password" class="short text" />
 						<?=form_error('password')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(lang('field_password_confirm'), 'password_confirm');?>
+					<?=form_label(_('Confirm password'), 'password_confirm');?>
 					<div>
 						<input type="password" name="password_confirm" id="password_confirm" class="short text" />
 						<?=form_error('password_confirm')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(lang('field_firstname'), 'firstname');?>
+					<?=form_label(_('First name'), 'firstname');?>
 					<div>
 						<input type="text" name="firstname" id="firstname" class="short text" value="<?=set_value('firstname');?>" />
 						<?=form_error('firstname')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(lang('field_lastname'), 'lastname');?>
+					<?=form_label(_('Last name'), 'lastname');?>
 					<div>
 						<input type="text" name="lastname" id="lastname" class="short text" value="<?=set_value('lastname');?>" />
 						<?=form_error('lastname')?>
 					</div>
 				</li>
 			</ul>
-			<h3>Optional information</h3>
+			<h3><?=_('Optional information');?></h3>
 			<ul>
 				<li>
-					<?=form_label(lang('field_institution'), 'institution');?>
+					<?=form_label(_('Institution'), 'institution');?>
 					<div>
 						<input type="text" name="institution" id="institution" class="medium text" value="<?=set_value('institution');?>" />
 						<?=form_error('institution')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(lang('field_phone'), 'phone');?>
+					<?=form_label(_('Phone number'), 'phone');?>
 					<div>
 						<input type="text" name="phone" id="phone" class="short text" value="<?=set_value('phone');?>" />
 						<?=form_error('phone')?>
 					</div>
-					<label class="note">Example: +49 123 456789</label>
+					<label class="note"><?=('Example');?>: +49 123 456789</label>
 				</li>
 				<li>
-					<?=form_label("Language", 'language');?>
+					<?=form_label(_('Language'), 'language');?>
 					<div>
 						<?=form_dropdown('language', array('English'), null, 'id="language" class="drop"');?>
 						<?=form_error('language')?>
@@ -80,7 +80,7 @@
 				</li>
 			</ul>
 			<p>
-				<a class="button save" href="javascript:void(0);" onclick="$('form[name=createUser]').submit();">Speichern</a>
+				<a class="button save" href="javascript:void(0);" onclick="$('form[name=createUser]').submit();"><?=_('Save');?></a>
 			</p>
 		</form>
 	</div>
