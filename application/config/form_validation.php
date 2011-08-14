@@ -118,6 +118,19 @@ $config['users/edit'] = array(
 );
 
 /**
+ * Rules for editing programs.
+ *
+ * @var array
+ */
+$config['programs/edit'] = array(
+	array(
+		'field' => 'name',
+		'label' => _('Name of the program'),
+		'rules' => 'required|max_length[100]|trim',
+	),
+);
+
+/**
  * Rules for the settings page.
  *
  * @var array

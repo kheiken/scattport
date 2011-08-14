@@ -48,3 +48,12 @@ table tbody tr:nth-child(even) {
 table tbody tr:nth-child(odd) {
     background: #f6f6f6;
 }
+
+td.drag_handle {
+	width: 16px;
+}
+
+td.drag_handle-show {
+	background: url(../images/icons/arrow-resize-090.png) center center no-repeat;
+	cursor: move;
+}

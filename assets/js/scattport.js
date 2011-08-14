@@ -163,7 +163,18 @@ $(document).ready(function() {
 		table.trigger('repaginate');
 	});
 
-	$('.sortable').tableDnD();
+	/*
+	 * Sortable tables
+	 */
+	$('.sortable').tableDnD({
+		dragHandle: 'drag_handle'
+	});
+
+	$('.sortable tr').hover(function() {
+		$(this).find('td.drag_handle').addClass('drag_handle-show');
+	}, function() {
+		$(this).find('td.drag_handle').removeClass('drag_handle-show');
+	});
 
 	/*
 	 * In-place editor

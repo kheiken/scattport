@@ -59,7 +59,7 @@ p.success {
 	color: #008000;
 }
 
-p.error, p.req {
+p.error, span.req {
 	color: #d8122d;
 	font-weight: normal;
 }

@@ -55,4 +55,15 @@ class Ajax extends CI_Controller {
 		$data['description'] = $this->input->post('content');
 		$this->project->update($this->session->userdata('active_project'), $data);
 	}
+
+	/**
+	 * Sorts a programs parameters.
+	 *
+	 * @param string $id
+	 */
+	public function sort_parameters($programId) {
+		$this->load->model('program');
+		$this->program->sortParameters($this->input->post('parameters'), $programId);
+	}
+
 }
