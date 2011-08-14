@@ -72,6 +72,7 @@ class MY_Session extends CI_Session {
 				$cookieData[$val] = $this->userdata[$val];
 			}
 
+			// FIXME Severity: Notice / Message: Undefined index: user_id
 			$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->now, 'user_id' => $this->userdata['user_id'], 'session_id' => $newSessionID), array('session_id' => $oldSessionID));
 
 			// update users table if user is logged in
