@@ -15,7 +15,6 @@ class Users extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('user');
-		$this->load->config('form_validation');
 	}
 
 	/**
@@ -23,7 +22,7 @@ class Users extends CI_Controller {
 	 */
 	public function index() {
 		$data['users'] = $this->user->getAll();
-		$this->load->view('admin/users/index', $data);
+		$this->load->view('admin/users/list', $data);
 	}
 
 	/**
@@ -41,7 +40,7 @@ class Users extends CI_Controller {
 			);
 
 			if ($this->user->register($username, $this->input->post('password'), $this->input->post('email'), $data)) {
-				$this->messages->add(sprintf(_("The user '%s' was created"), $username), 'success');
+				$this->messages->add(sprintf(_("The user '%s' has been created successfully"), $username), 'success');
 				redirect('admin/users', 303);
 			}
 		}
@@ -71,7 +70,7 @@ class Users extends CI_Controller {
 			);
 
 			if ($this->user->update($user['id'], $data)) {
-				$this->messages->add(sprintf(_("The user '%s' was updated"), $user['username']), 'success');
+				$this->messages->add(sprintf(_("The user '%s' has been updated successfully"), $user['username']), 'success');
 				redirect('admin/users', 303);
 			}
 		}
@@ -91,7 +90,7 @@ class Users extends CI_Controller {
 			show_404();
 		} else {
 			$this->user->delete($user['id']);
-			$this->messages->add(_("The selected user was deleted"), 'success');
+			$this->messages->add(_("The selected user has been deleted successfully"), 'success');
 			redirect('admin/users', 303);
 		}
 	}

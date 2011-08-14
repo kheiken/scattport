@@ -12,6 +12,7 @@
 			<ul>
 				<li>
 					<?=form_label(_('Username'), 'username');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="username" id="username" class="short text" value="<?=set_value('username');?>" />
 						<?=form_error('username')?>
@@ -20,6 +21,7 @@
 				</li>
 				<li>
 					<?=form_label(_('Email address'), 'email');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="email" id="email" class="medium text" value="<?=set_value('email');?>" />
 						<?=form_error('email')?>
@@ -27,6 +29,7 @@
 				</li>
 				<li>
 					<?=form_label(_('Password'), 'password');?>
+					<span class="req">*</span>
 					<div>
 						<input type="password" name="password" id="password" class="short text" />
 						<?=form_error('password')?>
@@ -34,6 +37,7 @@
 				</li>
 				<li>
 					<?=form_label(_('Confirm password'), 'password_confirm');?>
+					<span class="req">*</span>
 					<div>
 						<input type="password" name="password_confirm" id="password_confirm" class="short text" />
 						<?=form_error('password_confirm')?>
@@ -41,6 +45,7 @@
 				</li>
 				<li>
 					<?=form_label(_('First name'), 'firstname');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="firstname" id="firstname" class="short text" value="<?=set_value('firstname');?>" />
 						<?=form_error('firstname')?>
@@ -48,6 +53,7 @@
 				</li>
 				<li>
 					<?=form_label(_('Last name'), 'lastname');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="lastname" id="lastname" class="short text" value="<?=set_value('lastname');?>" />
 						<?=form_error('lastname')?>
@@ -70,13 +76,6 @@
 						<?=form_error('phone')?>
 					</div>
 					<label class="note"><?=('Example');?>: +49 123 456789</label>
-				</li>
-				<li>
-					<?=form_label(_('Language'), 'language');?>
-					<div>
-						<?=form_dropdown('language', array('English'), null, 'id="language" class="drop"');?>
-						<?=form_error('language')?>
-					</div>
 				</li>
 			</ul>
 			<p>

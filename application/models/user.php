@@ -251,7 +251,6 @@ class User extends CI_Model {
 		if ($this->storeSalt) {
 			$data['salt'] = $salt;
 		}
-		print_r($data);
 
 		$this->db->insert('users', array_merge($data, $additionalData));
 
