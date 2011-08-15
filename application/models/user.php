@@ -117,6 +117,7 @@ class User extends CI_Model {
 	/**
 	 * Checks entered usernames.
 	 *
+	 * @param string $username
 	 * @return boolean
 	 */
 	public function checkUsername($username = '') {

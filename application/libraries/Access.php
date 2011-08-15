@@ -48,6 +48,9 @@ class Access {
 	/**
 	 * Changes a users password.
 	 *
+	 * @param string $username
+	 * @param string $old
+	 * @param string $new
 	 * @return boolean
 	 */
 	public function changePassword($username, $old, $new) {
@@ -63,6 +66,7 @@ class Access {
 	/**
 	 * forgotten password feature
 	 *
+	 * @param string $email
 	 * @return void
 	 */
 	public function forgottenPassword($email) {
@@ -101,6 +105,7 @@ class Access {
 	/**
 	 * forgotten_password_complete
 	 *
+	 * @param string $code
 	 * @return void
 	 */
 	public function forgottenPasswordComplete($code) {
@@ -146,6 +151,9 @@ class Access {
 	/**
 	 * Logs the user in.
 	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param boolean $remember
 	 * @return boolean
 	 */
 	public function login($username, $password, $remember = false) {
@@ -204,6 +212,7 @@ class Access {
 	/**
 	 * Checks if the current user is assigned to the specified group.
 	 *
+	 * @param string $checkGroup
 	 * @return boolean
 	 */
 	public function isGroup($checkGroup)  {
