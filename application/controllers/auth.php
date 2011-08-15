@@ -113,10 +113,9 @@ class Auth extends CI_Controller {
 			if ($this->input->post('new_password') != '') {
 				$username = $this->session->userdata('username');
 				$change = $this->access->changePassword($username, $this->input->post('old_password'), $this->input->post('new_password'));
-
-				if ($change) {
-					$this->logout();
-				}
+// 				if ($change) {
+// 					$this->logout();
+// 				}
 			}
 
 			// update users table
