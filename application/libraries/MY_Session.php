@@ -24,6 +24,44 @@ class MY_Session extends CI_Session {
 	}
 
 	/**
+	 * Writes the session data.
+	 *
+	 * @see CI_Session::sess_write()
+	 */
+	public function sess_write() {
+		// are we saving custom data to the DB? If not, all we do is update the cookie
+		if ($this->sess_use_database === false) {
+			$this->_set_cookie();
+			return;
+		}
+
+		// set the custom userdata, the session data we will set in a second
+		$customUserdata = $this->userdata;
+		$cookieUserdata = array();
+
+		// before continuing, we need to determine if there is any custom data to deal with.
+		foreach (array('session_id', 'user_id', 'ip_address', 'user_agent', 'last_activity') as $val) {
+			unset($customUserdata[$val]);
+			$cookieUserdata[$val] = $this->userdata[$val];
+		}
+
+		// did we find any custom data? If not, we turn the empty array into a string
+		if (count($customUserdata) === 0) {
+			$customUserdata = '';
+		} else {
+			// serialize the custom data array so we can store it
+			$customUserdata = $this->_serialize($customUserdata);
+		}
+
+		// run the update query
+		$this->CI->db->where('session_id', $this->userdata['session_id']);
+		$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->userdata['last_activity'], 'user_id' => $this->userdata['user_id'], 'user_data' => $customUserdata));
+
+		// write the cookie.
+		$this->_set_cookie($cookieUserdata);
+	}
+
+	/**
 	 * Creates a new session.
 	 *
 	 * @see CI_Session::sess_create()
@@ -33,7 +71,8 @@ class MY_Session extends CI_Session {
         	'session_id' => $this->generateHash(),
         	'ip_address' => $this->CI->input->ip_address(),
         	'user_agent' => substr($this->CI->input->user_agent(), 0, 50),
-        	'last_activity' => $this->now
+        	'last_activity' => $this->now,
+        	'user_id' => null,
 		);
 
 		// save data to the DB if needed
@@ -61,6 +100,7 @@ class MY_Session extends CI_Session {
 
 		$this->userdata['session_id'] = $newSessionID;
 		$this->userdata['last_activity'] = $this->now;
+		$this->userdata['user_id'] = array_key_exists('user_id', $this->userdata) ? $this->userdata['user_id'] : null;
 
 		$cookieData = null;
 
@@ -72,11 +112,10 @@ class MY_Session extends CI_Session {
 				$cookieData[$val] = $this->userdata[$val];
 			}
 
-			// FIXME Severity: Notice / Message: Undefined index: user_id
 			$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->now, 'user_id' => $this->userdata['user_id'], 'session_id' => $newSessionID), array('session_id' => $oldSessionID));
 
 			// update users table if user is logged in
-			if (array_key_exists('user_id', $this->userdata) && $this->userdata['user_id'] > 0) {
+			if (array_key_exists('user_id', $this->userdata) && !is_null($this->userdata['user_id'])) {
 				$this->CI->db->update('users', array('last_activity' => $this->now), array('id' => $this->userdata['user_id']));
 			}
 		}
