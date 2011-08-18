@@ -49,9 +49,9 @@
 ?>
 				<li><?=_('Project')?> <?=$active_project['name']?>
 					<ul>
-						<li><a href="<?=site_url('projects/detail'.$active_project['id'])?>" title="<?=_('Show overview')?>"><?=_('Overview')?></a></li>
-						<li><a href="<?=site_url('trials/create'.$active_project['id'])?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
-						<li><a href="<?=site_url('results/project'.$active_project['id'])?>" title="Show results for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
+						<li><a href="<?=site_url('projects/detail/'.$active_project['id'])?>" title="<?=_('Show overview')?>"><?=_('Overview')?></a></li>
+						<li><a href="<?=site_url('trials/create/'.$active_project['id'])?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
+						<li><a href="<?=site_url('results/project/'.$active_project['id'])?>" title="<?=sprintf(_('Show results for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('Show results')?></a></li>
 					</ul>
 				</li>
 <?
