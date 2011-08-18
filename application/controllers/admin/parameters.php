@@ -77,6 +77,54 @@ class Parameters extends Admin_Controller {
 	}
 
 	/**
+	 * Allows admins to upload a CSV file to create a bunch of parameters.
+	 *
+	 * @param string $programId
+	 */
+	public function upload_csv($programId = '') {
+		$program = $this->program->getByID($programId);
+
+		if (empty($programId) || !isset($program['id'])) {
+			show_404();
+		}
+
+		if (count($_FILES) > 0) {
+			if ($_FILES['csv_file']['type'] == 'text/csv') {
+				$row = 1;
+				$inserted = 0;
+				$handler = fopen($_FILES['csv_file']['tmp_name'], "r");
+
+				while (($parameter = fgetcsv($handler, 1000, ',')) !== false) {
+					if ($row > 1) {
+						$data = array(
+							'program_id' => $program['id'],
+							'name' => $parameter[0],
+							'readable' => $parameter[1],
+							'unit' => $parameter[2],
+							'type' => $parameter[3],
+							'default_value' => $parameter[4],
+							'description' => $parameter[5],
+						);
+
+						if ($this->parameter->create($data)) {
+							$inserted++;
+						}
+					}
+					$row++;
+				}
+
+				if ($inserted > 0) {
+					$this->messages->add(sprintf(_('%s parameters were successfully created.'), $inserted), 'success');
+				}
+			} else {
+				$this->messages->add(_('No CSV file specified.'), 'error');
+			}
+		}
+
+		redirect('admin/programs/edit/' . $program['id'], 303);
+	}
+
+	/**
 	 * Allows admins to edit a parameter.
 	 *
 	 * @param string $id

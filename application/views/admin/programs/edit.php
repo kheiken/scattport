@@ -20,7 +20,7 @@ $(document).ready(function() {
 	</div>
 
 	<div class="box">
-		<form name="createUser" method="post" action="<?=site_url('admin/programs/edit/' . $program['id'])?>">
+		<form name="editProgram" method="post" action="<?=site_url('admin/programs/edit/' . $program['id'])?>">
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
@@ -33,41 +33,56 @@ $(document).ready(function() {
 				</li>
 			</ul>
 			<p>
-				<a class="button save" href="javascript:void(0);" onclick="$('form[name=createUser]').submit();"><?=_('Save');?></a>
+				<a class="button save" href="javascript:void(0);" onclick="$('form[name=editProgram]').submit();"><?=_('Save');?></a>
 				<a class="button cancel" href="<?=site_url('admin/programs');?>"><?=_('Cancel');?></a>
 			</p>
+		</form>
 
-			<h3><?=_('Parameters');?></h3>
-			<table class="tableList sortable" id="parameters">
-				<thead>
-					<tr>
-						<th scope="col">&nbsp;</th>
-						<th scope="col"><?=_('Readable name');?></th>
-						<th scope="col"><?=_('Unit');?></th>
-						<th scope="col"><?=_('Type');?></th>
-						<th scope="col"><?=_('Actions');?></th>
-					</tr>
-				</thead>
-				<tbody>
+		<h3><?=_('Parameters');?></h3>
+		<table class="tableList sortable" id="parameters">
+			<thead>
+				<tr>
+					<th scope="col">&nbsp;</th>
+					<th scope="col"><?=_('Readable name');?></th>
+					<th scope="col"><?=_('Unit');?></th>
+					<th scope="col"><?=_('Type');?></th>
+					<th scope="col"><?=_('Actions');?></th>
+				</tr>
+			</thead>
+			<tbody>
 <?php
 	foreach ($parameters as $parameter):
 ?>
-					<tr id="<?=$parameter['id'];?>">
-						<td class="drag_handle"></td>
-						<td><?=$parameter['readable'];?></td>
-						<td><?=$parameter['unit'];?></td>
-						<td><?=$parameter['type'];?></td>
-						<td><?=anchor('admin/parameters/edit/' . $parameter['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/parameters/delete/' . $parameter['id']);?>');"><?=_('Delete');?></a></td>
-					</tr>
+				<tr id="<?=$parameter['id'];?>">
+					<td class="drag_handle"></td>
+					<td><?=$parameter['readable'];?></td>
+					<td><?=$parameter['unit'];?></td>
+					<td><?=$parameter['type'];?></td>
+					<td><?=anchor('admin/parameters/edit/' . $parameter['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/parameters/delete/' . $parameter['id']);?>');"><?=_('Delete');?></a></td>
+				</tr>
 <?php
 	endforeach;
 ?>
-				</tbody>
-			</table>
-			<p>
-				<a class="button add" href="<?=site_url('admin/parameters/create/' . $program['id']);?>"><?=_('Add new parameter');?></a>
-			</p>
-		</form>
+			</tbody>
+		</table>
+		<p>
+			<a class="button add" href="<?=site_url('admin/parameters/create/' . $program['id']);?>"><?=_('Add new parameter');?></a>
+		</p>
+
+		<form name="uploadCSV" method="post" action="<?=site_url('admin/parameters/upload_csv/' . $program['id'])?>" enctype="multipart/form-data">
+		<ul>
+			<li>
+				<?=form_label(_('CVS file'), 'csv_file');?>
+				<div>
+					<input type="file" name="csv_file" id="csv_file" class="file" />
+					<?=form_error('csv_file')?>
+				</div>
+				<label class="note">You can upload a CVS file, containing a bunch of parameters. The rows of the file must be in the following format: <em>parameter name, human-readable name, unit, type, default value, description</em>. The first row is reserved for headlines.</label>
+			</li>
+		</ul>
+		<p>
+			<a class="button upload" href="javascript:void(0);" onclick="$('form[name=uploadCSV]').submit();"><?=_('Upload');?></a>
+		</p>
 	</div>
 </div>
 
