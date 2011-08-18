@@ -229,7 +229,7 @@ class User extends CI_Model {
 
 		$query = $this->db->limit(1)->get('users');
 
-		return $query->num_rows() > 0 ? $query->row_array() : false;
+		return $query->num_rows() > 0 ? $query->row() : false;
 	}
 
 	/**
