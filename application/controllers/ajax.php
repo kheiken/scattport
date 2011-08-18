@@ -26,6 +26,7 @@
  * Controller for Ajax requests.
  *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Ajax extends CI_Controller {
 
@@ -62,6 +63,17 @@ class Ajax extends CI_Controller {
 	public function sort_parameters() {
 		$this->load->model('parameter');
 		$this->parameter->sort($this->input->post('parameters'));
+	}
+
+	/**
+	 * Displays the description of parameters.
+	 */
+	public function parameter_help($parameterId) {
+		$this->load->model('parameter');
+		$this->load->helper('typography');
+
+		$parameter = $this->parameter->getById($parameterId);
+		$this->output->set_output(auto_typography($parameter['description']));
 	}
 
 }

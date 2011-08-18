@@ -92,8 +92,20 @@
 	foreach($parameters[$program['id']] as $param):
 ?>
 							<tr>
-								<td><abbr title="<?=$param['description']?>"><?=$param['readable']?></abbr></td>
-								<td><input type="text" name="<?=$param['fieldname']?>" class="long text" value="<?=set_value($param['fieldname'])?>"><?=form_error($param['fieldname'])?></td>
+								<td><?=$param['readable'];?></td>
+								<td>
+									<input type="text" name="<?=$param['name']?>" class="long text" value="<?=set_value($param['name'])?>" />
+<?php
+	if ($param['description'] != ''):
+?>
+									<span class="form_info">
+										<a href="<?=site_url('ajax/parameter_help/' . $param['id']);?>" name="<?=_('Description');?>" id="<?=$param['id'];?>" class="jTip">&nbsp;</a>
+									</span>
+<?php
+	endif;
+?>
+									<?=form_error($param['name'])?>
+								</td>
 								<td><?=$param['unit']?></td>
 							</tr>
 <?
@@ -107,7 +119,7 @@
 	endforeach;
 ?>
 			<p>
-				<a class="button save-big big" href="#" onclick="document.forms.newtrial.submit();return false"><?= _('Save') ?></a>
+				<a class="button save-big big" href="#" onclick="document.forms.newtrial.submit();"><?= _('Save') ?></a>
 			</p>
 		</div>
 	</form>
