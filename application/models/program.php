@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -24,29 +23,58 @@
 
 /**
  * Programs are used to do the actual calculation of a trial.
- * 
+ *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Program extends CI_Model {
 
 	/**
-	 * Create a new program.
-	 *
-	 * @param array $data the data of the new program
-	 * @return bool was the insert successful
+	 * Calls the parent constructor.
 	 */
-	public function create($data) {
-		// TODO: stub
-		return FALSE;
+	public function __construct() {
+		parent::__construct();
 	}
 
 	/**
-	 * Delete a program.
-	 * @param string the program id to delete
-	 * @return bool was the deletion successful
+	 * Creates a new program.
+	 *
+	 * @param string $name The name of the new program
+	 * @return string|boolean Returns the ID of the new program, or FALSE if
+	 *                        the insert was unsuccessful.
 	 */
-	public function delete($program_id) {
-		return $this->db->delete('programs', array('id' => $program_id));
+	public function create($name) {
+		$this->load->helper('hash');
+
+		do { // generate unique hash
+			$id = random_hash('16');
+		} while ($this->db->where('id', $id)->from('programs')->count_all_results() > 0);
+
+		$this->db->insert('programs', array('id' => $id, 'name' => $name));
+
+		return $this->db->affected_rows() > 0 ? $id : false;
+	}
+
+	/**
+	 * Updates a program.
+	 *
+	 * @param string $name The new name of the program
+	 * @param string $id The ID of the program to update
+	 * @return boolean Returns TRUE if the update was successful
+	 */
+	public function update($name, $id) {
+		$this->db->update('programs', array('name' => $name), array('id' => $id));
+		return $this->db->affected_rows() > 0;
+	}
+
+	/**
+	 * Deletes a program.
+	 *
+	 * @param string $programId The program ID to delete
+	 * @return boolean Returns TRUE if the deletion was successful
+	 */
+	public function delete($programId) {
+		return $this->db->delete('programs', array('id' => $programId));
 	}
 
 	/**
@@ -59,13 +87,13 @@ class Program extends CI_Model {
 	}
 
 	/**
-	 * Get a specific program.
+	 * Gets a specific program.
 	 *
-	 * @param string $prg_id The id of the program to get from the database
+	 * @param string $id The id of the program to get from the database
 	 * @return array Declarative array with all available information of the program.
 	 */
-	public function getById($prg_id) {
-		return $this->db->get_where('programs', array('id' => $prg_id))->row_array();
+	public function getById($id) {
+		return $this->db->get_where('programs', array('id' => $id))->row_array();
 	}
 
 	/**
@@ -87,12 +115,12 @@ class Program extends CI_Model {
 	 *     )
 	 * )
 	 *
-	 * @param type $program_id The program for which we want to get the parameters.
+	 * @param string $id The program for which we want to get the parameters.
 	 * @return array The parameters
 	 */
-	public function getParameters($program_id) {
-		$query = $this->db->select('id, fieldname, readable, unit, description, type')
-				->get_where('configuration_fields', array('program_id' => $program_id));
+	public function getParameters($id) {
+		$query = $this->db->order_by('sort_number ASC')
+			->get_where('parameters', array('program_id' => $id));
 
 		return $query->result_array();
 	}

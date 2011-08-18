@@ -16,6 +16,7 @@
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
+			<tbody>
 <?php
 	foreach ($users as $user):
 ?>
@@ -27,7 +28,6 @@
 <?php
 	endforeach;
 ?>
-			<tbody>
 			</tbody>
 		</table>
 

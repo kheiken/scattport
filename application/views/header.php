@@ -1,7 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<!DOCTYPE html>
+<html lang="<?=substr($this->config->item('language'), 0, 2);?>">
+<head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 
 <title>ScattPort</title>
 
@@ -13,10 +14,12 @@
 <?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
 <?=script_tag('assets/js/scattport.js');?>
 <?=script_tag('assets/js/tablednd.jquery.js');?>
+<?=script_tag('assets/js/jtip.js');?>
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
 </script>
 </head>
+
 <body>
 
 <div id="header">
@@ -27,7 +30,7 @@
 			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
 		</select>
 	</div>
-	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
+	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">

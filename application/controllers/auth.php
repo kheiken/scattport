@@ -33,30 +33,23 @@ class Auth extends CI_Controller {
 	 */
 	public function login() {
 		if ($this->access->loggedIn()) {
-			redirect();
+			redirect('dashboard');
 		}
 
-		// validate form input
-		$this->form_validation->set_rules('username', _('Username'), 'required');
-		$this->form_validation->set_rules('password', _('Password'), 'required');
+		$data['messages'] = $this->messages->get('success');
 
-		if ($this->form_validation->run() == true) {
+		if ($this->form_validation->run() === true) {
 			// check for "remember me"
 			$remember = (boolean) $this->input->post('remember');
 
 			if ($this->access->login($this->input->post('username'), $this->input->post('password'), $remember)) {
-				$this->data['success'] = true;
-				redirect('dashboard', 'refresh');
+				redirect('dashboard', 303);
 			} else { // if the login was un-successful
-				$this->data['success'] = false;
-				$this->data['message'] = $this->access->errors();
+				$data['errors'] = $this->messages->get('error');
 			}
-		} else {
-			$this->data['message'] = validation_errors() ? validation_errors() : null;
-			$this->data['username'] = $this->form_validation->set_value('username');
-
-			$this->load->view('auth/login', $this->data);
 		}
+
+		$this->load->view('auth/login', $data);
 	}
 
 	/**
@@ -64,8 +57,7 @@ class Auth extends CI_Controller {
 	 */
 	public function logout() {
 		$logout = $this->access->logout();
-
-		redirect(base_url(), 'refresh');
+		redirect('auth/login');
 	}
 
 	/**
@@ -114,85 +106,66 @@ class Auth extends CI_Controller {
 	 * Allows users to edit their settings.
 	 */
 	public function settings() {
-		if (!$this->access->loggedIn()) {
-			redirect('auth/login', 'refresh');
-		}
+		$user = $this->access->getCurrentUser();
 
-		// validate the form
-		$this->form_validation->set_rules('new_password', _('New password'), 'min_length[' . $this->config->item('min_password_length', 'auth') . ']|max_length[' . $this->config->item('max_password_length', 'access') . ']|matches[new_password_confirm]');
-
-		if ($this->form_validation->run() == true) {
+		if ($this->form_validation->run() === true) {
 			// change password if needed
 			if ($this->input->post('new_password') != '') {
 				$username = $this->session->userdata('username');
 				$change = $this->access->changePassword($username, $this->input->post('old_password'), $this->input->post('new_password'));
-
-				if ($change) {
-					$this->logout();
-				}
+// 				if ($change) {
+// 					$this->logout();
+// 				}
 			}
 
-			// update user
-			$updateData = array(
-                'firstname' => $this->input->post('firstname'),
-                'lastname' => $this->input->post('lastname'),
-                'institution' => $this->input->post('institution'),
-            	'phone' => $this->input->post('phone'),
-                'email' => $this->input->post('email'),
+			// update users table
+			$data = array(
+				'email' => $this->input->post('email'),
+				'firstname' => $this->input->post('firstname'),
+				'lastname' => $this->input->post('lastname'),
+				'institution' => $this->input->post('institution'),
+				'phone' => $this->input->post('phone')
 			);
-			$this->access->updateUser($this->session->userdata('user_id'), $updateData);
 
-			// output JSON data
-			$this->output->set_content_type('application/json')
-				->set_output(json_encode(array('success' => true)));
-		} else {
-			$data['success'] = true;
-			$data['data'] = $this->access->getCurrentUser();
-
-			// output JSON data
-			$this->output->set_content_type('application/json')
-					->set_output(json_encode($data));
+			if ($this->user->update($user['id'], $data)) {
+				$this->messages->add(_("Settings saved successfully"), 'success');
+				redirect('auth/settings', 303);
+			}
 		}
+
+		$this->load->view('auth/settings', $user);
 	}
 
 	/**
 	 * Allows users to request a new password.
 	 */
 	public function forgot_password() {
-		$this->form_validation->set_rules('email', _('eMail address'), 'required');
-		if ($this->form_validation->run() == false) {
-			//setup the input
-			$this->data['email'] = array('name' => 'email',
-				'id' => 'email',
-			);
-			//set any errors and display the form
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-			$this->load->view('auth/forgot_password', $this->data);
-		} else {
-			//run the forgotten password method to email an activation code to the user
-			$forgotten = $this->access->forgotten_password($this->input->post('email'));
+		if ($this->form_validation->run() === true) {
+			// run the forgotten password method to email an activation code to the user
+			$forgotten = $this->access->forgottenPassword($this->input->post('email'));
 
-			if ($forgotten) { //if there were no errors
-				$this->session->set_flashdata('message', $this->access->messages());
-				redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
+			if ($forgotten) { // if there were no errors
+				redirect('auth/login'); // TODO Display a confirmation page here instead of the login page
 			} else {
-				$this->session->set_flashdata('message', $this->access->errors());
-				redirect("auth/forgot_password", 'refresh');
+				redirect('auth/forgot_password');
 			}
 		}
+
+		$data['messages'] = $this->messages->get('success');
+		$data['errors'] = $this->messages->get('error');
+
+		$this->load->view('auth/forgot_password', $data);
 	}
 
 	/**
 	 * Final step for forgotten password.
 	 */
 	public function reset_password($code) {
-		$reset = $this->access->forgotten_password_complete($code);
+		$reset = $this->access->forgottenPasswordComplete($code);
 
-		if ($reset) {  //if the reset worked then send them to the login page
-			$this->session->set_flashdata('message', $this->access->messages());
+		if ($reset) {  // if the reset worked then send them to the login page
 			redirect('auth/login');
-		} else { //if the reset didnt work then send them back to the forgot password page
-			$this->session->set_flashdata('message', $this->access->errors());
+		} else { // if the reset didn't work then send them back to the forgot password page
 			redirect('auth/forgot_password');
 		}
 	}

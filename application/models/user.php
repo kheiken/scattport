@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') || exit("No direct script access allowed");
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * User model.
@@ -6,6 +6,20 @@
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class User extends CI_Model {
+
+	/**
+	 * Should the salt be stored in the database?
+	 *
+	 * @var boolean
+	 */
+	private $storeSalt;
+
+	/**
+	 * Contains the salt length.
+	 *
+	 * @var integer
+	 */
+	private $saltLength;
 
 	/**
 	 * Contains the forgotten password key.
@@ -104,7 +118,7 @@ class User extends CI_Model {
 		$new = $this->hashPassword($new, $result->salt);
 
 		if ($dbPassword === $old) {
-			// store the new password and reset the remember code so all remembered instances have to re-login
+			// reset the remember code so all remembered instances have to re-login
 			$data = array('password' => $new, 'remember_code' => '');
 
 			$this->db->update('users', $data, array('username' => $username));
@@ -117,6 +131,7 @@ class User extends CI_Model {
 	/**
 	 * Checks entered usernames.
 	 *
+	 * @param string $username
 	 * @return boolean
 	 */
 	public function checkUsername($username = '') {
@@ -129,6 +144,7 @@ class User extends CI_Model {
 	/**
 	 * Checks entered emails.
 	 *
+	 * @param string $email
 	 * @return boolean
 	 */
 	public function checkEmail($email = '') {
@@ -141,6 +157,7 @@ class User extends CI_Model {
 	/**
 	 * Inserts a forgotten password key.
 	 *
+	 * @param string $email
 	 * @return boolean
 	 */
 	public function forgottenPassword($email = '') {
@@ -158,8 +175,10 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * Forgotten Password Complete
+	 * Completes the forgotten password procedure.
 	 *
+	 * @param string $code
+	 * @param boolean $salt
 	 * @return string
 	 */
 	public function forgottenPasswordComplete($code, $salt = false) {
@@ -174,7 +193,7 @@ class User extends CI_Model {
 
 			$data = array(
 				'password' => $this->hashPassword($password, $salt),
-				'forgotten_password_code' => null
+				'forgotten_password_code' => null,
 			);
 
 			$this->db->update('users', $data, array('forgotten_password_code' => $code));
@@ -185,15 +204,18 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * profile
+	 * Gets a users profile.
 	 *
-	 * @return boolean|object
+	 * @param string $username
+	 * @param boolean $isCode
+	 * @return mixed
 	 */
 	public function profile($username = '', $isCode = false) {
 		if (empty($username)) {
 			@$username = $this->session->userdata('username');
-			if(empty($username))
-				return FALSE;
+			if (empty($username)) {
+				return false;
+			}
 		}
 
 		$this->db->select('users.*, groups.name AS `group`, groups.description AS `group_description`');
@@ -207,7 +229,7 @@ class User extends CI_Model {
 
 		$query = $this->db->limit(1)->get('users');
 
-		return $query->num_rows > 0 ? $query->row() : false;
+		return $query->num_rows() > 0 ? $query->row_array() : false;
 	}
 
 	/**
@@ -251,7 +273,6 @@ class User extends CI_Model {
 		if ($this->storeSalt) {
 			$data['salt'] = $salt;
 		}
-		print_r($data);
 
 		$this->db->insert('users', array_merge($data, $additionalData));
 
@@ -259,8 +280,11 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * login
+	 * Validates the given password against the username.
 	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param boolean $remember
 	 * @return boolean
 	 */
 	public function login($username, $password, $remember = false) {
@@ -300,8 +324,11 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * get
+	 * Gets users.
 	 *
+	 * @param mixed $group
+	 * @param integer $limit
+	 * @param integer $offset
 	 * @return object
 	 */
 	public function get($group = false, $limit = null, $offset = null) {
@@ -332,6 +359,7 @@ class User extends CI_Model {
 	/**
 	 * Returns the number of users.
 	 *
+	 * @param mixed $group
 	 * @return integer The number of users
 	 */
 	public function count($group = false) {
@@ -346,6 +374,7 @@ class User extends CI_Model {
 	/**
 	 * Gets a user by ID.
 	 *
+	 * @param string $id
 	 * @return array
 	 */
 	public function getUserByID($id = false) {
@@ -353,74 +382,72 @@ class User extends CI_Model {
 			return false;
 		}
 
-		$this->db->where('users.id', $id);
-		$this->db->limit(1);
+		$this->db->where('users.id', $id)->limit(1);
 
 		return $this->get()->row_array();
 	}
 
 	/**
-	 * getUserByEmail
+	 * Gets a user by email.
 	 *
-	 * @return object
+	 * @param string $email
+	 * @return array
 	 */
 	public function getUserByEmail($email) {
-		$this->db->where('users.email', $email);
-		$this->db->limit(1);
-		return $this->get();
+		$this->db->where('users.email', $email)->limit(1);
+		return $this->get()->row_array();
 	}
 
 	/**
-	 * getUserByUsername
+	 * Gets a user by username.
 	 *
-	 * @return object
+	 * @param string $username
+	 * @return array
 	 */
 	public function getUserByUsername($username) {
-		$this->db->where('users.username', $username);
-		$this->db->limit(1);
-		return $this->get();
+		$this->db->where('users.username', $username)->limit(1);
+		return $this->get()->row_array();
 	}
 
 	/**
-	 * getNewestUsers
+	 * Gets a specified number of new users.
 	 *
-	 * @return object
+	 * @param integer $limit
+	 * @return array
 	 */
 	public function getNewestUsers($limit = 10) {
-		$this->db->order_by('users.created_on DESC');
-		$this->db->limit($limit);
-		return $this->get();
+		$this->db->order_by('users.created_on DESC')->limit($limit);
+		return $this->get()->result_array();
 	}
 
 	/**
-	 * getUsersGroup
+	 * Gets a users group.
 	 *
-	 * @return object
+	 * @param string $id
+	 * @return array
 	 */
 	public function getUsersGroup($id = false) {
 		// if no ID was passed use the current users ID
 		$id || $id = $this->session->userdata('user_id');
 
-		$user = $this->db->select('group_id')->where('id', $id)->get('users')
-				->row();
+		$user = $this->db->select('group_id')->where('id', $id)->get('users')->row();
 
 		return $this->db->select('name, description')
-				->where('id', $user->group_id)->get('groups')->row();
+				->where('id', $user->group_id)->get('groups')->row_array();
 	}
 
 	/**
-	 * update
+	 * Updates a user.
 	 *
-	 * @return boolean
+	 * @param string $id
+	 * @param array $data
+	 * @return boolean Returns TRUE if the update was successful.
 	 */
 	public function update($id, $data) {
 		$user = $this->getUserByID($id);
 
-		$this->db->trans_begin();
-
 		if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user['username'] !== $data['username']) {
-			$this->db->trans_rollback();
-			$this->access->setError('account_creation_duplicate_username');
+			$this->messages->add(_('The entered username is already in use.'), 'error');
 			return false;
 		}
 
@@ -432,38 +459,25 @@ class User extends CI_Model {
 			$this->db->update('users', $data, array('id' => $id));
 		}
 
-		if ($this->db->trans_status() === false) {
-			$this->db->trans_rollback();
-			return false;
-		}
-
-		$this->db->trans_commit();
-		return true;
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
-	 * Deletes the specified user.
+	 * Deletes a specified user.
 	 *
-	 * @return boolean
+	 * @param string $id
+	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
 	public function delete($id) {
-		$this->db->trans_begin();
-
 		$this->db->delete('users', array('id' => $id));
-
-		if ($this->db->trans_status() === false) {
-			$this->db->trans_rollback();
-			return false;
-		}
-
-		$this->db->trans_commit();
-		return true;
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
-	 * updateLastLogin
+	 * Updates a users last login time.
 	 *
-	 * @return boolean
+	 * @param string $id
+	 * @return boolean Returns TRUE if the update was successful.
 	 */
 	public function updateLastLogin($id) {
 		$this->db->update('users', array('last_login' => now()), array('id' => $id));
@@ -471,7 +485,7 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * loginRemembedUser
+	 * Logs a remembed user in.
 	 *
 	 * @return boolean
 	 */
@@ -512,8 +526,9 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * rememberUser
+	 * Remembers a user.
 	 *
+	 * @param string $id
 	 * @return boolean
 	 */
 	private function rememberUser($id) {
@@ -542,7 +557,6 @@ class User extends CI_Model {
 		}
 		return false;
 	}
-
 }
 
 /* End of file user.php */

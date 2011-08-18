@@ -12,6 +12,7 @@
 			<ul>
 				<li>
 					<?=form_label(_('Email address'), 'email');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="email" id="email" class="medium text" value="<?=set_value('email', $user['email']);?>" />
 						<?=form_error('email')?>
@@ -19,6 +20,7 @@
 				</li>
 				<li>
 					<?=form_label(_('First name'), 'firstname');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="firstname" id="firstname" class="short text" value="<?=set_value('firstname', $user['firstname']);?>" />
 						<?=form_error('firstname')?>
@@ -26,6 +28,7 @@
 				</li>
 				<li>
 					<?=form_label(_('Last name'), 'lastname');?>
+					<span class="req">*</span>
 					<div>
 						<input type="text" name="lastname" id="lastname" class="short text" value="<?=set_value('lastname', $user['lastname']);?>" />
 						<?=form_error('lastname')?>
@@ -48,13 +51,6 @@
 						<?=form_error('phone')?>
 					</div>
 					<label class="note"><?=_('Example');?>: +49 123 456789</label>
-				</li>
-				<li>
-					<?=form_label(_('Language'), 'language');?>
-					<div>
-						<?=form_dropdown('language', array('English'), null, 'id="language" class="drop"');?>
-						<?=form_error('language')?>
-					</div>
 				</li>
 			</ul>
 			<p>

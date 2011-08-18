@@ -22,56 +22,13 @@ class Users extends CI_Controller {
 	 */
 	public function index() {
 		$data['users'] = $this->user->getAll();
-		$this->load->view('admin/users/index', $data);
+		$this->load->view('admin/users/list', $data);
 	}
 
 	/**
 	 * Allows admins to create a new user.
 	 */
 	public function create() {
-		$config = array(
-			array(
-				'field' => 'username',
-				'label' => _('Username'),
-				'rules' => 'trim|required|min_length[4]|max_length[20]|unique[users.username]',
-			),
-			array(
-				'field' => 'password',
-				'label' => _('Password'),
-				'rules' => 'required|min_length[6]|matches[password_confirm]',
-			),
-			array(
-				'field' => 'password_confirm',
-				'label' => _('Confirm password'),
-			),
-			array(
-				'field' => 'firstname',
-				'label' => _('First name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'lastname',
-				'label' => _('Last name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'email',
-				'label' => _('Email address'),
-				'rules' => 'trim|required|valid_email',
-			),
-			array(
-				'field' => 'institution',
-				'label' => _('Institution'),
-				'rules' => 'trim|max_length[100]',
-			),
-			array(
-				'field' => 'phone',
-				'label' => _('Phone number'),
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
-			)
-		);
-		$this->form_validation->set_rules($config);
-
 		if ($this->form_validation->run() === true) {
 			$username = $this->input->post('username');
 
@@ -83,7 +40,7 @@ class Users extends CI_Controller {
 			);
 
 			if ($this->user->register($username, $this->input->post('password'), $this->input->post('email'), $data)) {
-				$this->messages->add(sprintf(_("The user '%s' was created"), $username), 'success');
+				$this->messages->add(sprintf(_("The user '%s' has been created successfully"), $username), 'success');
 				redirect('admin/users', 303);
 			}
 		}
@@ -103,36 +60,7 @@ class Users extends CI_Controller {
 			show_404();
 		}
 
-		$config = array(
-			array(
-				'field' => 'firstname',
-				'label' => _('First name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'lastname',
-				'label' => _('Last name'),
-				'rules' => 'trim|required|max_length[50]',
-			),
-			array(
-				'field' => 'email',
-				'label' => _('Email address'),
-				'rules' => 'trim|required|valid_email',
-			),
-			array(
-				'field' => 'institution',
-				'label' => _('Institution'),
-				'rules' => 'trim|max_length[100]',
-			),
-			array(
-				'field' => 'phone',
-				'label' => _('Phone number'),
-				'rules' => 'trim|regex_match[/^\+\d{2,4}\s\d{2,4}\s\d{3,10}+$/i]',
-			)
-		);
-		$this->form_validation->set_rules($config);
-
-		if ($this->form_validation->run() === true) {
+		if ($this->form_validation->run('users/edit') === true) {
 			$data = array(
 				'email' => $this->input->post('email'),
 				'firstname' => $this->input->post('firstname'),
@@ -142,7 +70,7 @@ class Users extends CI_Controller {
 			);
 
 			if ($this->user->update($user['id'], $data)) {
-				$this->messages->add(sprintf(_("The user '%s' was updated"), $user['username']), 'success');
+				$this->messages->add(sprintf(_("The user '%s' has been updated successfully"), $user['username']), 'success');
 				redirect('admin/users', 303);
 			}
 		}
@@ -162,7 +90,7 @@ class Users extends CI_Controller {
 			show_404();
 		} else {
 			$this->user->delete($user['id']);
-			$this->messages->add(_("The selected user was deleted"), 'success');
+			$this->messages->add(_("The selected user has been deleted successfully"), 'success');
 			redirect('admin/users', 303);
 		}
 	}

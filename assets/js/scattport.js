@@ -67,35 +67,35 @@ $.fn.nl2br = function() {
 	return $(this).html().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
 };
 
-/*
- * Tabs
- */
-$(document).ready(function() {
-	$(".tab_content").hide(); // hide all content
-	$("ul.tabs li:first").addClass("active").show(); // activate first tab
-	$(".tab_content:first").show(); // show first tab content
-
-	// onClick event
-	$("ul.tabs li").click(function() {
-
-		$("ul.tabs li").removeClass("active"); // remove any "active" class
-		$(this).addClass("active"); // add "active" class to selected tab
-		$(".tab_content").hide(); // hide all tab content
-
-		var activeTab = $(this).find("a").attr("href");
-		$(activeTab).fadeIn(); // fade in the active tab content
-		return false;
-	});
-
-	$('#notifications').hide();
-	getNotifications();
-	setInterval('getNotifications()', '5000');
-});
-
 /**
  * Do some stuff if document is ready.
  */
 $(document).ready(function() {
+	/*
+	 * Tabs
+	 */
+	$('.tab_content').hide(); // hide all content
+	$('ul.tabs li:first').addClass('active').show(); // activate first tab
+	$('.tab_content:first').show(); // show first tab content
+
+	// onClick event
+	$('ul.tabs li').click(function() {
+		$('ul.tabs li').removeClass('active'); // remove any 'active' class
+		$(this).addClass('active'); // add 'active' class to selected tab
+		$('.tab_content').hide(); // hide all tab content
+
+		var activeTab = $(this).find('a').attr('href');
+		$(activeTab).fadeIn(); // fade in the active tab content
+		return false;
+	});
+
+	/*
+	 * Notification stuff
+	 */
+	$('#notifications').hide();
+	getNotifications();
+	setInterval('getNotifications()', '5000');
+
 	/*
 	 * Tables
 	 */
@@ -103,14 +103,14 @@ $(document).ready(function() {
 			table_class : 'tableList'
 	};
 
-	// add or delete "hover" class on mouseOver event
+	// add or delete 'hover' class on mouseOver event
 	$('.' + settings.table_class + ' tbody tr').hover(function() {
-		$(this).addClass("hover");
+		$(this).addClass('hover');
 	}, function() {
-		$(this).removeClass("hover");
+		$(this).removeClass('hover');
 	});
 
-	// add or delete "selected" class if a row is selected via checkbox
+	// add or delete 'selected' class if a row is selected via checkbox
 	$('.' + settings.table_class + ' tbody input:checkbox').click(function() {
 		if ($(this).attr('checked') == true) {
 			$(this).parent().parent().addClass('selected');
@@ -163,7 +163,18 @@ $(document).ready(function() {
 		table.trigger('repaginate');
 	});
 
-	$('.sortable').tableDnD();
+	/*
+	 * Sortable tables
+	 */
+	$('.sortable').tableDnD({
+		dragHandle: 'drag_handle'
+	});
+
+	$('.sortable tr').hover(function() {
+		$(this).find('td.drag_handle').addClass('drag_handle-show');
+	}, function() {
+		$(this).find('td.drag_handle').removeClass('drag_handle-show');
+	});
 
 	/*
 	 * In-place editor
@@ -187,6 +198,9 @@ $(document).ready(function() {
 		$(this).removeClass('editable');
 	});
 
+	/*
+	 * Active project selection
+	 */
 	$('select[name="activeProject"]').bind('change', function () {
 		var url = $(this).val();
 		if (url) {

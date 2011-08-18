@@ -1,4 +1,5 @@
-/* Table Style */
+@CHARSET "UTF-8";
+/* Table styles */
 
 table {
 	width: 99%;
@@ -26,9 +27,17 @@ table td {
 	border-bottom: 1px solid #d2d2d2;
 }
 
-table td span.active { color: #55a34a;}
-table td span.pending { color: #c5a059;}
-table td span.closed { color: #a02b2b;}
+table td span.active {
+	color: #55a34a;
+}
+
+table td span.pending {
+	color: #c5a059;
+}
+
+table td span.closed {
+	color: #a02b2b;
+}
 
 table .odd {
 	background: #f6f6f6; 
@@ -45,6 +54,16 @@ table .hover {
 table tbody tr:nth-child(even) {
     background: #fff;
 }
+
 table tbody tr:nth-child(odd) {
     background: #f6f6f6;
+}
+
+td.drag_handle {
+	width: 16px;
+}
+
+td.drag_handle-show {
+	background: url(../images/icons/arrow-resize-090.png) center center no-repeat;
+	cursor: move;
 }
