@@ -12,11 +12,23 @@ body {
 	background: #404040;
 }
 
-a { color: #0088cc; text-decoration: none;}
-a:hover { text-decoration: underline;}
-a img { border: none;}
+a {
+	color: #08c;
+	text-decoration: none;
+}
 
-p { margin: 0px 0px 20px 0px; line-height: 18px;}
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+p {
+	margin: 0 0 20px 0;
+	line-height: 18px;
+}
 
 #box {
 	margin: 40px auto;
