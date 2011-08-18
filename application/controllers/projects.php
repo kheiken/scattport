@@ -1,30 +1,31 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 /**
+ *
  * @author Karsten Heiken <karsten@disposed.de>
-*/
+ * @author Eike Foken <kontakt@eikefoken.de>
+ */
 class Projects extends CI_Controller {
 
 	/**
@@ -43,7 +44,7 @@ class Projects extends CI_Controller {
 		$projects = $this->project->getAll();
 
 		$tpl['projects'] = $projects;
-		$this->load->view('project/list', $tpl);
+		$this->load->view('projects/list', $tpl);
 	}
 
 	/**
@@ -100,7 +101,7 @@ class Projects extends CI_Controller {
 			$data['model']['success'] = isset($modelUploaded) && $modelUploaded ? true : false;
 			$data['config']['success'] = isset($configUploaded) && $configUploaded ? true: false;
 
-			$this->load->view('project/new', $data);
+			$this->load->view('projects/new', $data);
 		} else {
 			$data = array(
 				'name' => $this->input->post('name'),
@@ -112,17 +113,9 @@ class Projects extends CI_Controller {
 			$data['project_id'] = $this->project->create($data);
 
 			if (isset($data['project_id'])) {
-				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
-				$projectpath = $userpath . $data['project_id'] . '/';
-
-				if (!is_dir($projectpath)) {
-					if (!is_dir($userpath)) {
-						mkdir($userpath, 0777);
-						chmod($userpath, 0777);
-					}
-					mkdir($projectpath, 0777);
-					chmod($projectpath, 0777);
-				}
+				$this->load->helper('directory');
+				$projectPath = FCPATH.'uploads/'.$this->session->userdata('user_id').'/'.$data['project_id'].'/';
+				mkdirs($projectPath);
 
 				if ($modelUploaded) {
 					copy($modelData['full_path'], $projectpath . $modelData['file_name']);
@@ -132,10 +125,10 @@ class Projects extends CI_Controller {
 				}
 
 				$this->messages->add($projectpath, 'notice');
-				redirect('/projects/detail/' . $data['project_id'], 301);
+				redirect('/projects/detail/' . $data['project_id'], 303);
 			} else {
 				$this->messages->add(_('The project could not be created.'), 'error');
-				$this->load->view('project/new');
+				$this->load->view('projects/new');
 			}
 		}
 	}
@@ -143,22 +136,22 @@ class Projects extends CI_Controller {
 	/**
 	 * Shows the project details
 	 *
-	 * @param integer $prj_id The ID of the project to show
+	 * @param integer $id The ID of the project to show
 	 */
-	public function detail($prj_id) {
-		$project = $this->project->getById($prj_id);
+	public function detail($id) {
+		$this->load->helper('typography');
+
+		$project = $this->project->getById($id);
 		if (!$project) {
 			$this->messages->add(_('The project could not be loaded.'), 'error');
-			redirect('projects', 301);
+			redirect('projects', 303);
 		}
 
-		$this->session->set_userdata('active_project', $prj_id);
-		$trials = $this->trial->getByProjectId($prj_id);
+		$data['project'] = $project;
+		$data['trials'] = $this->trial->getByProjectId($id);
+		$data['jobsDone'] = null;
 
-		$tpl['project'] = $project;
-		$tpl['trials'] = $trials;
-		$tpl['jobsDone'] = null;
-		$this->load->view('project/detail', $tpl);
+		$this->load->view('projects/detail', $data);
 	}
 
 	/**
@@ -166,11 +159,11 @@ class Projects extends CI_Controller {
 	 *
 	 * @param integer $projectId
 	 */
-	public function delete($projectId) {
-		$this->project->delete($projectId);
-		$this->session->unset_userdata('active_project');
-		$this->messages->add(_('The project was deleted.'), 'success');
-		redirect('projects');
+	public function delete($id) {
+		if ($this->project->delete($id)) {
+			$this->messages->add(_('The project was deleted.'), 'success');
+		}
+		redirect('projects', 303);
 	}
 
 }

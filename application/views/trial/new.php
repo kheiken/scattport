@@ -66,6 +66,7 @@
 ?>
 			<h4><?=_('Application to use for the computation');?></h4>
 			<input type="hidden" name="program_id" id="program_id" value="<?=set_value('program_id');?>" />
+			<?=form_error('program_id');?>
 			<p>
 <?
 	foreach ($programs as $program):

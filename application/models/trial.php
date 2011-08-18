@@ -36,15 +36,19 @@ class Trial extends CI_Model {
 	 * @return bool was the insert successful
 	 */
 	public function create($data) {
-		do {
+		if (!isset($data['project_id'])) {
+			return false;
+		}
+
+		do { // generate unique hash
 			$data['id'] = random_hash();
 		} while ($this->db->where('id', $data['id'])->from('trials')->count_all_results() > 0);
 
-
-		if ($this->db->insert('trials', $data))
+		if ($this->db->insert('trials', $data)) {
 			return $data['id'];
-		else
-			return FALSE;
+		} else {
+			return false;
+		}
 	}
 
 	/**

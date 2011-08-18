@@ -201,6 +201,29 @@ $config['parameters/create'] = array(
 	),
 );
 
+/**
+ * Rules for creating trials.
+ *
+ * @var array
+ */
+$config['trials/create'] = array(
+	array(
+		'field' => 'name',
+		'label' => _('Trial name'),
+		'rules' => 'required|min_length[3]|max_length[60]|trim',
+	),
+	array(
+		'field' => 'description',
+		'label' => _('Description'),
+		'rules' => 'required|trim',
+	),
+	array(
+		'field' => 'program_id',
+		'label' => _('Program'),
+		'rules' => 'required|alpha_numeric|trim',
+	),
+);
+
 /* End of file form_validation.php */
 /* Location: ./application/config/form_validation.php */
 

@@ -42,9 +42,13 @@ class Trials extends CI_Controller {
 	}
 
 	/**
-	 * Create a new project.
+	 * Allows users to create new trials.
+	 *
+	 * @param string $projectId
 	 */
-	public function create($projectId = '') {
+	public function create($projectId = '', $copyId = '') {
+		// TODO: Handle copying of trials
+
 		$project = $this->project->getByID($projectId);
 
 		if (empty($projectId) || !isset($project['id'])){
@@ -58,22 +62,8 @@ class Trials extends CI_Controller {
 			$parameters[$program['id']] = $this->parameter->getAll($program['id']);
 		}
 
-		$config = array(
-			array(
-				'field' => 'name',
-				'label' => _('Trial name'),
-				'rules' => 'required|min_length[3]|max_length[60]|trim',
-			),
-			array(
-				'field' => 'description',
-				'label' => _('Description'),
-				'rules' => 'required|trim',
-			),
-		);
-		$this->form_validation->set_rules($config);
-
-		if ($this->form_validation->run() === true) {
-			// TODO: handle file upload
+		if ($this->form_validation->run('trials/create') === true) {
+			// TODO: Handle file upload
 
 			$data = array(
 				'name' => $this->input->post('name'),
@@ -83,43 +73,32 @@ class Trials extends CI_Controller {
 				'creator_id' => $this->session->userdata('user_id'),
 			);
 
-			$result = $this->trial->create($data);
-			if ($result) {
+			$trialId = $this->trial->create($data);
+			if ($trialId) {
 				foreach ($_POST as $key => $value) {
 					if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
 						$param['parameter_id'] = substr($key, 6, 16);
 						$param['value'] = $this->input->post($key);
-						$this->trial->addParameter($param, $result);
+						$this->trial->addParameter($param, $trialId);
 					}
 				}
 
-				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
-				$projectpath = $userpath . $projectId . '/';
-				$trialpath = $projectpath . $result . '/';
-				if(!is_dir($trialpath)) {
-					if (!is_dir($projectpath)) {
-						if(!is_dir($userpath)) {
-							mkdir($userpath);
-							chmod($userpath, 0777);
-						}
-						mkdir($projectpath);
-						chmod($projectpath, 0777);
-					}
-					mkdir($trialpath);
-					chmod($trialpath, 0777);
-				}
+				$this->load->helper('directory');
+				$trialPath = FCPATH.'uploads/'.$this->session->userdata('user_id').'/'.$projectId.'/'. $trialId.'/';
+				mkdirs($trialPath);
 
-				redirect('trials/detail/' . $result, 'refresh');
+				redirect('trials/detail/' . $trialId, 'refresh');
 			} else {
 				$this->messages->add(_('The trial could not be created.'), 'error');
 			}
 		}
 
-		$tpl['parameters'] = $parameters;
-		$tpl['programs'] = $programs;
-		$tpl['project'] = $project;
+		$data = array(); // empty the data array
+		$data['parameters'] = $parameters;
+		$data['programs'] = $programs;
+		$data['project'] = $project;
 
-		$this->load->view('trial/new', $tpl);
+		$this->load->view('trial/new', $data);
 	}
 }
 
