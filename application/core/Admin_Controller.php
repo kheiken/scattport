@@ -35,7 +35,7 @@ class Admin_Controller extends CI_Controller {
 		parent::__construct();
 
 		if (!$this->access->isAdmin()) {
-			show_error(_('Shove off, this is for admins.'));
+			show_error(_('Shove off, this is for admins.'), 403);
 		}
 	}
 }
