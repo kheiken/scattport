@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -21,20 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+require_once APPPATH . 'core/Admin_Controller.php';
 
 /**
  * Server management.
- * 
+ *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Servers extends CI_Controller {
+class Servers extends Admin_Controller {
 
 	/**
 	 * Constructor.
 	 */
 	function __construct() {
 		parent::__construct();
-
 		$this->load->model('server');
 	}
 
@@ -49,7 +48,7 @@ class Servers extends CI_Controller {
 
 	/**
 	 * Retrieve details of a server.
-	 * 
+	 *
 	 * @param type $server_id
 	 */
 	function detail($server_id) {
@@ -59,3 +58,6 @@ class Servers extends CI_Controller {
 	}
 
 }
+
+/* End of file servers.php */
+/* Location: ./application/controllers/admin/servers.php */
