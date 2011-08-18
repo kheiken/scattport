@@ -39,27 +39,31 @@
 	<div id="sidebar">
 
 		<div class="title">
-			<h2><?=_('Actions')?></h2>
+			<h2><?=_('Actions');?></h2>
 		</div>
 		<div class="navigation">
 			<ul>
 <?
-	if($this->session->userdata('active_project')):
-		$active_project = $this->project->getById($this->session->userdata('active_project'));
+	if ($this->input->get('active_project')):
+		$active_project = $this->project->getById($this->input->get('active_project'));
 ?>
-				<li><?=_('Project')?> <?=$active_project['name']?>
+				<li>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Project');?> <?=$active_project['name'];?></a>
 					<ul>
-						<li><a href="<?=site_url('projects/detail/'.$active_project['id'])?>" title="<?=_('Show overview')?>"><?=_('Overview')?></a></li>
-						<li><a href="<?=site_url('trials/create/'.$active_project['id'])?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('New trial')?></a></li>
-						<li><a href="<?=site_url('results/project/'.$active_project['id'])?>" title="<?=sprintf(_('Show results for the project &quot;%s&quot;'), $active_project['name'])?>"><?=_('Show results')?></a></li>
+						<li><a href="<?=site_url('projects/detail/' . $active_project['id']);?>" title="<?=_('Show overview');?>"><?=_('Overview');?></a></li>
+						<li><a href="<?=site_url('trials/create/' . $active_project['id']);?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('New trial');?></a></li>
+						<li><a href="<?=site_url('results/project/' . $active_project['id']);?>" title="<?=sprintf(_('Show results for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('Show results');?></a></li>
 					</ul>
 				</li>
 <?
 	endif;
 ?>
-				<li><?=_('Global')?>
+				<li>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Projects');?></a>
 					<ul>
-						<li><a href="<?=site_url('projects/create')?>" title="<?=_('Create a new project')?>"><?=_('New project')?></a></li>
+						<li><a href="<?=site_url('projects/create');?>" title="<?=_('Create a new project');?>"><?=_('New project');?></a></li>
+						<li><a href="<?=site_url('projects');?>" title="<?=_('Shows a list of all projects');?>"><?=_('Show projects');?></a></li>
+						<li><a href="<?=site_url('projects/search');?>" title="<?=_('Search for a project');?>"><?=_('Search');?></a></li>
 					</ul>
 				</li>
 			</ul>
@@ -70,7 +74,8 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li><a href="#"><?=_('Own projects')?></a>
+				<li>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Own projects')?></a>
 					<ul>
 <?
 	$projects = $this->project->getOwn();
@@ -82,12 +87,14 @@
 ?>
 					</ul>
 				</li>
-				<li><a href="#"><?=_('Projects shared with me')?></a>
+				<li>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Projects shared with me')?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
-				<li><a href="#"><?=_('Public projects')?></a>
+				<li>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Public projects')?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
 					</ul>
