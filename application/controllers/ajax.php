@@ -58,12 +58,10 @@ class Ajax extends CI_Controller {
 
 	/**
 	 * Sorts a programs parameters.
-	 *
-	 * @param string $id
 	 */
-	public function sort_parameters($programId) {
-		$this->load->model('program');
-		$this->program->sortParameters($this->input->post('parameters'), $programId);
+	public function sort_parameters() {
+		$this->load->model('parameter');
+		$this->parameter->sort($this->input->post('parameters'));
 	}
 
 }
