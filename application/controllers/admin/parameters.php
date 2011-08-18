@@ -35,6 +35,7 @@ class Parameters extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('parameter');
 		$this->load->model('program');
+		$this->load->library('form_validation');
 	}
 
 	/**

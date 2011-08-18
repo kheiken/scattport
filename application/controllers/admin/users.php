@@ -34,8 +34,8 @@ class Users extends Admin_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('form_validation');
 		$this->load->model('user');
+		$this->load->library('form_validation');
 	}
 
 	/**

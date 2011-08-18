@@ -34,9 +34,9 @@ class Programs extends Admin_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('form_validation');
 		$this->load->model('program');
 		$this->load->model('parameter');
+		$this->load->library('form_validation');
 	}
 
 	/**
