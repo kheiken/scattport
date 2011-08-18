@@ -1,48 +1,49 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('header');?>
 
 <div id="content">
 
 	<div class="title">
-		<h2><?= _('Create a new trial') ?></h2>
+		<h2><?=_('Create a new trial');?></h2>
 	</div>
 
-	<form name="newtrial" method="post" action="<?=site_url('trials/create')?>">
+	<form name="newTrial" method="post" action="<?=site_url('trials/create/' . $project['id']);?>">
 		<div class="box">
 
-
-			<h3><?= _('Required information') ?></h3>
+			<h3><?=_('Required information');?></h3>
 				<ul>
 					<li>
-						<h4><?= _('Trial name') ?> <span class="req">*</span></h4>
+						<?=form_label(_('Trial name'), 'name');?>
+						<span class="req">*</span>
 						<div>
-							<input type="text" name="name" class="short text" value="<?=set_value('name')?>">
-							<?=form_error('name')?>
+							<input type="text" name="name" id="name" class="short text" value="<?=set_value('name');?>" />
+							<?=form_error('name');?>
 						</div>
 					</li>
 					<li>
-						<h4><?= _('Description') ?></h4>
-						<label class="note"><?= _('A description is useful if you want to share this trial with co-workers.') ?></label>
+						<?=form_label(_('Description'), 'description');?>
+						<span class="req">*</span>
 						<div>
-							<textarea name="description" rows="6" cols="60" class="textarea"><?=set_value('description')?></textarea>
-							<?=form_error('description')?>
+							<textarea name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
+							<?=form_error('description');?>
 						</div>
+						<label class="note"><?=_('A description is useful if you want to share this trial with co-workers.');?></label>
 					</li>
 					<li>
-						<h4><?= _('3D model') ?></h4>
+						<h4><?=_('3D model');?></h4>
 <?
-	$defaultmodel = "foo";
-	if(isset($defaultmodel)):
+	$defaultmodel = 'foo';
+	if (isset($defaultmodel)):
 ?>
 						<div class="notice">
-							<strong><?= _('There is a default model set for this project.') ?></strong><br />
-								<?= _('If you want to use a different model for this trial, you can upload it here.') ?>
+							<strong><?=_('There is a default model set for this project.');?></strong><br />
+							<?=_('If you want to use a different model for this trial, you can upload it here.');?>
 						</div>
 <?
 	endif;
 ?>
 						<div>
-							<input type="file" class="file" name="defaultmodel" value="<?=set_value('defaultmodel')?>">
-							<?=form_error('defaultmodel')?>
+							<input type="file" class="file" name="defaultmodel" value="<?=set_value('defaultmodel');?>" />
+							<?=form_error('defaultmodel');?>
 						</div>
 					</li>
 				</ul>
@@ -50,63 +51,65 @@
 
 		<div class="box">
 
-			<h3><?= _('Application-specific parameters') ?></h3>
+			<h3><?=_('Application-specific parameters');?></h3>
 <?
-	$defaultconfig = "foo";
-	if(isset($defaultconfig)):
+	$defaultconfig = 'foo';
+	if (isset($defaultconfig)):
 ?>
 			<div class="notice">
-				<strong><?= _('There is a default configuration set for this project.') ?></strong><br />
-				<?= _('This form contains the default values. You can adjust them for this trial.') ?><br />
-				<?= _('The default configuration will not be modified.') ?>
+				<strong><?=_('There is a default configuration set for this project.');?></strong><br />
+				<?=_('This form contains the default values. You can adjust them for this trial.');?><br />
+				<?=_('The default configuration will not be modified.');?>
 			</div>
 <?
 	endif;
 ?>
-			<h4><?= _('Application to use for the computation') ?></h4>
+			<h4><?=_('Application to use for the computation');?></h4>
+			<input type="hidden" name="program_id" id="program_id" value="<?=set_value('program_id');?>" />
 			<p>
 <?
-	foreach($programs as $program):
-?><a class="button" onclick="$('.program-parameters').hide();$('#<?=$program['id']?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');return false;" href="#"><?=$program['name']?></a>
+	foreach ($programs as $program):
+?>
+				<a class="button" href="javascript:void(0);" onclick="$('.program-parameters').hide();$('#<?=$program['id'];?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');$('input[name=program_id]').val('<?=$program['id'];?>');return false;"><?=$program['name'];?></a>
 <?
 	endforeach;
 ?>
 			</p>
 <?
-	foreach($programs as $program):
+	foreach ($programs as $program):
 ?>
 
-			<div class="program-parameters" id="<?=$program['id']?>-params" style="display:none">
-				<h4><?= sprintf(_('Parameters for %s'), $program['name'])?></h4>
+			<div class="program-parameters" id="<?=$program['id'];?>-params" style="display:none">
+				<h4><?=sprintf(_('Parameters for %s'), $program['name']);?></h4>
 				<p>
 					<table>
 						<thead>
 							<tr>
-								<th scope="col" width="40%"><?= _('Parameter') ?></th>
-								<th scope="col" width="40%"><?= _('Value') ?></th>
-								<th scope="col"><?= _('Unit') ?></th>
+								<th scope="col" width="40%"><?=_('Parameter');?></th>
+								<th scope="col" width="40%"><?=_('Value');?></th>
+								<th scope="col"><?=_('Unit');?></th>
 							</tr>
 						</thead>
 						<tbody>
 <?
-	foreach($parameters[$program['id']] as $param):
+	foreach ($parameters[$program['id']] as $param):
 ?>
 							<tr>
 								<td><?=$param['readable'];?></td>
 								<td>
-									<input type="text" name="<?=$param['name']?>" class="long text" value="<?=set_value($param['name'])?>" />
+									<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : $param['default_value']);?>" />
 <?php
-	if ($param['description'] != ''):
+	if (!empty($param['description'])):
 ?>
 									<span class="form_info">
-										<a href="<?=site_url('ajax/parameter_help/' . $param['id']);?>" name="<?=_('Description');?>" id="<?=$param['id'];?>" class="jTip">&nbsp;</a>
+										<a href="<?=site_url('ajax/parameter_help/' . $param['id']);?>" name="<?=_('Description');?>" id="<?=$param['id'];?>" class="jtip">&nbsp;</a>
 									</span>
 <?php
 	endif;
 ?>
-									<?=form_error($param['name'])?>
+									<?=form_error('params');?>
 								</td>
-								<td><?=$param['unit']?></td>
+								<td><?=$param['unit'];?></td>
 							</tr>
 <?
 	endforeach;
@@ -119,11 +122,11 @@
 	endforeach;
 ?>
 			<p>
-				<a class="button save-big big" href="#" onclick="document.forms.newtrial.submit();"><?= _('Save') ?></a>
+				<a class="button save-big big" href="javascript:void(0);" onclick="$('form[name=newTrial]').submit();"><?=_('Save');?></a>
 			</p>
 		</div>
 	</form>
 
 </div>
 
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('footer');?>

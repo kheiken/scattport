@@ -24,7 +24,7 @@
 
 /**
  * Trials are used to store different variations of the same project.
- * 
+ *
  * @author Karsten Heiken <karsten@disposed.de>
  */
 class Trial extends CI_Model {
@@ -54,6 +54,28 @@ class Trial extends CI_Model {
 	 */
 	public function delete($trial_id) {
 		return $this->db->delete('trials', array('id' => $trial_id));
+	}
+
+	/**
+	 * Adds a parameter for a specific trial.
+	 *
+	 * @param array $data
+	 * @param string $trialId
+	 * @return boolean Returns TRUE if the parameter was added successfully.
+	 */
+	public function addParameter($data, $trialId) {
+		if (!isset($data['parameter_id'])) {
+			return false;
+		}
+
+		$trial = $this->get($trialId);
+		$parameter = $this->db->get_where('parameters', array('id' => $data['parameter_id']))->row_array();
+
+		if (isset($trial['id']) && $trial['program_id'] == $parameter['program_id']) {
+			$data['trial_id'] = $trialId;
+			$this->db->insert('trials_parameters', $data);
+		}
+		return $this->db->affected_rows() == 1 ? $trialId : false;
 	}
 
 	/**

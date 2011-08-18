@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -26,6 +25,7 @@
  * Trials are used to store different variations of the same project.
  *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Trials extends CI_Controller {
 
@@ -34,57 +34,68 @@ class Trials extends CI_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('trial');
+		$this->load->library('form_validation');
+		$this->load->model('parameter');
 		$this->load->model('program');
 		$this->load->model('project');
+		$this->load->model('trial');
 	}
 
 	/**
 	 * Create a new project.
 	 */
-	public function create() {
-		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+	public function create($projectId = '') {
+		$project = $this->project->getByID($projectId);
+
+		if (empty($projectId) || !isset($project['id'])){
+			show_404();
+		}
 
 		$programs = $this->program->getAll();
 
-		// Get the parameters for a specific program
-		foreach ($programs as $program)
-			$parameters[$program['id']] = $this->program->getParameters($program['id']);
+		// get the parameters for a specific program
+		foreach ($programs as $program) {
+			$parameters[$program['id']] = $this->parameter->getAll($program['id']);
+		}
 
 		$config = array(
 			array(
 				'field' => 'name',
-				'label' => 'Projektname',
-				'rules' => 'trim|required|min_length[3]|max_length[100]|xss_clean',
+				'label' => _('Trial name'),
+				'rules' => 'required|min_length[3]|max_length[60]|trim',
 			),
 			array(
 				'field' => 'description',
-				'label' => 'Beschreibung',
-				'rules' => 'trim|required|xss_clean',
+				'label' => _('Description'),
+				'rules' => 'required|trim',
 			),
 		);
-
 		$this->form_validation->set_rules($config);
 
-
-		if ($this->form_validation->run() == FALSE) {
-			$tpl['parameters'] = $parameters;
-			$tpl['programs'] = $programs;
-			$this->load->view('trial/new', $tpl);
-		} else {
+		if ($this->form_validation->run() === true) {
 			// TODO: handle file upload
 
 			$data = array(
 				'name' => $this->input->post('name'),
 				'description' => $this->input->post('description'),
+				'program_id' => $this->input->post('program_id'),
+				'project_id' => $projectId,
+				'creator_id' => $this->session->userdata('user_id'),
 			);
 
 			$result = $this->trial->create($data);
 			if ($result) {
+				foreach ($_POST as $key => $value) {
+					if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
+						$param['parameter_id'] = substr($key, 6, 16);
+						$param['value'] = $this->input->post($key);
+						$this->trial->addParameter($param, $result);
+					}
+				}
+
 				$userpath = FCPATH . 'uploads/' . $this->session->userdata('user_id') . '/';
-				$projectpath = $userpath . $data['project_id'] . '/';
-				$trialpath = $projectpath . $data['trial_id'] . '/';
+				$projectpath = $userpath . $projectId . '/';
+				$trialpath = $projectpath . $result . '/';
 				if(!is_dir($trialpath)) {
 					if (!is_dir($projectpath)) {
 						if(!is_dir($userpath)) {
@@ -98,11 +109,19 @@ class Trials extends CI_Controller {
 					chmod($trialpath, 0777);
 				}
 
-				redirect('/trial/detail/' . $result, 'refresh');
+				redirect('trials/detail/' . $result, 'refresh');
 			} else {
 				$this->messages->add(_('The trial could not be created.'), 'error');
-				$this->load->view('trial/new', $tpl);
 			}
 		}
+
+		$tpl['parameters'] = $parameters;
+		$tpl['programs'] = $programs;
+		$tpl['project'] = $project;
+
+		$this->load->view('trial/new', $tpl);
 	}
 }
+
+/* End of file trials.php */
+/* Location: ./application/controllers/trials.php */
