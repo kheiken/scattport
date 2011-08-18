@@ -4,11 +4,7 @@
 $(document).ready(function() {
 	$('#parameters').tableDnD({
 		onDrop: function(table, row) {
-			/*var rows = table.tBodies[0].rows;
-			for (var i = 0; i < rows.length; i++) {
-				$(rows[i]).children().find('input[type=hidden]').val(i + 1);
-			}*/
-			$.post(SITE_URL + 'ajax/sort_parameters/<?=$program['id'];?>', $.tableDnD.serialize());
+			$.post(SITE_URL + 'ajax/sort_parameters', $.tableDnD.serialize());
 		},
 		dragHandle: 'drag_handle'
 	});
@@ -61,7 +57,7 @@ $(document).ready(function() {
 						<td><?=$parameter['readable'];?></td>
 						<td><?=$parameter['unit'];?></td>
 						<td><?=$parameter['type'];?></td>
-						<td><?=anchor('admin/programs/edit_parameter/' . $parameter['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/programs/delete_parameter/' . $parameter['id']);?>');"><?=_('Delete');?></a></td>
+						<td><?=anchor('admin/parameters/edit/' . $parameter['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/parameters/delete/' . $parameter['id']);?>');"><?=_('Delete');?></a></td>
 					</tr>
 <?php
 	endforeach;
@@ -69,7 +65,7 @@ $(document).ready(function() {
 				</tbody>
 			</table>
 			<p>
-				<a class="button add" href="<?=site_url('admin/programs/add_parameter');?>"><?=_('Add new parameter');?></a>
+				<a class="button add" href="<?=site_url('admin/parameters/create/' . $program['id']);?>"><?=_('Add new parameter');?></a>
 			</p>
 		</form>
 	</div>

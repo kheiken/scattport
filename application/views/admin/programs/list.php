@@ -29,7 +29,7 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('admin/users/create')?>"><?=_('Create new user')?></a>
+		<p><a class="button add" href="<?=site_url('admin/programs/create')?>"><?=_('Add program')?></a>
 	</div>
 </div>
 

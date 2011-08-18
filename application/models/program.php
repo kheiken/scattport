@@ -119,19 +119,9 @@ class Program extends CI_Model {
 	 * @return array The parameters
 	 */
 	public function getParameters($id) {
-		$query = $this->db->order_by('order ASC')
+		$query = $this->db->order_by('sort_number ASC')
 			->get_where('parameters', array('program_id' => $id));
 
 		return $query->result_array();
-	}
-
-	/**
-	 *
-	 * @param string $programId
-	 */
-	public function sortParameters($order, $programId) {
-		foreach ($order as $key => $value) {
-			$this->db->update('parameters', array('order' => $key), array('id' => $value));
-		}
 	}
 }

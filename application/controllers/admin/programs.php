@@ -13,6 +13,7 @@ class Programs extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('program');
+		$this->load->model('parameter');
 	}
 
 	/**
@@ -43,8 +44,9 @@ class Programs extends CI_Controller {
 		}
 
 		$data['program'] = $program;
-		$data['parameters'] = $this->program->getParameters($program['id']);
+		$data['parameters'] = $this->parameter->getAll($program['id']);
 
 		$this->load->view('admin/programs/edit', $data);
 	}
+
 }
