@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') || exit("No direct script access allowed");
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * User model.
@@ -409,18 +409,17 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * update
+	 * Updates a user.
 	 *
-	 * @return boolean
+	 * @param string $id
+	 * @param array $data
+	 * @return boolean Returns TRUE if the update was successful.
 	 */
 	public function update($id, $data) {
 		$user = $this->getUserByID($id);
 
-		$this->db->trans_begin();
-
 		if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user['username'] !== $data['username']) {
-			$this->db->trans_rollback();
-			$this->access->setError('account_creation_duplicate_username');
+			$this->messages->add(_('The entered username is already in use.'), 'error');
 			return false;
 		}
 
@@ -432,32 +431,18 @@ class User extends CI_Model {
 			$this->db->update('users', $data, array('id' => $id));
 		}
 
-		if ($this->db->trans_status() === false) {
-			$this->db->trans_rollback();
-			return false;
-		}
-
-		$this->db->trans_commit();
-		return true;
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
-	 * Deletes the specified user.
+	 * Deletes a specified user.
 	 *
-	 * @return boolean
+	 * @param string $id
+	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
 	public function delete($id) {
-		$this->db->trans_begin();
-
 		$this->db->delete('users', array('id' => $id));
-
-		if ($this->db->trans_status() === false) {
-			$this->db->trans_rollback();
-			return false;
-		}
-
-		$this->db->trans_commit();
-		return true;
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
