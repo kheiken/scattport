@@ -158,7 +158,6 @@ class Access {
 	 */
 	public function login($username, $password, $remember = false) {
 		if ($this->ci->user->login($username, $password, $remember)) {
-			$this->ci->messages->add(_('Logged in successfully'), 'success');
 			return true;
 		} else {
 			$this->ci->messages->add(_('Incorrect username or password'), 'error');
