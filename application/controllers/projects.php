@@ -114,7 +114,7 @@ class Projects extends CI_Controller {
 
 			if (isset($data['project_id'])) {
 				$this->load->helper('directory');
-				$projectPath = FCPATH.'uploads/'.$this->session->userdata('user_id').'/'.$data['project_id'].'/';
+				$projectPath = FCPATH . 'uploads/' . $data['project_id'] . '/';
 				mkdirs($projectPath);
 
 				if ($modelUploaded) {
