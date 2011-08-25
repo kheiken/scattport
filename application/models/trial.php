@@ -83,15 +83,41 @@ class Trial extends CI_Model {
 	}
 
 	/**
+	 * Gets all parameters for the specified trial.
+	 *
+	 * @param string $trialId
+	 * @return array
+	 */
+	public function getParameters($trialId) {
+		$this->db->select('trials_parameters.*, parameters.name AS `name`, parameters.type AS `type`');
+		$this->db->join('parameters', 'trials_parameters.parameter_id = parameters.id', 'left');
+		$this->db->where('trial_id', $trialId);
+
+		$query = $this->db->get('trials_parameters');
+
+		return $query->num_rows() > 0 ? $query->result_array() : false;
+	}
+
+	/**
 	 * Get a trial by id.
 	 *
-	 * @param type $trial_id The trial to get.
+	 * @param string $trial_id The trial to get.
 	 * @return array The trial
 	 */
 	public function get($trial_id) {
 		$query = $this->db->get_where('trials', array('id' => $trial_id));
 
 		return $query->row_array();
+	}
+
+	/**
+	 * Gets a trial by ID.
+	 *
+	 * @param string $trialId The trial to get
+	 * @return array The trial
+	 */
+	public function getById($trialId) {
+		return $this->db->get_where('trials', array('id' => $trialId))->row_array();
 	}
 
 	/**
