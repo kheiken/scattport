@@ -84,4 +84,8 @@ class Server extends CI_Model {
 		return $this->db->limit(1)->order_by('last_update', 'desc')->
 				get_where('servers', 'workload <= 2')->row_array();
 	}
+
+	public function getBySecret($secret) {
+		return $this->db->get_where('servers', array('secret' => $secret))->row();
+	}
 }
