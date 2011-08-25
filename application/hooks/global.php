@@ -32,7 +32,7 @@
 function check_login() {
 
 	// whitelisted (publicly available) controllers
-	$public_controllers = array('auth');
+	$public_controllers = array('auth', 'xmlrpc');
 
 	$CI = & get_instance();
 	if (!$CI->input->is_ajax_request() && !$CI->access->loggedIn() && !in_array($CI->router->class, $public_controllers)) {
