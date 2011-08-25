@@ -25,7 +25,7 @@
  * Trials are used to store different variations of the same project.
  *
  * @author Karsten Heiken <karsten@disposed.de>
- * @author Eike Foken <kontakt@eikefoken.de>
+ * @author Eike Foken <kontakts@eikefoken.de>
  */
 class Trials extends CI_Controller {
 
@@ -84,10 +84,13 @@ class Trials extends CI_Controller {
 				}
 
 				$this->load->helper('directory');
-				$trialPath = FCPATH.'uploads/'.$this->session->userdata('user_id').'/'.$projectId.'/'. $trialId.'/';
+				$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $trialId . '/';
 				mkdirs($trialPath);
 
-				redirect('trials/detail/' . $trialId, 'refresh');
+				$this->load->library('job');
+				$this->job->createConfigs($trialId);
+
+				//redirect('trials/detail/' . $trialId, 'refresh');
 			} else {
 				$this->messages->add(_('The trial could not be created.'), 'error');
 			}

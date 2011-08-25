@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('session', 'lang_detect', 'database', 'access', 'datamapper', 'messages');
+$autoload['libraries'] = array('session', 'lang_detect', 'database', 'access', 'messages');
 
 
 /*

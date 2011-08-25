@@ -31,6 +31,20 @@ $(document).ready(function() {
 						<?=form_error('name')?>
 					</div>
 				</li>
+				<li>
+					<?=form_label(_('Config file line'), 'input_line');?>
+					<span class="req">*</span>
+					<div>
+						<textarea name="input_line" id="input_line" rows="6" cols="60" class="textarea"><?=set_value('input_line', $program['input_line']);?></textarea>
+						<?=form_error('input_line')?>
+					</div>
+					<label class="note">
+						<?=_('Here you can specify how a single line of a configuration file looks. You can use the following placeholders:');?><br />
+						<strong>{type}</strong> <?=_('Parameter type');?><br />
+						<strong>{param}</strong> <?=_('Parameter name');?><br />
+						<strong>{value}</strong> <?=_('Value');?><br />
+					</label>
+				</li>
 			</ul>
 			<p>
 				<a class="button save" href="javascript:void(0);" onclick="$('form[name=editProgram]').submit();"><?=_('Save');?></a>
