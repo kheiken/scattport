@@ -70,4 +70,12 @@ class Job extends CI_Model {
 
 		return $jobs;
 	}
+
+	/**
+	 * Get a list of jobs that have not yet started running.
+	 */
+	public function getWaitingJob() {
+		$query = $this->db->order_by('created_at', 'asc')->get_where('jobs', array('started_at' => '0000-00-00 00:00:00'), 1);
+		return $this->db->count_all_results() > 0 ? $query->row() : FALSE;
+	}
 }
