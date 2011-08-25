@@ -72,7 +72,7 @@ class Server extends CI_Model {
 	 * @param type $workload The server's workload.
 	 */
 	public function update($server_id, $data) {
-		return $this->db->update('servers', $data);
+		return $this->db->where('id', $server_id)->update('servers', $data);
 	}
 
 	/**
