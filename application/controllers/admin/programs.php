@@ -60,7 +60,11 @@ class Programs extends Admin_Controller {
 		}
 
 		if ($this->form_validation->run('programs/edit') === true) {
-			if ($this->program->update($this->input->post('name'), $id)) {
+			$data = array(
+				'name' => $this->input->post('name'),
+				'config_template' => $_POST['config_template'],
+			);
+			if ($this->program->update($data, $id)) {
 				$this->messages->add(sprintf(_("The program '%s' has been updated successfully"), $this->input->post('name')), 'success');
 				redirect('admin/programs', 303);
 			}

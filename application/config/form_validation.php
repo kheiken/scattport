@@ -166,6 +166,11 @@ $config['programs/edit'] = array(
 		'label' => _('Name of the program'),
 		'rules' => 'required|max_length[100]|trim',
 	),
+	array(
+		'field' => 'config_template',
+		'label' => _('Config template'),
+		'rules' => 'required',
+	),
 );
 
 /**

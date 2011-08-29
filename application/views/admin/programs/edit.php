@@ -32,16 +32,16 @@ $(document).ready(function() {
 					</div>
 				</li>
 				<li>
-					<?=form_label(_('Config file line'), 'input_line');?>
+					<?=form_label(_('Config template'), 'config_template');?>
 					<span class="req">*</span>
 					<div>
-						<textarea name="input_line" id="input_line" rows="6" cols="60" class="textarea"><?=set_value('input_line', $program['input_line']);?></textarea>
-						<?=form_error('input_line')?>
+						<textarea name="config_template" id="config_template" rows="6" cols="60" class="textarea"><?=set_value('config_template', $program['config_template']);?></textarea>
+						<?=form_error('config_template')?>
 					</div>
 					<label class="note">
-						<?=_('Here you can specify how a single line of a configuration file looks. You can use the following placeholders:');?><br />
-						<strong>{type}</strong> <?=_('Parameter type');?><br />
-						<strong>{param}</strong> <?=_('Parameter name');?><br />
+						<?=_('Here you can specify how the configuration file looks. You can use the following placeholders:');?><br />
+						<strong>{parameters}{/parameters}</strong> <?=_('Parameter loop');?><br />
+						<strong>{name}</strong> <?=_('Parameter name');?><br />
 						<strong>{value}</strong> <?=_('Value');?><br />
 					</label>
 				</li>
