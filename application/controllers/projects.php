@@ -55,10 +55,10 @@ class Projects extends CI_Controller {
 		// run form validation
 		if ($this->form_validation->run() === true) {
 			$data = array(
-				'name' => $this->input->post('name'),
-				'description' => $this->input->post('description'),
-				'defaultmodel' => $modelData['file_name'],
-				'defaultconfig' => $configData['file_name'],
+					'name' => $this->input->post('name'),
+					'description' => $this->input->post('description'),
+					'defaultmodel' => $modelData['file_name'],
+					'defaultconfig' => $configData['file_name'],
 			);
 
 			$data['project_id'] = $this->project->create($data);
@@ -69,12 +69,13 @@ class Projects extends CI_Controller {
 				mkdirs($projectPath);
 
 				$config = array(
-					'upload_path' => $projectPath,
-					'allowed_types' => '*',
+						'upload_path' => $projectPath,
+						'allowed_types' => '*',
+						'overwrite' => true,
 				);
 				$this->load->library('upload', $config);
 
-				if (!empty($_FILES['defaultmodel']['tmp_name'])) {
+				if ($_FILES['defaultmodel']['tmp_name'] != '') {
 					$config['file_name'] = 'defaultmodel';
 					$this->upload->initialize($config);
 
@@ -82,7 +83,7 @@ class Projects extends CI_Controller {
 						$this->messages->add(_('The default model could not be uploaded.'), 'error');
 					}
 				}
-				if (!empty($_FILES['defaultconfig']['tmp_name'])) {
+				if ($_FILES['defaultconfig']['tmp_name'] != '') {
 					$config['file_name'] = 'defaultconfig';
 					$this->upload->initialize($config);
 
