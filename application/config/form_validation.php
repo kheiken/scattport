@@ -207,6 +207,34 @@ $config['parameters/create'] = array(
 );
 
 /**
+ * Rules for creating projects.
+ *
+ * @var array
+ */
+$config['projects/create'] = array(
+	array(
+		'field' => 'name',
+		'label' => _('Project name'),
+		'rules' => 'required|min_length[3]|max_length[100]|trim',
+	),
+	array(
+		'field' => 'description',
+		'label' => _('Description'),
+		'rules' => 'required|trim',
+	),
+	array(
+		'field' => 'defaultmodel',
+		'label' => _('3D model'),
+		'rules' => 'file_allowed_type[obj]',
+	),
+	array(
+		'field' => 'defaultconfig',
+		'label' => _('Default configuration'),
+		'rules' => 'file_allowed_type[calc]',
+	),
+);
+
+/**
  * Rules for creating trials.
  *
  * @var array

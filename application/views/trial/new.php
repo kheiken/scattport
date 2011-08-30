@@ -6,7 +6,7 @@
 		<h2><?=_('Create a new trial');?></h2>
 	</div>
 
-	<form name="newTrial" method="post" action="<?=site_url('trials/create/' . $project['id']);?>">
+	<form name="newTrial" method="post" action="<?=site_url('trials/create/' . $project['id']);?>" enctype="multipart/form-data">
 		<div class="box">
 
 			<h3><?=_('Required information');?></h3>
@@ -31,8 +31,7 @@
 					<li>
 						<h4><?=_('3D model');?></h4>
 <?
-	$defaultmodel = 'foo';
-	if (isset($defaultmodel)):
+	if (file_exists(FCPATH.'uploads/'.$project['id'].'/default.txt')):
 ?>
 						<div class="notice">
 							<strong><?=_('There is a default model set for this project.');?></strong><br />
@@ -42,8 +41,9 @@
 	endif;
 ?>
 						<div>
-							<input type="file" class="file" name="defaultmodel" value="<?=set_value('defaultmodel');?>" />
-							<?=form_error('defaultmodel');?>
+							<input type="file" class="file" name="3dmodel" value="<?=set_value('3dmodel');?>" />
+							<?=form_error('3dmodel');?>
+							<?=$this->upload->display_errors('<span class="error">', '</span>');?>
 						</div>
 					</li>
 				</ul>
@@ -53,7 +53,6 @@
 
 			<h3><?=_('Application-specific parameters');?></h3>
 <?
-	$defaultconfig = 'foo';
 	if (isset($defaultconfig)):
 ?>
 			<div class="notice">

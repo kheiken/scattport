@@ -35,6 +35,7 @@ class Trials extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->library('upload');
 		$this->load->model('parameter');
 		$this->load->model('program');
 		$this->load->model('project');
@@ -64,35 +65,53 @@ class Trials extends CI_Controller {
 
 		if ($this->form_validation->run('trials/create') === true) {
 			// TODO: Handle file upload
-
-			$data = array(
-				'name' => $this->input->post('name'),
-				'description' => $this->input->post('description'),
-				'program_id' => $this->input->post('program_id'),
-				'project_id' => $projectId,
-				'creator_id' => $this->session->userdata('user_id'),
+			$config = array(
+				'upload_path' => '/tmp',
+				'allowed_types' => '*',
+				'max_size' => ini_get('upload_max_filesize'),
+				'file_name' => 'default',
 			);
+			$this->upload->initialize($config);
 
-			$trialId = $this->trial->create($data);
-			if ($trialId) {
-				foreach ($_POST as $key => $value) {
-					if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
-						$param['parameter_id'] = substr($key, 6, 16);
-						$param['value'] = $this->input->post($key);
-						$this->trial->addParameter($param, $trialId);
-					}
-				}
-
-				$this->load->helper('directory');
-				$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $trialId . '/';
-				mkdirs($trialPath);
-
-				$this->load->library('job');
-				$this->job->createConfigs($trialId);
-
-				//redirect('trials/detail/' . $trialId, 'refresh');
+			if (!$this->upload->do_upload('3dmodel')) {
+				$this->messages->add(_('There was an error while uploading the selected 3d model.'), 'error');
 			} else {
-				$this->messages->add(_('The trial could not be created.'), 'error');
+				$data = array(
+					'name' => $this->input->post('name'),
+					'description' => $this->input->post('description'),
+					'program_id' => $this->input->post('program_id'),
+					'project_id' => $projectId,
+					'creator_id' => $this->session->userdata('user_id'),
+				);
+
+				$trialId = $this->trial->create($data);
+				if ($trialId) {
+					foreach ($_POST as $key => $value) {
+						if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
+							$param['parameter_id'] = substr($key, 6, 16);
+							$param['value'] = $this->input->post($key);
+							$this->trial->addParameter($param, $trialId);
+						}
+					}
+
+					$this->load->helper('directory');
+					$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $trialId . '/';
+					mkdirs($trialPath);
+
+					$model = $this->upload->data();
+					if (!copy($model['full_path'], $trialPath . $model['file_name'])) {
+						$this->messages->add(_('The selected 3d model could not be copied to trial path.'), 'error');
+					}
+
+					$program = $this->program->getById($data['program_id']);
+
+					$this->load->library('program_runner', array('program_driver' => $program['driver']));
+					$this->program_runner->createJob($trialId);
+
+					redirect('trials/detail/' . $trialId, 'refresh');
+				} else {
+					$this->messages->add(_('The trial could not be created.'), 'error');
+				}
 			}
 		}
 
