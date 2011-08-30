@@ -55,10 +55,8 @@ class Projects extends CI_Controller {
 		// run form validation
 		if ($this->form_validation->run() === true) {
 			$data = array(
-				'name' => $this->input->post('name'),
-				'description' => $this->input->post('description'),
-				'defaultmodel' => $modelData['file_name'],
-				'defaultconfig' => $configData['file_name'],
+					'name' => $this->input->post('name'),
+					'description' => $this->input->post('description'),
 			);
 
 			$data['project_id'] = $this->project->create($data);
@@ -69,24 +67,31 @@ class Projects extends CI_Controller {
 				mkdirs($projectPath);
 
 				$config = array(
-					'upload_path' => $projectPath,
-					'allowed_types' => '*',
+						'upload_path' => $projectPath,
+						'allowed_types' => '*',
+						'overwrite' => true,
 				);
 				$this->load->library('upload', $config);
 
-				if (!empty($_FILES['defaultmodel']['tmp_name'])) {
+				if ($_FILES['defaultmodel']['tmp_name'] != '') {
 					$config['file_name'] = 'defaultmodel';
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('defaultmodel')) {
+					if ($this->upload->do_upload('defaultmodel')) {
+						$default = $this->upload->data();
+						$this->project->update($data['project_id'], array('default_model' => $default['file_name']));
+					} else {
 						$this->messages->add(_('The default model could not be uploaded.'), 'error');
 					}
 				}
-				if (!empty($_FILES['defaultconfig']['tmp_name'])) {
+				if ($_FILES['defaultconfig']['tmp_name'] != '') {
 					$config['file_name'] = 'defaultconfig';
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('defaultconfig')) {
+					if ($this->upload->do_upload('defaultconfig')) {
+						$default = $this->upload->data();
+						$this->project->update($data['project_id'], array('default_config' => $default['file_name']));
+					} else {
 						$this->messages->add(_('The default config could not be uploaded.'), 'error');
 					}
 				}
@@ -111,6 +116,7 @@ class Projects extends CI_Controller {
 	 */
 	public function detail($id) {
 		$this->load->helper('typography');
+		$this->load->model('job');
 
 		$project = $this->project->getById($id);
 		if (!$project) {
@@ -120,7 +126,7 @@ class Projects extends CI_Controller {
 
 		$data['project'] = $project;
 		$data['trials'] = $this->trial->getByProjectId($id);
-		$data['jobsDone'] = null;
+		$data['jobs'] = $this->job->getRecent();
 
 		$this->load->view('projects/detail', $data);
 	}

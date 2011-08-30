@@ -11,6 +11,29 @@
 		<div class="editInPlace"><?=auto_typography($project['description']);?></div>
 		<p></p>
 
+<?php
+	if ($project['default_model'] != ''):
+?>
+	<canvas id="cv" style="border: #e8e8e8 1px solid;" width="120" height="120"></canvas>
+	<p></p>
+
+	<script type="text/javascript">
+	var canvas = document.getElementById('cv');
+	var viewer = new JSC3D.Viewer(canvas);
+	viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$project['id'];?>/<?=$project['default_model'];?>');
+	viewer.setParameter('InitRotationX', -20);
+	viewer.setParameter('InitRotationY', 20);
+	viewer.setParameter('InitRotationZ', 0);
+	viewer.setParameter('ModelColor', '#cccccc');
+	viewer.setParameter('BackgroundColor1', '#ffffff');
+	viewer.setParameter('BackgroundColor2', '#ffffff');
+	viewer.setParameter('RenderMode', 'flat');
+	viewer.init();
+	viewer.update();
+	</script>
+<?php
+	endif;
+?>
 		<h3><?=_('Trials');?></h3>
 		<table class="tableList">
 			<thead>
@@ -60,21 +83,21 @@
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Trial');?></th>
-					<th scope="col"><?=_('Finished');?></th>
+					<th scope="col"><?=_('Started');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
 			<tbody>
 <?php
-	if (count($jobsDone) > 0):
-		foreach ($jobsDone as $job):
+	if (count($jobs) > 0):
+		foreach ($jobs as $job):
 ?>
 				<tr>
-					<td>Versuchsname</td>
-					<td>Heute, 09:32</td>
+					<td><?=$job['name'];?></td>
+					<td><?=$job['started_at'];?></td>
 					<td>
-						<a href="<?=site_url('trials/results/' . $trial['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('trials/edit/' . $trial['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Edit');?></td>
+						<a href="<?=site_url('trials/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $job['name']);?>"><?=_('Show results');?></a> |
+						<a href="<?=site_url('trials/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $job['name']);?>"><?=_('Edit');?></td>
 				</tr>
 <?php
 		endforeach;

@@ -11,12 +11,14 @@
 <?=link_tag('assets/css/form.css');?>
 
 <?=script_tag('assets/js/minmax.js');?>
+<?=script_tag('assets/js/jsc3d.min.js');?>
 <?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
 <?=script_tag('assets/js/scattport.js');?>
 <?=script_tag('assets/js/tablednd.jquery.js');?>
 <?=script_tag('assets/js/jtip.js');?>
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
+	var BASE_URL = '<?=base_url()?>';
 </script>
 </head>
 
@@ -26,8 +28,14 @@
 	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
 	<div class="status">
 		<select name="activeProject">
-			<option value="<?=site_url('');?>">Beispielprojekt</option>
-			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
+<?php
+	$projects = $this->project->getAll();
+	foreach ($projects as $project):
+?>
+			<option value="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"<?=($this->input->get('active_project') == $project['id']) ? ' selected' : '';?>><?=$project['name'];?></option>
+<?php
+	endforeach;
+?>
 		</select>
 	</div>
 	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
