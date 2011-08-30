@@ -116,6 +116,7 @@ class Projects extends CI_Controller {
 	 */
 	public function detail($id) {
 		$this->load->helper('typography');
+		$this->load->model('job');
 
 		$project = $this->project->getById($id);
 		if (!$project) {
@@ -125,7 +126,7 @@ class Projects extends CI_Controller {
 
 		$data['project'] = $project;
 		$data['trials'] = $this->trial->getByProjectId($id);
-		$data['jobsDone'] = null;
+		$data['jobs'] = $this->job->getRecent();
 
 		$this->load->view('projects/detail', $data);
 	}

@@ -83,21 +83,21 @@
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Trial');?></th>
-					<th scope="col"><?=_('Finished');?></th>
+					<th scope="col"><?=_('Started');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
 			<tbody>
 <?php
-	if (count($jobsDone) > 0):
-		foreach ($jobsDone as $job):
+	if (count($jobs) > 0):
+		foreach ($jobs as $job):
 ?>
 				<tr>
-					<td>Versuchsname</td>
-					<td>Heute, 09:32</td>
+					<td><?=$job['name'];?></td>
+					<td><?=$job['started_at'];?></td>
 					<td>
-						<a href="<?=site_url('trials/results/' . $trial['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('trials/edit/' . $trial['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Edit');?></td>
+						<a href="<?=site_url('trials/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $job['name']);?>"><?=_('Show results');?></a> |
+						<a href="<?=site_url('trials/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $job['name']);?>"><?=_('Edit');?></td>
 				</tr>
 <?php
 		endforeach;

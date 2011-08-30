@@ -28,10 +28,10 @@
 class Job extends CI_Model {
 
 	/**
-	 * Create a new job.
+	 * Creates a new job.
 	 *
-	 * @param array $data the data of the new job
-	 * @return bool was the insert successful
+	 * @param array $data The data of the new job
+	 * @return boolean Returns TRUE if the insert was successful.
 	 */
 	public function create($data) {
 		$this->load->helper('date');
@@ -49,18 +49,18 @@ class Job extends CI_Model {
 	}
 
 	/**
-	 * Delete a job.
-	 * @param string the job id to delete
-	 * @return bool was the deletion successful
+	 * Deletes a job.
+	 * @param string The job ID to delete
+	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
 	public function delete($job_id) {
 		return $this->db->delete('jobs', array('id' => $job_id));
 	}
 
 	/**
-	 * Update the details of a given job.
+	 * Updates the details of a given job.
 	 *
-	 * @param string $job_id The job's id you want to update.
+	 * @param string $job_id The job ID you want to update
 	 * @param integer $data The data of the job.
 	 */
 	public function update($job_id, $data) {
@@ -68,7 +68,27 @@ class Job extends CI_Model {
 	}
 
 	/**
-	 * Get a list of results that the owner has not yet seen.
+	 * Gets a list of recent jobs.
+	 *
+	 * @param string $projectId The project's ID you want to get the jobs for
+	 * @return array
+	 */
+	public function getRecent($projectId = '') {
+		$this->db->select('jobs.*, trials.project_id, trials.name');
+		$this->db->join('trials', 'jobs.trial_id = trials.id', 'left');
+		$this->db->where('finished_at', 0);
+
+		if (!empty($projectId)) {
+			$this->db->where('project_id', $projectId);
+		}
+
+		return $this->db->get('jobs')->result_array();
+	}
+
+	/**
+	 * Gets a list of results that the owner has not yet seen.
+	 *
+	 * @return array
 	 */
 	public function getUnseenResults() {
 		$query = $this->db->order_by('started_at', 'asc')
@@ -83,7 +103,9 @@ class Job extends CI_Model {
 	}
 
 	/**
-	 * Get a list of jobs that have not yet started running.
+	 * Gets a list of jobs that have not yet started running.
+	 *
+	 * @return mixed
 	 */
 	public function getWaitingJob() {
 		$query = $this->db->order_by('created_at', 'asc')->get_where('jobs', array('started_at' => '0000-00-00 00:00:00'), 1);
