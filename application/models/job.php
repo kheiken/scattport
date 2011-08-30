@@ -34,7 +34,18 @@ class Job extends CI_Model {
 	 * @return bool was the insert successful
 	 */
 	public function create($data) {
-		return $this->db->insert('jobs', $data);
+		$this->load->helper('date');
+		$this->load->helper('hash');
+
+		do { // generate unique hash
+			$data['id'] = random_hash();
+		} while ($this->db->where('id', $data['id'])->from('jobs')->count_all_results() > 0);
+
+		$data['created_at'] = date('Y-m-d H:i:s', now());
+
+		$this->db->insert('jobs', $data);
+
+		return $this->db->affected_rows() > 0 ? $data['id'] : false;
 	}
 
 	/**
