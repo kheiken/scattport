@@ -1,53 +1,51 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('header');?>
 
 <div id="content">
 
 	<div class="title">
-		<h2><?= _('Create a new project') ?></h2>
+		<h2><?=_('Create a new project');?></h2>
 	</div>
 
 	<div class="box">
-
-
-		<form method="post" name="createproject" action="<?=site_url('projects/create')?>" enctype="multipart/form-data">
-			<h3><?= _('Required information') ?></h3>
+		<form method="post" name="createproject" action="<?=site_url('projects/create');?>" enctype="multipart/form-data">
+			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
-					<h4><?= _('Project name') ?> <span class="req">*</span></h4>
+					<?=form_label(_('Project name'), 'name');?> <span class="req">*</span>
 					<div>
-						<input type="text" name="name" class="short text" tabindex="1" value="<?=set_value('name') == '' ? $this->input->post('name') : set_value('name');?>">
-						<?=form_error('name')?>
+						<input type="text" name="name" id="name" class="short text" value="<?=set_value('name');?>" />
+						<?=form_error('name');?>
 					</div>
 				</li>
 				<li>
-					<h4><?= _('Description') ?></h4>
-					<label class="note"><?= _('A description is useful if you want to share this project with co-workers.') ?></label>
+					<?=form_label(_('Description'), 'description');?> <span class="req">*</span>
 					<div>
-						<textarea name="description" rows="6" cols="60" tabindex="2" class="textarea"><?=set_value('description') == '' ? $this->input->post('description') : set_value('description');?></textarea>
-						<?=form_error('description')?>
+						<textarea name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
+						<?=form_error('description');?>
 					</div>
+					<label class="note"><?= _('A description is useful if you want to share this project with co-workers.') ?></label>
 				</li>
 			</ul>
-			<h3><?= _('Optional information') ?></h3>
+			<h3><?=_('Optional information');?></h3>
 			<ul>
 				<li>
-					<h4><?= _('3D model') ?></h4>
-					<label class="note"><?= _('Upload a 3D model that is used as a default for new trials. <br/>This model can be changed for every trial.')?></label>
+					<?=form_label(_('3D model'), 'defaultmodel');?>
 					<div>
-						<input type="file" class="file" name="defaultmodel" tabindex="3" value="<?=set_value('defaultmodel')?>">
-						<?=$model['success'] ? '' : $this->upload->display_errors('<span class="error">', '</span>');?>
+						<input type="file" name="defaultmodel" id="defaultmodel" class="file" />
+						<?=form_error('defaultmodel');?>
 					</div>
+					<label class="note"><?=_('Upload a 3D model that is used as a default for new trials.<br/>This model can be changed for every trial.');?></label>
 				</li>
 				<li>
-					<h4><?= _('Default configuration') ?> <span class="req">*</span></h4>
-					<label class="note"><?= _('Upload a configuration that is used as a default for new trials. <br/>This configuration can be changed for every trial.')?></label>
+					<?=form_label(_('Default configuration'), 'defaultconfig');?>
 					<div>
-						<input type="file" class="file" name="defaultconfig" tabindex="4" value="<?=set_value('defaultconfig')?>">
-						<?=$config['success'] ? '' : $this->upload->display_errors('<span class="error">', '</span>');?>
+						<input type="file" name="defaultconfig" id="defaultconfig" class="file" />
+						<?=form_error('defaultconfig');?>
 					</div>
+					<label class="note"><?=_('Upload a configuration that is used as a default for new trials.<br/>This configuration can be changed for every trial.');?></label>
 				</li>
 				<li>
-					<a href="#" onclick="document.forms.createproject.submit()" class="button"><?= _('Save') ?></a>
+					<a href="#" onclick="document.forms.createproject.submit()" class="button"><?=_('Save');?></a>
 				</li>
 			</ul>
 		</form>
@@ -55,4 +53,4 @@
 
 </div>
 
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('footer');?>

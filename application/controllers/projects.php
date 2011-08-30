@@ -33,6 +33,7 @@ class Projects extends CI_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('form_validation');
 		$this->load->model('project');
 		$this->load->model('trial');
 	}
@@ -51,58 +52,8 @@ class Projects extends CI_Controller {
 	 * Allows users to create a new project.
 	 */
 	public function create() {
-		$this->load->library('upload');
-		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
-
-		$config = array(
-		array(
-				'field' => 'name',
-				'label' => 'Projektname',
-				'rules' => 'trim|required|min_length[3]|max_length[100]|xss_clean',
-		),
-		array(
-				'field' => 'description',
-				'label' => 'Beschreibung',
-				'rules' => 'trim|required|xss_clean',
-		),
-		array(
-				'field' => 'defaultmodel',
-				'label' => '3D-Modell',
-		),
-		array(
-				'field' => 'defaultconfig',
-				'label' => 'Standard-Konfiguration',
-		),
-		);
-
-		$this->form_validation->set_rules($config);
-
-		if (count($_POST) > 0) {
-			$config = array();
-			$config['upload_path'] = '/tmp';
-			$config['allowed_types'] = 'txt';
-			$config['max_size']	= '1024';
-			$config['file_name'] = 'defaultmodel';
-
-			$this->upload->initialize($config);
-			$modelUploaded = $this->upload->do_upload('defaultmodel');
-			$modelData = $this->upload->data();
-
-			$config['file_name'] = 'defaultconfig';
-
-			$this->upload->initialize($config);
-			$configUploaded = $this->upload->do_upload('defaultconfig');
-			$configData = $this->upload->data();
-		}
-
 		// run form validation
-		if ($this->form_validation->run() == false) {
-			$data['model']['success'] = isset($modelUploaded) && $modelUploaded ? true : false;
-			$data['config']['success'] = isset($configUploaded) && $configUploaded ? true: false;
-
-			$this->load->view('projects/new', $data);
-		} else {
+		if ($this->form_validation->run() === true) {
 			$data = array(
 				'name' => $this->input->post('name'),
 				'description' => $this->input->post('description'),
@@ -117,11 +68,27 @@ class Projects extends CI_Controller {
 				$projectPath = FCPATH . 'uploads/' . $data['project_id'] . '/';
 				mkdirs($projectPath);
 
-				if ($modelUploaded) {
-					copy($modelData['full_path'], $projectpath . $modelData['file_name']);
+				$config = array(
+					'upload_path' => $projectPath,
+					'allowed_types' => '*',
+				);
+				$this->load->library('upload', $config);
+
+				if (!empty($_FILES['defaultmodel']['tmp_name'])) {
+					$config['file_name'] = 'defaultmodel';
+					$this->upload->initialize($config);
+
+					if (!$this->upload->do_upload('defaultmodel')) {
+						$this->messages->add(_('The default model could not be uploaded.'), 'error');
+					}
 				}
-				if ($configUploaded) {
-					copy($configData['full_path'], $projectpath . $configData['file_name']);
+				if (!empty($_FILES['defaultconfig']['tmp_name'])) {
+					$config['file_name'] = 'defaultconfig';
+					$this->upload->initialize($config);
+
+					if (!$this->upload->do_upload('defaultconfig')) {
+						$this->messages->add(_('The default config could not be uploaded.'), 'error');
+					}
 				}
 
 				$this->messages->add($projectpath, 'notice');
@@ -131,6 +98,10 @@ class Projects extends CI_Controller {
 				$this->load->view('projects/new');
 			}
 		}
+
+		$data = array();
+
+		$this->load->view('projects/new', $data);
 	}
 
 	/**
