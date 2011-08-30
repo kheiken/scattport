@@ -11,12 +11,14 @@
 <?=link_tag('assets/css/form.css');?>
 
 <?=script_tag('assets/js/minmax.js');?>
+<?=script_tag('assets/js/jsc3d.min.js');?>
 <?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
 <?=script_tag('assets/js/scattport.js');?>
 <?=script_tag('assets/js/tablednd.jquery.js');?>
 <?=script_tag('assets/js/jtip.js');?>
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
+	var BASE_URL = '<?=base_url()?>';
 </script>
 </head>
 

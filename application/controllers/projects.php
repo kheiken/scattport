@@ -57,8 +57,6 @@ class Projects extends CI_Controller {
 			$data = array(
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
-					'defaultmodel' => $modelData['file_name'],
-					'defaultconfig' => $configData['file_name'],
 			);
 
 			$data['project_id'] = $this->project->create($data);
@@ -79,7 +77,10 @@ class Projects extends CI_Controller {
 					$config['file_name'] = 'defaultmodel';
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('defaultmodel')) {
+					if ($this->upload->do_upload('defaultmodel')) {
+						$default = $this->upload->data();
+						$this->project->update($data['project_id'], array('default_model' => $default['file_name']));
+					} else {
 						$this->messages->add(_('The default model could not be uploaded.'), 'error');
 					}
 				}
@@ -87,7 +88,10 @@ class Projects extends CI_Controller {
 					$config['file_name'] = 'defaultconfig';
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('defaultconfig')) {
+					if ($this->upload->do_upload('defaultconfig')) {
+						$default = $this->upload->data();
+						$this->project->update($data['project_id'], array('default_config' => $default['file_name']));
+					} else {
 						$this->messages->add(_('The default config could not be uploaded.'), 'error');
 					}
 				}

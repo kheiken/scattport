@@ -11,6 +11,29 @@
 		<div class="editInPlace"><?=auto_typography($project['description']);?></div>
 		<p></p>
 
+<?php
+	if ($project['default_model'] != ''):
+?>
+	<canvas id="cv" style="border: #e8e8e8 1px solid;" width="120" height="120"></canvas>
+	<p></p>
+
+	<script type="text/javascript">
+	var canvas = document.getElementById('cv');
+	var viewer = new JSC3D.Viewer(canvas);
+	viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$project['id'];?>/<?=$project['default_model'];?>');
+	viewer.setParameter('InitRotationX', -20);
+	viewer.setParameter('InitRotationY', 20);
+	viewer.setParameter('InitRotationZ', 0);
+	viewer.setParameter('ModelColor', '#cccccc');
+	viewer.setParameter('BackgroundColor1', '#ffffff');
+	viewer.setParameter('BackgroundColor2', '#ffffff');
+	viewer.setParameter('RenderMode', 'flat');
+	viewer.init();
+	viewer.update();
+	</script>
+<?php
+	endif;
+?>
 		<h3><?=_('Trials');?></h3>
 		<table class="tableList">
 			<thead>
