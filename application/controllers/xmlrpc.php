@@ -45,6 +45,7 @@ class Xmlrpc extends CI_Controller {
 
 		$config['functions']['heartbeat'] = array('function' => 'Xmlrpc._heartbeat');
 		$config['functions']['get_job'] = array('function' => 'Xmlrpc._get_job');
+		$config['functions']['job_done'] = array('function' => 'Xmlrpc._job_done');
 		$config['object'] = $this;
 
 		$this->xmlrpcs->initialize($config);
@@ -112,6 +113,29 @@ class Xmlrpc extends CI_Controller {
 			'last_update' => mysql_now()
 		);
 		$this->server->update($server->id, $update);
+		$response = array(array(
+				'success' => array('true', 'string'),
+			), 'struct');
+		return $this->xmlrpc->send_response($response);
+	}
+
+	function _job_done($request) {
+		$this->load->model('job');
+		$parameters = $request->output_parameters();
+		$server = $this->server->getBySecret($parameters[0]);
+
+		//TODO: Auth
+		//if($server)
+		//	return $this->xmlrpc->send_error_message('100', 'Invalid Access');
+		$parameters = $parameters[1];
+
+		$job_id = $parameters[0];
+
+		$update = array(
+			'finished_at' => mysql_now(),
+			'progress' => 100
+		);
+		$this->job->update($job_id, $update);
 		$response = array(array(
 				'success' => array('true', 'string'),
 			), 'struct');
