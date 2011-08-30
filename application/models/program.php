@@ -62,8 +62,8 @@ class Program extends CI_Model {
 	 * @param string $id The ID of the program to update
 	 * @return boolean Returns TRUE if the update was successful
 	 */
-	public function update($name, $id) {
-		$this->db->update('programs', array('name' => $name), array('id' => $id));
+	public function update($data, $id) {
+		$this->db->update('programs', $data, array('id' => $id));
 		return $this->db->affected_rows() > 0;
 	}
 
@@ -94,6 +94,16 @@ class Program extends CI_Model {
 	 */
 	public function getById($id) {
 		return $this->db->get_where('programs', array('id' => $id))->row_array();
+	}
+
+	/**
+ 	 * Gets a specific program by it's driver's name.
+ 	 *
+	 * @param string $driver The driver
+	 * @return array Declarative array with all available information of the program.
+	 */
+	public function getByDriver($driver) {
+		return $this->db->get_where('programs', array('driver' => $driver))->row_array();
 	}
 
 	/**
