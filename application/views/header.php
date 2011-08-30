@@ -28,8 +28,14 @@
 	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
 	<div class="status">
 		<select name="activeProject">
-			<option value="<?=site_url('');?>">Beispielprojekt</option>
-			<option value="<?=site_url('projects');?>">Projekte verwalten</option>
+<?php
+	$projects = $this->project->getAll();
+	foreach ($projects as $project):
+?>
+			<option value="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"<?=($this->input->get('active_project') == $project['id']) ? ' selected' : '';?>><?=$project['name'];?></option>
+<?php
+	endforeach;
+?>
 		</select>
 	</div>
 	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
