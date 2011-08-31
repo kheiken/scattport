@@ -108,7 +108,8 @@ class Trials extends CI_Controller {
 					$this->load->library('program_runner', array('program_driver' => $program['driver']));
 					$this->program_runner->createJob($trialId);
 
-					redirect('trials/detail/' . $trialId, 'refresh');
+					//redirect('trials/detail/' . $trialId, 'refresh');
+					redirect('projects/detail/' . $projectId, 303);
 				} else {
 					$this->messages->add(_('The trial could not be created.'), 'error');
 				}
