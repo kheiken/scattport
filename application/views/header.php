@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7,9; chrome=1" />
 
 <title>ScattPort</title>
 
