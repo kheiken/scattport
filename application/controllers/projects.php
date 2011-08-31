@@ -126,7 +126,7 @@ class Projects extends CI_Controller {
 
 		$data['project'] = $project;
 		$data['trials'] = $this->trial->getByProjectId($id);
-		$data['jobs'] = $this->job->getRecent();
+		$data['jobs'] = $this->job->getRecent($id);
 
 		$this->load->view('projects/detail', $data);
 	}

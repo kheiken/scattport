@@ -76,7 +76,7 @@ class Job extends CI_Model {
 	public function getRecent($projectId = '') {
 		$this->db->select('jobs.*, trials.project_id, trials.name');
 		$this->db->join('trials', 'jobs.trial_id = trials.id', 'left');
-		$this->db->where('finished_at', 0);
+		//$this->db->where('finished_at', 0);
 
 		if (!empty($projectId)) {
 			$this->db->where('project_id', $projectId);

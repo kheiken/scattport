@@ -84,6 +84,7 @@
 				<tr>
 					<th scope="col"><?=_('Trial');?></th>
 					<th scope="col"><?=_('Started');?></th>
+					<th scope="col"><?=_('Finished');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
@@ -95,6 +96,7 @@
 				<tr>
 					<td><?=$job['name'];?></td>
 					<td><?=$job['started_at'];?></td>
+					<td><?=$job['finished_at'] != '0000-00-00 00:00:00' ? $job['finished_at'] : _('Currently running');?></td>
 					<td>
 						<a href="<?=site_url('trials/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $job['name']);?>"><?=_('Show results');?></a> |
 						<a href="<?=site_url('trials/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $job['name']);?>"><?=_('Edit');?></td>
