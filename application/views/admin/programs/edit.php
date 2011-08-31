@@ -86,12 +86,12 @@ $(document).ready(function() {
 		<form name="uploadCSV" method="post" action="<?=site_url('admin/parameters/upload_csv/' . $program['id'])?>" enctype="multipart/form-data">
 		<ul>
 			<li>
-				<?=form_label(_('CVS file'), 'csv_file');?>
+				<?=form_label(_('CSV file'), 'csv_file');?>
 				<div>
 					<input type="file" name="csv_file" id="csv_file" class="file" />
 					<?=form_error('csv_file')?>
 				</div>
-				<label class="note">You can upload a CVS file, containing a bunch of parameters. The rows of the file must be in the following format: <em>parameter name, human-readable name, unit, type, default value, description</em>. The first row is reserved for headlines.</label>
+				<label class="note">You can upload a CSV file, containing a bunch of parameters. The rows of the file must be in the following format: <em>parameter name, human-readable name, unit, type, default value, description</em>. The first row is reserved for headlines.</label>
 			</li>
 		</ul>
 		<p>
