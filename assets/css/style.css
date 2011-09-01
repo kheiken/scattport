@@ -181,7 +181,7 @@ div.error {
 	background: url(../images/icons/chevron-small.png) -2px center no-repeat;
 	padding-left: 16px;
 	margin-left: -7px;
-	color: #666;
+	color: #fff;
 	height: 100%;
 	width: 100%;
 	display: block;
@@ -193,7 +193,7 @@ div.error {
 
 .navigation ul li.active a {
 	background: url(../images/icons/chevron-small-expand.png) -2px center no-repeat;
-	color: #fff;
+	color: #666;
 }
 
 .navigation ul li ul {
@@ -317,6 +317,8 @@ div.error {
 	background: #fff;
 	border: 1px solid #e8e8e8;
 	padding: 15px;
+	height: 35px;
+	line-height: 36px;
 	clear: both;
 }
 
@@ -326,6 +328,7 @@ div.error {
 
 #footer .right {
 	float: right;
+	margin-left: 6px;
 }
 
 /* Buttons */
