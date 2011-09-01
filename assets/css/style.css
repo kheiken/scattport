@@ -170,7 +170,7 @@ div.error {
 	margin: 0;
 	padding: 0 15px;
 	border-top: 1px solid #e8e8e8;
-	background: url(../images/navigation-off.gif) repeat-x;
+	background: url(../images/navigation-on.gif) repeat-x;
 	line-height: 24px;
 	height: 100%;
 	display: block;
@@ -188,7 +188,7 @@ div.error {
 }
 
 .navigation ul li.active {
-	background: url(../images/navigation-on.gif) repeat-x;
+	background: url(../images/navigation-off.gif) repeat-x;
 }
 
 .navigation ul li.active a {
@@ -529,7 +529,7 @@ ul.tabs li {
 	margin-bottom: -1px; /* Pull the list item down 1px */
 	overflow: hidden;
 	position: relative;
-	background: #e0e0e0 url('../images/navigation-off.gif');
+	background: #e0e0e0 url('../images/tabs-back.gif');
 }
 
 ul.tabs li a {
