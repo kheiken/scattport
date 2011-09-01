@@ -67,8 +67,8 @@
 <?
 	endif;
 ?>
-				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Projects');?></a>
+				<li class="toggleable" id="nav_projects">
+					<a href="javascript:void(0);"><?=_('Projects');?></a>
 					<ul>
 						<li><a href="<?=site_url('projects/create');?>" title="<?=_('Create a new project');?>"><?=_('New project');?></a></li>
 						<li><a href="<?=site_url('projects');?>" title="<?=_('Shows a list of all projects');?>"><?=_('Show projects');?></a></li>
@@ -83,8 +83,8 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Own projects')?></a>
+				<li class="toggleable" id="nav_own_projects">
+					<a href="javascript:void(0);"><?=_('Own projects')?></a>
 					<ul>
 <?
 	$projects = $this->project->getOwn();
@@ -96,14 +96,14 @@
 ?>
 					</ul>
 				</li>
-				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Projects shared with me')?></a>
+				<li class="toggleable" id="nav_shared_projects">
+					<a href="javascript:void(0);"><?=_('Projects shared with me')?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
-				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Public projects')?></a>
+				<li class="toggleable" id="nav_public_projects">
+					<a href="javascript:void(0);"><?=_('Public projects')?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
 					</ul>
