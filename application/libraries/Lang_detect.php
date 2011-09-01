@@ -39,12 +39,10 @@ class Lang_detect {
 	 * @return string Language directory name, e.g. 'english'
 	 */
 	public function detectLanguage() {
-		for ($i = $this->CI->uri->total_segments(); $i > 0; $i--) {
-			$segment = $this->CI->uri->segment($i);
-			if (strlen($segment) == 2 && array_key_exists($segment, $this->supportedLanguages)) {
-				$lang = $segment;
-				$this->CI->session->set_userdata('language', $lang);
-			}
+		$segment = $this->CI->input->get('lang');
+		if (strlen($segment) == 2 && array_key_exists($segment, $this->supportedLanguages)) {
+			$lang = $segment;
+			$this->CI->session->set_userdata('language', $lang);
 		}
 
 		if ($this->CI->session->userdata('language')) {
