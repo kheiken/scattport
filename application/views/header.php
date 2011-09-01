@@ -57,7 +57,7 @@
 		$active_project = $this->project->getById($this->input->get('active_project'));
 ?>
 				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Project');?> <?=$active_project['name'];?></a>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').toggle();"><?=_('Project');?> <?=$active_project['name'];?></a>
 					<ul>
 						<li><a href="<?=site_url('projects/detail/' . $active_project['id']);?>" title="<?=_('Show overview');?>"><?=_('Overview');?></a></li>
 						<li><a href="<?=site_url('trials/create/' . $active_project['id']);?>" title="<?=sprintf(_('Create a new trial for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('New trial');?></a></li>
