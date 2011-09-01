@@ -75,6 +75,13 @@
 						<li><a href="<?=site_url('projects/search');?>" title="<?=_('Search for a project');?>"><?=_('Search');?></a></li>
 					</ul>
 				</li>
+				<li class="toggleable" id="nav_calculations">
+					<a href="javascript:void(0);"><?=_('Calculations');?></a>
+					<ul>
+						<li><a href="<?=site_url('jobs/results');?>" title="<?=_('Show the newest results');?>"><?=_('Newest results');?></a></li>
+						<li><a href="<?=site_url('jobs/running');?>" title="<?=_('Shows a list of running calculations');?>"><?=_('Running calculations');?></a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 
