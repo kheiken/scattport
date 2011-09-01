@@ -106,7 +106,7 @@
 	else:
 ?>
 				<tr>
-					<td colspan="3"><?=_('No jobs found.');?></td>
+					<td colspan="4"><?=_('No jobs found.');?></td>
 				</tr>
 <?php
 	endif;
