@@ -17,9 +17,9 @@
 			<?=anchor('legal', _('License'));?>
 		</span>
 		<span class="right">
-			<?=img(array('src' => 'assets/images/iwt.gif', 'width' => 36));?>
-			<?=img(array('src' => 'assets/images/dfg.gif', 'width' => 36));?>
-			<?=img(array('src' => 'assets/images/uni.png', 'width' => 36));?>
+			<?=asset('image', 'iwt.gif', array('width' => 36));?>
+			<?=asset('image', 'dfg.gif', array('width' => 36));?>
+			<?=asset('image', 'uni.png', array('width' => 36));?>
 		</span>
 	</div>
 

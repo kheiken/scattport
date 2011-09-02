@@ -7,26 +7,27 @@
 
 <title>ScattPort</title>
 
-<?=link_tag('assets/css/style.css');?>
-<?=link_tag('assets/css/table.css');?>
-<?=link_tag('assets/css/form.css');?>
+<?=asset('css', 'style.css');?>
+<?=asset('css', 'table.css');?>
+<?=asset('css', 'form.css');?>
 
-<?=script_tag('assets/js/minmax.js');?>
-<?=script_tag('assets/js/jsc3d.min.js');?>
-<?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
-<?=script_tag('assets/js/scattport.js');?>
-<?=script_tag('assets/js/tablednd.jquery.js');?>
-<?=script_tag('assets/js/jtip.js');?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
+<?=asset('js', 'tablednd.jquery.js');?>
+<?=asset('js', 'jsc3d.min.js');?>
+<?=asset('js', 'scattport.js');?>
+<?=asset('js', 'jtip.js');?>
+
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
 	var BASE_URL = '<?=base_url()?>';
 </script>
+
 </head>
 
 <body>
 
 <div id="header">
-	<h1><?=anchor('', img('assets/images/logo.png'))?></h1>
+	<h1><?=anchor('', asset('image', 'logo.png'))?></h1>
 	<div class="status">
 		<select name="activeProject">
 <?php
