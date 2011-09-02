@@ -18,8 +18,8 @@
 <?=asset('js', 'jtip.js');?>
 
 <script type="text/javascript">
-	var SITE_URL = '<?=site_url()?>';
-	var BASE_URL = '<?=base_url()?>';
+	var SITE_URL = '<?=site_url();?>';
+	var BASE_URL = '<?=base_url();?>';
 </script>
 
 </head>
@@ -27,7 +27,7 @@
 <body>
 
 <div id="header">
-	<h1><?=anchor('', asset('image', 'logo.png'))?></h1>
+	<h1><?=anchor('', asset('image', 'logo.png'));?></h1>
 	<div class="status">
 		<select name="activeProject">
 <?php
@@ -40,7 +40,7 @@
 ?>
 		</select>
 	</div>
-	<div class="menu"><?= _('Hello,') ?> <a href="<?=site_url('');?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help')?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
+	<div class="menu"><?= _('Hello,') ?> <a href="<?=base_url();?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help');?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">
@@ -53,7 +53,7 @@
 		</div>
 		<div class="navigation">
 			<ul>
-<?
+<?php
 	if ($this->input->get('active_project')):
 		$active_project = $this->project->getById($this->input->get('active_project'));
 ?>
@@ -65,7 +65,7 @@
 						<li><a href="<?=site_url('results/project/' . $active_project['id']);?>" title="<?=sprintf(_('Show results for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('Show results');?></a></li>
 					</ul>
 				</li>
-<?
+<?php
 	endif;
 ?>
 				<li class="toggleable" id="nav_projects">
@@ -87,31 +87,31 @@
 		</div>
 
 		<div class="title">
-			<h2><a href="<?=site_url('projects')?>" title="<?=_('Show all projects')?>"><?=_('Projects')?></a></h2>
+			<h2><a href="<?=site_url('projects');?>" title="<?=_('Show all projects');?>"><?=_('Projects');?></a></h2>
 		</div>
 		<div class="navigation">
 			<ul>
 				<li class="toggleable" id="nav_own_projects">
-					<a href="javascript:void(0);"><?=_('Own projects')?></a>
+					<a href="javascript:void(0);"><?=_('Own projects');?></a>
 					<ul>
-<?
+<?php
 	$projects = $this->project->getOwn();
 	foreach($projects as $project):
 ?>
-						<li><a href="<?=site_url('projects/detail/'.$project['id'])?>"><?=$project['name']?></a></li>
-<?
+						<li><a href="<?=site_url('projects/detail/'.$project['id']);?>"><?=$project['name'];?></a></li>
+<?php
 	endforeach;
 ?>
 					</ul>
 				</li>
 				<li class="toggleable" id="nav_shared_projects">
-					<a href="javascript:void(0);"><?=_('Projects shared with me')?></a>
+					<a href="javascript:void(0);"><?=_('Projects shared with me');?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
 				<li class="toggleable" id="nav_public_projects">
-					<a href="javascript:void(0);"><?=_('Public projects')?></a>
+					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
 					</ul>
@@ -120,25 +120,25 @@
 		</div>
 
 		<div class="title">
-			<h2><?=_('Search')?></h2>
+			<h2><?=_('Search');?></h2>
 		</div>
 
 		<div class="box">
 			<form id="search-form" method="get" action="#">
-				<input type="text" name="search" id="search-input" class="search-input">
-				<input type="image" src="<?=site_url('assets/images/button-search.gif')?>" id="search-submit" class="search-submit">
+				<input type="text" name="search" id="search-input" class="search-input" />
+				<input type="image" src="<?=asset_url('image', 'button-search.gif');?>" id="search-submit" class="search-submit" />
 			</form>
 		</div>
 
 		<div class="title">
-			<h2><?=_('Recent events')?></h2>
+			<h2><?=_('Recent events');?></h2>
 		</div>
 
 		<div class="box">
 			<ul id="blog">
-				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
-				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
-				<li><h4><a href="#" title="<?=_('Calculation done')?>"><?=_('Calculation done')?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn')?></i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
+				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
 			</ul>
 		</div>
 
