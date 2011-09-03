@@ -126,7 +126,7 @@
 		<div class="box">
 			<form id="search-form" method="get" action="#">
 				<input type="text" name="search" id="search-input" class="search-input" />
-				<input type="image" src="<?=asset_url('image', 'button-search.gif');?>" id="search-submit" class="search-submit" />
+				<input type="image" src="<?=asset_url('images', 'button-search.gif');?>" id="search-submit" class="search-submit" />
 			</form>
 		</div>
 
