@@ -6,12 +6,12 @@
 
 <title>ScattPort | <?=_('Login');?></title>
 
-<?= link_tag('assets/css/login.css'); ?>
-<?= link_tag('assets/css/form.css'); ?>
+<?=asset('css', 'login.css');?>
+<?=asset('css', 'form.css');?>
 
-<?= script_tag('assets/js/minmax.js'); ?>
-<?= script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'); ?>
-<?= script_tag('assets/js/scattport.js'); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
+<?=asset('js', 'assets/js/minmax.js');?>
+<?=asset('js', 'assets/js/scattport.js');?>
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url()?>';
 </script>
