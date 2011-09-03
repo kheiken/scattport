@@ -68,7 +68,7 @@
 <?php
 	endif;
 ?>
-				<li class="toggleable" id="nav_projects">
+				<li class="togglable" id="nav_projects">
 					<a href="javascript:void(0);"><?=_('Projects');?></a>
 					<ul>
 						<li><a href="<?=site_url('projects/create');?>" title="<?=_('Create a new project');?>"><?=_('New project');?></a></li>
@@ -76,7 +76,7 @@
 						<li><a href="<?=site_url('projects/search');?>" title="<?=_('Search for a project');?>"><?=_('Search');?></a></li>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_calculations">
+				<li class="togglable" id="nav_calculations">
 					<a href="javascript:void(0);"><?=_('Calculations');?></a>
 					<ul>
 						<li><a href="<?=site_url('jobs/results');?>" title="<?=_('Show the newest results');?>"><?=_('Newest results');?></a></li>
@@ -91,7 +91,7 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li class="toggleable" id="nav_own_projects">
+				<li class="togglable" id="nav_own_projects">
 					<a href="javascript:void(0);"><?=_('Own projects');?></a>
 					<ul>
 <?php
@@ -104,13 +104,13 @@
 ?>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_shared_projects">
+				<li class="togglable" id="nav_shared_projects">
 					<a href="javascript:void(0);"><?=_('Projects shared with me');?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_public_projects">
+				<li class="togglable" id="nav_public_projects">
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
