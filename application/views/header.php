@@ -18,8 +18,8 @@
 <?=asset('js', 'jtip.js');?>
 
 <script type="text/javascript">
-	var SITE_URL = '<?=site_url();?>';
-	var BASE_URL = '<?=base_url();?>';
+	var SITE_URL = '<?=site_url("/");?>';
+	var BASE_URL = '<?=base_url("/");?>';
 </script>
 
 </head>
