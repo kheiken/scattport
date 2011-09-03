@@ -14,7 +14,7 @@
 
 		<span class="right">
 			<?=anchor('about', _('About'));?> |
-			<?=anchor('legal', _('License'));?>
+			<?=anchor('license', _('License'));?>
 		</span>
 		<span class="right">
 			<?=asset('image', 'iwt.gif', array('width' => 36));?>
