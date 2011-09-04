@@ -11,7 +11,7 @@
 <?=css_asset('table.css');?>
 <?=css_asset('form.css');?>
 
-<?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
 
 <?=js_asset('tablednd.jquery.js');?>
 <?=js_asset('jsc3d.min.js');?>
