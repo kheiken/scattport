@@ -7,15 +7,16 @@
 
 <title>ScattPort</title>
 
-<?=asset('css', 'style.css');?>
-<?=asset('css', 'table.css');?>
-<?=asset('css', 'form.css');?>
+<?=css_asset('style.css');?>
+<?=css_asset('table.css');?>
+<?=css_asset('form.css');?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
-<?=asset('js', 'tablednd.jquery.js');?>
-<?=asset('js', 'jsc3d.min.js');?>
-<?=asset('js', 'scattport.js');?>
-<?=asset('js', 'jtip.js');?>
+<?=script_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
+
+<?=js_asset('tablednd.jquery.js');?>
+<?=js_asset('jsc3d.min.js');?>
+<?=js_asset('scattport.js');?>
+<?=js_asset('jtip.js');?>
 
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url();?>';
@@ -27,7 +28,7 @@
 <body>
 
 <div id="header">
-	<h1><?=anchor('', asset('image', 'logo.png'));?></h1>
+	<h1><?=anchor('', image_asset('logo.png'));?></h1>
 	<div class="status">
 		<select name="activeProject">
 <?php
