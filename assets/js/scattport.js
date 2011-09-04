@@ -293,7 +293,7 @@ $(document).ready(function() {
 		$('#' + toggled[i]).toggleClass('active').find('ul').hide();
 	}
 
-	$('.toggleable').find('a').not('ul li ul li a').click(function() {
+	$('.togglable').find('a').not('ul li ul li a').click(function() {
 		var id = $(this).parent().attr('id');
 
 		// toggle

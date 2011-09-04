@@ -19,8 +19,8 @@
 <?=js_asset('jtip.js');?>
 
 <script type="text/javascript">
-	var SITE_URL = '<?=site_url();?>';
-	var BASE_URL = '<?=base_url();?>';
+	var SITE_URL = '<?=site_url("/");?>';
+	var BASE_URL = '<?=base_url("/");?>';
 </script>
 
 </head>
@@ -69,7 +69,7 @@
 <?php
 	endif;
 ?>
-				<li class="toggleable" id="nav_projects">
+				<li class="togglable" id="nav_projects">
 					<a href="javascript:void(0);"><?=_('Projects');?></a>
 					<ul>
 						<li><a href="<?=site_url('projects/create');?>" title="<?=_('Create a new project');?>"><?=_('New project');?></a></li>
@@ -77,7 +77,7 @@
 						<li><a href="<?=site_url('projects/search');?>" title="<?=_('Search for a project');?>"><?=_('Search');?></a></li>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_calculations">
+				<li class="togglable" id="nav_calculations">
 					<a href="javascript:void(0);"><?=_('Calculations');?></a>
 					<ul>
 						<li><a href="<?=site_url('jobs/results');?>" title="<?=_('Show the newest results');?>"><?=_('Newest results');?></a></li>
@@ -92,7 +92,7 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li class="toggleable" id="nav_own_projects">
+				<li class="togglable" id="nav_own_projects">
 					<a href="javascript:void(0);"><?=_('Own projects');?></a>
 					<ul>
 <?php
@@ -105,13 +105,13 @@
 ?>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_shared_projects">
+				<li class="togglable" id="nav_shared_projects">
 					<a href="javascript:void(0);"><?=_('Projects shared with me');?></a>
 					<ul>
 						<li><a href="#">Prisma</a></li>
 					</ul>
 				</li>
-				<li class="toggleable" id="nav_public_projects">
+				<li class="togglable" id="nav_public_projects">
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
@@ -127,7 +127,7 @@
 		<div class="box">
 			<form id="search-form" method="get" action="#">
 				<input type="text" name="search" id="search-input" class="search-input" />
-				<input type="image" src="<?=asset_url('image', 'button-search.gif');?>" id="search-submit" class="search-submit" />
+				<input type="image" src="<?=asset_url('images', 'button-search.gif');?>" id="search-submit" class="search-submit" />
 			</form>
 		</div>
 
