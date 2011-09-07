@@ -99,7 +99,6 @@ class Projects extends CI_Controller {
 				redirect('/projects/detail/' . $data['project_id'], 303);
 			} else {
 				$this->messages->add(_('The project could not be created.'), 'error');
-				$this->load->view('projects/new');
 			}
 		}
 
