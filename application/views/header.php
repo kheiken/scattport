@@ -112,7 +112,7 @@
 	$projects = $this->project->getOwn();
 	foreach($projects as $project):
 ?>
-						<li><a href="<?=site_url('projects/detail/'.$project['id']);?>"><?=$project['name'];?></a></li>
+						<li><a href="<?=site_url('projects/detail/'.$project['id']);?>"><?=$project['mediumname'];?></a></li>
 <?php
 	endforeach;
 ?>
