@@ -64,7 +64,6 @@ class Trials extends CI_Controller {
 		}
 
 		if ($this->form_validation->run('trials/create') === true) {
-			// TODO: Handle file upload
 			$config = array(
 				'upload_path' => '/tmp',
 				'allowed_types' => '*',
