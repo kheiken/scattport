@@ -42,9 +42,8 @@ class Projects extends CI_Controller {
 	 * Shows a list of all projects.
 	 */
 	public function index() {
-		$projects = $this->project->getAll();
+		$tpl['projects'] = $this->project->getAll();
 
-		$tpl['projects'] = $projects;
 		$this->load->view('projects/list', $tpl);
 	}
 
