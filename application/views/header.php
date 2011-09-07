@@ -84,7 +84,7 @@
 		<div class="navigation">
 			<ul>
 				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('Own projects')?></a>
+					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').slideToggle();"><?=_('My projects')?></a>
 					<ul>
 <?
 	$projects = $this->project->getOwn();
