@@ -1,4 +1,4 @@
-<?php $this->load->view('header'); ?>
+<?php $this->load->view('header');?>
 
 <div id="content">
 
@@ -13,9 +13,9 @@
 		</p>
 	</div>
 	<div class="box">
-		<h3><?=_('Calculations');?></h3>
+		<h3><?=_('Experiments');?></h3>
 		<p>
-			<a class="button left big" href="#"><?=_('Newest results');?></a><a class="button middle big" href="#"><?=_('Running calculations');?></a>
+			<a class="button left big" href="#"><?=_('Newest results');?></a><a class="button middle big" href="#"><?=_('Running jobs');?></a>
 		</p>
 	</div>
 	<div class="box">
@@ -27,4 +27,4 @@
 
 </div>
 
-<?php $this->load->view('footer'); ?>
+<?php $this->load->view('footer');?>

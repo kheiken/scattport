@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -79,7 +78,7 @@ class Xmlrpc extends CI_Controller {
 					'success' => array('true', 'string'),
 					'new_job' => array('true', 'string'),
 					'job_id' => array($job->id, 'string'),
-					'trial_id' => array($job->trial_id, 'string'),
+					'experiment_id' => array($job->experiment_id, 'string'),
 				), 'struct');
 		} else {
 			$response = array(array(

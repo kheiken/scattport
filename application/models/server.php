@@ -1,5 +1,4 @@
-<?php
-
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -85,11 +84,22 @@ class Server extends CI_Model {
 				get_where('servers', 'workload <= 2')->row_array();
 	}
 
+	/**
+	 *
+	 * @param string $secret
+	 */
 	public function getBySecret($secret) {
 		return $this->db->get_where('servers', array('secret' => $secret))->row();
 	}
-	
-	public function getById($server_id) {
-		return $this->db->get_where('servers', array('id' => $server_id))->row();
+
+	/**
+	 *
+	 * @param string $serverId
+	 */
+	public function getById($serverId) {
+		return $this->db->get_where('servers', array('id' => $serverId))->row();
 	}
 }
+
+/* End of file server.php */
+/* Location: ./application/models/server.php */

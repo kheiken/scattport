@@ -22,12 +22,12 @@
  */
 
 /**
- * Trials are used to store different variations of the same project.
+ * Experiments are used to store different variations of the same project.
  *
  * @author Karsten Heiken <karsten@disposed.de>
  * @author Eike Foken <kontakts@eikefoken.de>
  */
-class Trials extends CI_Controller {
+class Experiments extends CI_Controller {
 
 	/**
 	 * Constructor.
@@ -37,17 +37,16 @@ class Trials extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('parameter');
 		$this->load->model('program');
-		$this->load->model('project');
-		$this->load->model('trial');
+		$this->load->model('experiment');
 	}
 
 	/**
-	 * Allows users to create new trials.
+	 * Allows users to create new experiments.
 	 *
 	 * @param string $projectId
 	 */
 	public function create($projectId = '', $copyId = '') {
-		// TODO: Handle copying of trials
+		// TODO: Handle copying of experiments
 
 		$project = $this->project->getByID($projectId);
 
@@ -64,15 +63,15 @@ class Trials extends CI_Controller {
 
 		if (is_null($project['default_model'])) {
 			$this->load->config('form_validation');
-			foreach ($this->config->item('trials/create') as $rule) { // restore old rules
+			foreach ($this->config->item('experiments/create') as $rule) { // restore old rules
 				$this->form_validation->set_rules($rule['field'], $rule['label'], $rule['rules']);
 			}
 
-			$this->form_validation->set_rules('3dmodel', _('3d model'), 'file_required|file_allowed_type[obj]');
+			$this->form_validation->set_rules('3dmodel', _('3D model'), 'file_required|file_allowed_type[obj]');
 		}
 
 		// run form validation
-		if ($this->form_validation->run('trials/create') === true) {
+		if ($this->form_validation->run('experiments/create') === true) {
 			$data = array(
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
@@ -81,15 +80,15 @@ class Trials extends CI_Controller {
 					'creator_id' => $this->session->userdata('user_id'),
 			);
 
-			$data['trial_id'] = $this->trial->create($data);
+			$data['experiment_id'] = $this->experiment->create($data);
 
-			if (isset($data['trial_id'])) {
+			if (isset($data['experiment_id'])) {
 				$this->load->helper('directory');
-				$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $data['trial_id'] . '/';
-				mkdirs($trialPath);
+				$experimentPath = FCPATH . 'uploads/' . $projectId . '/' .  $data['experiment_id'] . '/';
+				mkdirs($experimentPath);
 
 				$config = array(
-						'upload_path' => $trialPath,
+						'upload_path' => $experimentPath,
 						'allowed_types' => '*',
 						'overwrite' => true,
 						'file_name' => 'default',
@@ -109,18 +108,19 @@ class Trials extends CI_Controller {
 					if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
 						$param['parameter_id'] = substr($key, 6, 16);
 						$param['value'] = $this->input->post($key);
-						$this->trial->addParameter($param, $data['trial_id']);
+						$this->experiment->addParameter($param, $data['experiment_id']);
 					}
 				}
 
 				// TODO: Don't start jobs automatically
 				$program = $this->program->getById($data['program_id']);
 				$this->load->library('program_runner', array('program_driver' => $program['driver']));
-				$this->program_runner->createJob($data['trial_id']);
+				$this->program_runner->createJob($data['experiment_id']);
 
+				//redirect('/experiments/detail/' . $data['experiment_id'], 303);
 				redirect('/projects/detail/' . $projectId, 303);
 			} else {
-				$this->messages->add(_('The trial could not be created.'), 'error');
+				$this->messages->add(_('The experiment could not be created.'), 'error');
 			}
 		}
 
@@ -129,9 +129,9 @@ class Trials extends CI_Controller {
 		$data['programs'] = $programs;
 		$data['project'] = $project;
 
-		$this->load->view('trial/new', $data);
+		$this->load->view('experiments/new', $data);
 	}
 }
 
-/* End of file trials.php */
-/* Location: ./application/controllers/trials.php */
+/* End of file experiments.php */
+/* Location: ./application/controllers/experiments.php */

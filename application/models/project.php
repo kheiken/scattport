@@ -1,5 +1,4 @@
-<?php
-
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -28,10 +27,10 @@
  * @author Karsten Heiken <karsten@disposed.de>
  */
 class Project extends CI_Model {
-	
+
 	/**
 	 * Add a short and medium length description to one project.
-	 * 
+	 *
 	 * @param mixed $project
 	 */
 	private function _addShortName($project) {
@@ -39,10 +38,10 @@ class Project extends CI_Model {
 		$project['mediumname'] = character_limiter($project['name'], 35);
 		return $project;
 	}
-	
+
 	/**
 	 * Add a short and medium length description to an array of projects.
-	 * 
+	 *
 	 * @param mixed $project
 	 */
 	private function _addShortNames($project) {
@@ -206,3 +205,6 @@ class Project extends CI_Model {
 	}
 
 }
+
+/* End of file project.php */
+/* Location: ./application/models/project.php */

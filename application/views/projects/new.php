@@ -34,7 +34,7 @@
 						<input type="file" name="defaultmodel" id="defaultmodel" class="file" />
 						<?=form_error('defaultmodel');?>
 					</div>
-					<label class="note"><?=_('Upload a 3D model that is used as a default for new trials.<br/>This model can be changed for every trial.');?></label>
+					<label class="note"><?=_('Upload a 3D model that is used as a default for new experiments.<br/>This model can be changed for every experiment.');?></label>
 				</li>
 				<li>
 					<?=form_label(_('Default configuration'), 'defaultconfig');?>
@@ -42,7 +42,7 @@
 						<input type="file" name="defaultconfig" id="defaultconfig" class="file" />
 						<?=form_error('defaultconfig');?>
 					</div>
-					<label class="note"><?=_('Upload a configuration that is used as a default for new trials.<br/>This configuration can be changed for every trial.');?></label>
+					<label class="note"><?=_('Upload a configuration that is used as a default for new experiments.<br/>This configuration can be changed for every experiment.');?></label>
 				</li>
 				<li>
 					<a href="#" onclick="document.forms.createproject.submit()" class="button"><?=_('Save');?></a>

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -40,7 +39,6 @@ class Results extends CI_Controller {
 	}
 
 	public function index() {
-
 	}
 
 	/**
@@ -48,17 +46,15 @@ class Results extends CI_Controller {
 	 *
 	 * @param string $prj_id the project for which to get the results
 	 */
-	public function project($prj_id) {
-
+	public function project($projectId) {
 	}
 
 	/**
-	 * Get the results of a given trial.
+	 * Get the results of a given experiment.
 	 *
-	 * @param string $trial_id the trial for which to get the results
+	 * @param string $experimentId The experiment for which to get the results
 	 */
-	public function trial($trial_id) {
-
+	public function experiment($experimentId) {
 	}
 
 	/**
@@ -66,7 +62,9 @@ class Results extends CI_Controller {
 	 *
 	 * @param string $job_id the job for which to get the results
 	 */
-	public function job($job_id) {
-
+	public function job($jobId) {
 	}
 }
+
+/* End of file results.php */
+/* Location: ./application/controllers/results.php */

@@ -34,28 +34,28 @@
 <?php
 	endif;
 ?>
-		<h3><?=_('Trials');?></h3>
+		<h3><?=_('Experiments');?></h3>
 		<table class="tableList">
 			<thead>
 				<tr>
-					<th scope="col"><?=_('Trial');?></th>
+					<th scope="col"><?=_('Name');?></th>
 					<th scope="col"><?=_('Jobs');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
 			<tbody>
 <?php
-	if (count($trials) > 0):
-		foreach ($trials as $trial):
+	if (count($experiments) > 0):
+		foreach ($experiments as $experiment):
 ?>
 				<tr>
-					<td><a href="<?=site_url('trials/' . $trial['id']);?>" title="<?=sprintf(_("Show trial '%s'"), $trial['name']);?>"><?=$trial['name'];?></a></td>
+					<td><a href="<?=site_url('experiments/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
 					<td><span class="active"><?=_('Completed');?></span></td>
 					<td>
-						<a href="<?=site_url('trials/results/' . $trial['id']);?>" title="<?=sprintf(_('Show results for the trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('trials/create/' . $project['id'] . '/' . $trial['id']);?>" title="<?=sprintf(_('Copy trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Copy');?></a> |
-						<a href="<?=site_url('trials/edit/' . $trial['id']);?>" title="<?=sprintf(_('Edit trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Edit');?></a> |
-						<a href="<?=site_url('trials/delete/' . $trial['id']);?>" title="<?=sprintf(_('Delete trial &quot;%s&quot;'), $trial['name']);?>"><?=_('Delete');?></a>
+						<a href="<?=site_url('experiments/results/' . $experiment['id']);?>" title="<?=sprintf(_('Show results for this experiment'), $experiment['name']);?>"><?=_('Show results');?></a> |
+						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a> |
+						<a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a> |
+						<a href="<?=site_url('experiments/delete/' . $experiment['id']);?>" title="<?=sprintf(_('Delete experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 					</td>
 				</tr>
 <?php
@@ -63,7 +63,7 @@
 	else:
 ?>
 				<tr>
-					<td colspan="3"><?=_('No trials available.');?></td>
+					<td colspan="3"><?=_('No experiments available.');?></td>
 				</tr>
 <?php
 	endif;
@@ -71,7 +71,7 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('trials/create/' . $project['id']);?>"><?=_('Create a new trial');?></a>
+		<p><a class="button add" href="<?=site_url('experiments/create/' . $project['id']);?>"><?=_('Create experiment');?></a>
 	</div>
 
 	<div class="title">
@@ -82,7 +82,7 @@
 		<table class="tableList">
 			<thead>
 				<tr>
-					<th scope="col"><?=_('Trial');?></th>
+					<th scope="col"><?=_('Experiment');?></th>
 					<th scope="col"><?=_('Started');?></th>
 					<th scope="col"><?=_('Finished');?></th>
 					<th scope="col"><?=_('Actions');?></th>
@@ -98,8 +98,8 @@
 					<td><?=$job['started_at'];?></td>
 					<td><?=$job['finished_at'] != '0000-00-00 00:00:00' ? $job['finished_at'] : _('Currently running');?></td>
 					<td>
-						<a href="<?=site_url('trials/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for the trial &quot;%s&quot;'), $job['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('trials/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit trial &quot;%s&quot;'), $job['name']);?>"><?=_('Edit');?></td>
+						<a href="<?=site_url('experiments/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a> |
+						<a href="<?=site_url('experiments/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit this experiment'), $job['name']);?>"><?=_('Edit');?></td>
 				</tr>
 <?php
 		endforeach;

@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -22,7 +22,7 @@
  */
 
 /**
- * Programs are used to do the actual calculation of a trial.
+ * Programs are used to do the actual calculation of a experiment.
  *
  * @author Karsten Heiken <karsten@disposed.de>
  * @author Eike Foken <kontakt@eikefoken.de>
@@ -135,3 +135,6 @@ class Program extends CI_Model {
 		return $query->result_array();
 	}
 }
+
+/* End of file program.php */
+/* Location: ./application/models/program.php */

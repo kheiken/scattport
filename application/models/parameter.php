@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Eike Foken <kontakt@eikefoken.de>
  *
@@ -24,7 +24,7 @@
 /**
  * Model for parameters.
  *
- * Each program has many parameters used for configuration of trials.
+ * Each program has many parameters used for configuration of experiments.
  *
  * @author Eike Foken <kontakt@eikefoken.de>
  */

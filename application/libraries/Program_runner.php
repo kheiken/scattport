@@ -31,14 +31,14 @@ class Program_runner {
 	}
 
 	/**
-	 * Creates a job from the specified trial.
+	 * Creates a job from the specified experiment.
 	 *
-	 * @param string $trialId
+	 * @param string $experimentId
 	 */
-	public function createJob($trialId) {
-		if ($this->driver->_createJob($trialId)) {
+	public function createJob($experimentId) {
+		if ($this->driver->_createJob($experimentId)) {
 			$this->CI->load->model('job');
-			$this->CI->job->create(array('trial_id' => $trialId, 'started_by' => $this->CI->session->userdata('user_id')));
+			$this->CI->job->create(array('experiment_id' => $experimentId, 'started_by' => $this->CI->session->userdata('user_id')));
 		}
 		return true;
 	}

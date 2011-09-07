@@ -34,8 +34,7 @@ class Projects extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('form_validation');
-		$this->load->model('project');
-		$this->load->model('trial');
+		$this->load->model('experiment');
 	}
 
 	/**
@@ -123,7 +122,7 @@ class Projects extends CI_Controller {
 		}
 
 		$data['project'] = $project;
-		$data['trials'] = $this->trial->getByProjectId($id);
+		$data['experiments'] = $this->experiment->getByProjectId($id);
 		$data['jobs'] = $this->job->getRecent($id);
 
 		$this->load->view('projects/detail', $data);

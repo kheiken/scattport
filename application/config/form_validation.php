@@ -239,10 +239,10 @@ $config['projects/create'] = array(
  *
  * @var array
  */
-$config['trials/create'] = array(
+$config['experiments/create'] = array(
 		array(
 				'field' => 'name',
-				'label' => _('Trial name'),
+				'label' => _('Name'),
 				'rules' => 'required|min_length[3]|max_length[60]|trim',
 		),
 		array(

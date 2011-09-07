@@ -1,5 +1,4 @@
-<?php
-
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -74,8 +73,8 @@ class Job extends CI_Model {
 	 * @return array
 	 */
 	public function getRecent($projectId = '') {
-		$this->db->select('jobs.*, trials.project_id, trials.name');
-		$this->db->join('trials', 'jobs.trial_id = trials.id', 'left');
+		$this->db->select('jobs.*, experiments.project_id, experiments.name');
+		$this->db->join('experiments', 'jobs.experiment_id = experiments.id', 'left');
 		//$this->db->where('finished_at', 0);
 
 		if (!empty($projectId)) {
@@ -112,3 +111,6 @@ class Job extends CI_Model {
 		return $this->db->count_all_results() > 0 ? $query->row() : FALSE;
 	}
 }
+
+/* End of file job.php */
+/* Location: ./application/controllers/job.php */

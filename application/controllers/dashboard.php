@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
  *
@@ -33,12 +32,12 @@ class Dashboard extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('job');
-		$this->load->model('project');
-		$this->load->model('user');
 	}
 
 	public function index() {
-		$this->session->unset_userdata('active_project');
 		$this->load->view('dashboard');
 	}
 }
+
+/* End of file dashboard.php */
+/* Location: ./application/controllers/dashboard.php */
