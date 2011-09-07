@@ -21,29 +21,28 @@
 					</li>
 					<li>
 						<?=form_label(_('Description'), 'description');?>
-						<span class="req">*</span>
+						<span class="req">*</span><br />
+						<label class="note"><?=_('A description is useful if you want to share this trial with co-workers.');?></label>
 						<div>
 							<textarea name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
 							<?=form_error('description');?>
 						</div>
-						<label class="note"><?=_('A description is useful if you want to share this trial with co-workers.');?></label>
 					</li>
 					<li>
 						<h4><?=_('3D model');?></h4>
-<?
-	if (file_exists(FCPATH.'uploads/'.$project['id'].'/default.txt')):
+<?php
+	if (!is_null($project['default_model'])):
 ?>
 						<div class="notice">
 							<strong><?=_('There is a default model set for this project.');?></strong><br />
 							<?=_('If you want to use a different model for this trial, you can upload it here.');?>
 						</div>
-<?
+<?php
 	endif;
 ?>
 						<div>
 							<input type="file" class="file" name="3dmodel" value="<?=set_value('3dmodel');?>" />
 							<?=form_error('3dmodel');?>
-							<?=$this->upload->display_errors('<span class="error">', '</span>');?>
 						</div>
 					</li>
 				</ul>
@@ -52,30 +51,30 @@
 		<div class="box">
 
 			<h3><?=_('Application-specific parameters');?></h3>
-<?
-	if (isset($defaultconfig)):
+<?php
+	if (!is_null($project['default_config'])):
 ?>
 			<div class="notice">
 				<strong><?=_('There is a default configuration set for this project.');?></strong><br />
 				<?=_('This form contains the default values. You can adjust them for this trial.');?><br />
 				<?=_('The default configuration will not be modified.');?>
 			</div>
-<?
+<?php
 	endif;
 ?>
 			<h4><?=_('Application to use for the computation');?></h4>
 			<input type="hidden" name="program_id" id="program_id" value="<?=set_value('program_id');?>" />
 			<?=form_error('program_id');?>
 			<p>
-<?
+<?php
 	foreach ($programs as $program):
 ?>
 				<a class="button" href="javascript:void(0);" onclick="$('.program-parameters').hide();$('#<?=$program['id'];?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');$('input[name=program_id]').val('<?=$program['id'];?>');return false;"><?=$program['name'];?></a>
-<?
+<?php
 	endforeach;
 ?>
 			</p>
-<?
+<?php
 	foreach ($programs as $program):
 ?>
 
@@ -91,7 +90,7 @@
 							</tr>
 						</thead>
 						<tbody>
-<?
+<?php
 	foreach ($parameters[$program['id']] as $param):
 ?>
 							<tr>
@@ -111,14 +110,14 @@
 								</td>
 								<td><?=$param['unit'];?></td>
 							</tr>
-<?
+<?php
 	endforeach;
 ?>
 						</tbody>
 					</table>
 				</p>
 			</div>
-<?
+<?php
 	endforeach;
 ?>
 			<p>

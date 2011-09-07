@@ -255,6 +255,11 @@ $config['trials/create'] = array(
 				'label' => _('Program'),
 				'rules' => 'required|alpha_numeric|trim',
 		),
+		array(
+				'field' => '3dmodel',
+				'label' => _('3D model'),
+				'rules' => 'file_allowed_type[obj]',
+		),
 );
 
 /* End of file form_validation.php */

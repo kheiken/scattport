@@ -35,7 +35,6 @@ class Trials extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('form_validation');
-		$this->load->library('upload');
 		$this->load->model('parameter');
 		$this->load->model('program');
 		$this->load->model('project');
@@ -63,55 +62,65 @@ class Trials extends CI_Controller {
 			$parameters[$program['id']] = $this->parameter->getAll($program['id']);
 		}
 
-		if ($this->form_validation->run('trials/create') === true) {
-			$config = array(
-				'upload_path' => '/tmp',
-				'allowed_types' => '*',
-				'max_size' => 64*1024, // set maximum file size to 64 megabytes
-				'file_name' => 'default',
-			);
-			$this->upload->initialize($config);
+		if (is_null($project['default_model'])) {
+			$this->load->config('form_validation');
+			foreach ($this->config->item('trials/create') as $rule) { // restore old rules
+				$this->form_validation->set_rules($rule['field'], $rule['label'], $rule['rules']);
+			}
 
-			if (!$this->upload->do_upload('3dmodel')) {
-				$this->messages->add(_('There was an error while uploading the selected 3d model.'), 'error');
-			} else {
-				$data = array(
+			$this->form_validation->set_rules('3dmodel', _('3d model'), 'file_required|file_allowed_type[obj]');
+		}
+
+		// run form validation
+		if ($this->form_validation->run('trials/create') === true) {
+			$data = array(
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
 					'program_id' => $this->input->post('program_id'),
 					'project_id' => $projectId,
 					'creator_id' => $this->session->userdata('user_id'),
+			);
+
+			$data['trial_id'] = $this->trial->create($data);
+
+			if (isset($data['trial_id'])) {
+				$this->load->helper('directory');
+				$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $data['trial_id'] . '/';
+				mkdirs($trialPath);
+
+				$config = array(
+						'upload_path' => $trialPath,
+						'allowed_types' => '*',
+						'overwrite' => true,
+						'file_name' => 'default',
 				);
+				$this->load->library('upload', $config);
 
-				$trialId = $this->trial->create($data);
-				if ($trialId) {
-					foreach ($_POST as $key => $value) {
-						if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
-							$param['parameter_id'] = substr($key, 6, 16);
-							$param['value'] = $this->input->post($key);
-							$this->trial->addParameter($param, $trialId);
-						}
+				if ($_FILES['3dmodel']['tmp_name'] != '') {
+					if ($this->upload->do_upload('3dmodel')) {
+						$model = $this->upload->data();
+					} else {
+						$this->messages->add(_('The selected model could not be uploaded.'), 'error');
 					}
-
-					$this->load->helper('directory');
-					$trialPath = FCPATH . 'uploads/' . $projectId . '/' .  $trialId . '/';
-					mkdirs($trialPath);
-
-					$model = $this->upload->data();
-					if (!copy($model['full_path'], $trialPath . $model['file_name'])) {
-						$this->messages->add(_('The selected 3d model could not be copied to trial path.'), 'error');
-					}
-
-					$program = $this->program->getById($data['program_id']);
-
-					$this->load->library('program_runner', array('program_driver' => $program['driver']));
-					$this->program_runner->createJob($trialId);
-
-					//redirect('trials/detail/' . $trialId, 'refresh');
-					redirect('projects/detail/' . $projectId, 303);
-				} else {
-					$this->messages->add(_('The trial could not be created.'), 'error');
 				}
+
+				// save parameters to db
+				foreach ($_POST as $key => $value) {
+					if (preg_match('/^param-[0-9a-z]+/', $key) && !empty($value)) {
+						$param['parameter_id'] = substr($key, 6, 16);
+						$param['value'] = $this->input->post($key);
+						$this->trial->addParameter($param, $data['trial_id']);
+					}
+				}
+
+				// TODO: Don't start jobs automatically
+				$program = $this->program->getById($data['program_id']);
+				$this->load->library('program_runner', array('program_driver' => $program['driver']));
+				$this->program_runner->createJob($data['trial_id']);
+
+				redirect('/projects/detail/' . $projectId, 303);
+			} else {
+				$this->messages->add(_('The trial could not be created.'), 'error');
 			}
 		}
 
