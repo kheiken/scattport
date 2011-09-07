@@ -52,7 +52,7 @@ class Servers extends Admin_Controller {
 	 * @param type $server_id
 	 */
 	function detail($server_id) {
-		$tpl->server = $this->server->where('id', $server_id)->get();
+		$tpl->server = $this->server->getById($server_id);
 
 		$this->load->view('admin/server/detail', $tpl);
 	}

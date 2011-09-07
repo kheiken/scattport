@@ -88,4 +88,8 @@ class Server extends CI_Model {
 	public function getBySecret($secret) {
 		return $this->db->get_where('servers', array('secret' => $secret))->row();
 	}
+	
+	public function getById($server_id) {
+		return $this->db->get_where('servers', array('id' => $server_id))->row();
+	}
 }
