@@ -30,12 +30,26 @@
 <div id="header">
 	<h1><?=anchor('', image_asset('logo.png'));?></h1>
 	<div class="status">
+		<?=_('Current project:');?>&nbsp;
 		<select name="activeProject">
 <?php
+
+	// get the active project, if there is one
+	if ($this->input->get('active_project'))
+		$active_project = $this->project->getById($this->input->get('active_project'));
+	else 
+		$active_project = false;
+	
 	$projects = $this->project->getAll();
+	
+	if(!$active_project):
+?>
+			<option disabled="disabled" selected="selected"><strong><?=_('Select a project');?></strong></option>
+<?php 
+	endif;
 	foreach ($projects as $project):
 ?>
-			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"<?=($this->input->get('active_project') == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
+			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id']) . '?active_project=' . $project['id'];?>"<?=($active_project == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
 <?php
 	endforeach;
 ?>
@@ -55,8 +69,7 @@
 		<div class="navigation">
 			<ul>
 <?php
-	if ($this->input->get('active_project')):
-		$active_project = $this->project->getById($this->input->get('active_project'));
+	if ($active_project):
 ?>
 				<li>
 					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').toggle();"><?=_('Project');?> <?=$active_project['shortname'];?></a>
