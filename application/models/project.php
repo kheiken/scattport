@@ -28,6 +28,30 @@
  * @author Karsten Heiken <karsten@disposed.de>
  */
 class Project extends CI_Model {
+	
+	/**
+	 * Add a short and medium length description to one project.
+	 * 
+	 * @param mixed $project
+	 */
+	private function _addShortName($project) {
+		$project['shortname'] = character_limiter($project['name'], 20);
+		$project['mediumname'] = character_limiter($project['name'], 35);
+		return $project;
+	}
+	
+	/**
+	 * Add a short and medium length description to an array of projects.
+	 * 
+	 * @param mixed $project
+	 */
+	private function _addShortNames($project) {
+		return array_map(function($var) {
+			$var['shortname'] = character_limiter($var['name'], 20);
+			$var['mediumname'] = character_limiter($var['name'], 35);
+			return $var;
+		}, $project);
+	}
 
 	/**
 	 * Get the user's own projects.
@@ -38,7 +62,7 @@ class Project extends CI_Model {
 		$query = $this->db->where(array('owner' => $this->session->userdata('user_id')))
 				->order_by('lastaccess', 'desc')
 				->get('projects');
-		return $query->result_array();
+		return $this->_addShortNames($query->result_array());
 	}
 
 	/**
@@ -52,7 +76,7 @@ class Project extends CI_Model {
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
-		return $query->result_array();
+		return $this->_addShortNames($query->result_array());
 	}
 
 	/**
@@ -65,7 +89,7 @@ class Project extends CI_Model {
 			->order_by('name', 'asc')
 			->get('projects');
 
-		return $query->result_array();
+		return $this->_addShortNames($query->result_array());
 	}
 
 	/**
@@ -79,7 +103,7 @@ class Project extends CI_Model {
 			'lastaccess' => mysql_now(),
 		));
 
-		return $result;
+		return $this->_addShortName($result);
 	}
 
 	/**
@@ -90,7 +114,7 @@ class Project extends CI_Model {
 				->join('users', 'users.id = projects.owner', 'left')
 				->get('projects')->result_array();
 
-		return $result;
+		return $this->_addShortNames($result);
 	}
 
 	/**
@@ -132,7 +156,7 @@ class Project extends CI_Model {
 
 		$shared_results = $query->result_array();
 
-		return array_merge($own_results, $shared_results);
+		return $this->_addShortNames(array_merge($own_results, $shared_results));
 	}
 
 	/**
