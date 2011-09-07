@@ -68,7 +68,7 @@ class Trials extends CI_Controller {
 			$config = array(
 				'upload_path' => '/tmp',
 				'allowed_types' => '*',
-				'max_size' => ini_get('upload_max_filesize'),
+				'max_size' => 64*1024, // set maximum file size to 64 megabytes
 				'file_name' => 'default',
 			);
 			$this->upload->initialize($config);
