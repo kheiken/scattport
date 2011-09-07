@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('session', 'lang_detect', 'database', 'access', '
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('date', 'url', 'html', 'language', 'hash', 'text');
+$autoload['helper'] = array('date', 'url', 'form', 'language', 'hash', 'asset', 'text');
 
 
 /*

@@ -23,6 +23,81 @@ function deleteConfirm(url) {
 }
 
 /**
+ * Sets a cookie.
+ *
+ * @param name
+ * @param value
+ * @param days
+ */
+function setCookie(name, value, days) {
+	var today = new Date();
+	var expire = new Date();
+
+	if (days == null || days == 0) {
+		days = 1;
+	}
+	expire.setTime(today.getTime() + 3600000 * 24 * days);
+	document.cookie = name + "=" + escape(value) + ";path=/;expires=" + expire.toGMTString();
+}
+
+/**
+ * Gets a cookie.
+ *
+ * @param name
+ * @returns
+ */
+function getCookie(name) {
+	var cookie = ' ' + document.cookie;
+	var index = cookie.indexOf(" " + name + "=");
+
+	if (index == -1) {
+		index = cookie.indexOf(";" + name + "=");
+	}
+	if (index == -1 || name == '') {
+		return '';
+	}
+
+	var index2 = cookie.indexOf(";", index + 1);
+
+	if (index2 == -1) {
+		index2 = cookie.length;
+	}
+	return unescape(cookie.substring(index + name.length + 2, index2));
+}
+
+/**
+ *
+ * @param cookieName
+ * @returns
+ */
+var CookieList = function(cookieName) {
+	var cookie = getCookie(cookieName);
+	// load the items or a new array if null
+	var items = cookie ? cookie.split(/,/) : new Array();
+
+	return {
+		"add": function(val) {
+			// add to the items
+			items.push(val);
+			// save the items to a cookie
+			setCookie(cookieName, items.join(','));
+		}, "remove": function(val) {
+			// remove the value from items
+			items.splice(items.indexOf(val), 1);
+			// save the items to a cookie
+			setCookie(cookieName, items.join(','));
+		}, "clear": function() {
+			items = null;
+			// clear the cookie
+			setCookie(cookieName, null, null);
+		}, "items": function() {
+			// get all the items
+			return items;
+		}
+	};
+};
+
+/**
  * Saves the changes done by in-place edit.
  *
  * @param obj
@@ -205,6 +280,29 @@ $(document).ready(function() {
 		var url = $(this).val();
 		if (url) {
 			window.location = url;
+		}
+	});
+
+	/*
+	 * Toggleable navigation
+	 */
+	var toggleList = new CookieList("toggled");
+	var toggled = toggleList.items();
+
+	for (var i = 0; i < toggled.length; i++) {
+		$('#' + toggled[i]).toggleClass('active').find('ul').hide();
+	}
+
+	$('.togglable').find('a').not('ul li ul li a').click(function() {
+		var id = $(this).parent().attr('id');
+
+		// toggle
+		$(this).parent().toggleClass('active').find('ul').toggle();
+
+		if ($(this).next().css('display') == 'none') {
+			toggleList.add(id);
+		} else {
+			toggleList.remove(id);
 		}
 	});
 });

@@ -2,9 +2,11 @@
 .project
 .settings/
 .htaccess
-*.xcf
 application/config/config.php
 application/config/database.php
 application/logs/*
+application/cache/*
+assets/cache/*
 uploads/*
+*.xcf
 *.mo

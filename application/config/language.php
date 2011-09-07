@@ -16,8 +16,8 @@
 |
 */
 $config['supported_languages'] = array(
-    'en'=> array('name' => 'English', 'locale' => 'en_US'),
-    'de'=> array('name' => 'Deutsch', 'locale' => 'de_DE')
+		'en' => array('name' => 'English', 'locale' => 'en_US'),
+		'de' => array('name' => 'Deutsch', 'locale' => 'de_DE'),
 );
 
 /*
@@ -30,3 +30,6 @@ $config['supported_languages'] = array(
 |
 */
 $config['default_language'] = 'en';
+
+/* End of file autoload.php */
+/* Location: ./application/config/language.php */
