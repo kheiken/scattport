@@ -36,6 +36,17 @@ class Share extends CI_Model {
 	}
 
 	/**
+	 * Gets a share by its primary key.
+	 *
+	 * @param string $projectId
+	 * @param string $userId
+	 * @return array
+	 */
+	public function get($projectId, $userId) {
+		return $this->db->get_where('shares', array('project_id' => $projectId, 'user_id' => $userId))->row_array();
+	}
+
+	/**
 	 * Gets all share for a specific project.
 	 *
 	 * @param string $projectId
@@ -46,6 +57,19 @@ class Share extends CI_Model {
 		$this->db->join('users', 'users.id = shares.user_id', 'left');
 
 		return $this->db->get_where('shares', array('project_id' => $projectId))->result_array();
+	}
+
+	/**
+	 * Gets all share for a specific user.
+	 *
+	 * @param string $userId
+	 * @return array
+	 */
+	public function getByUserId($userId) {
+		$this->db->select('shares.*, projects.name');
+		$this->db->join('projects', 'projects.id = shares.project_id', 'left');
+
+		return $this->db->get_where('shares', array('user_id' => $userId))->result_array();
 	}
 
 	/**
