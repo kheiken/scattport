@@ -43,7 +43,8 @@ class MY_Config extends CI_Config {
 	 */
 	public function site_url($uri = '', $relative = true) {
 		$url = parent::site_url($uri);
-		return $relative ? parse_url($url, PHP_URL_PATH) : $url;
+		$parts = parse_url($url);
+		return $relative ? $parts['path'] . (isset($parts['query']) ? '?' . $parts['query'] : '') : $url;
 	}
 }
 

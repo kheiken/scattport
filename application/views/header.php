@@ -33,21 +33,18 @@
 		<?=_('Current project:');?>&nbsp;
 		<select name="activeProject">
 <?php
-
 	// get the active project, if there is one
 	if ($this->input->get('active_project'))
 		$active_project = $this->project->getById($this->input->get('active_project'));
 	else
 		$active_project = false;
 
-	$projects = $this->project->getAll();
-
 	if(!$active_project):
 ?>
 			<option disabled="disabled" selected="selected"><strong><?=_('Select a project');?></strong></option>
 <?php
 	endif;
-	foreach ($projects as $project):
+	foreach ($this->project->getAll() as $project):
 ?>
 			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id']) . '?active_project=' . $project['id'];?>"<?=($active_project == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
 <?php
@@ -55,7 +52,7 @@
 ?>
 		</select>
 	</div>
-	<div class="menu"><?= _('Hello,') ?> <a href="<?=base_url();?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help');?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
+	<div class="menu"><?=_('Hello,');?> <a href="<?=site_url('users/' . $this->user->profile()->id);?>"><?=$this->user->profile()->firstname;?> <?=$this->user->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help');?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">
@@ -101,7 +98,7 @@
 		</div>
 
 		<div class="title">
-			<h2><a href="<?=site_url('projects');?>" title="<?=_('Show all projects');?>"><?=_('Projects');?></a></h2>
+			<h2><?=_('Projects');?></h2>
 		</div>
 		<div class="navigation">
 			<ul>
@@ -109,10 +106,9 @@
 					<a href="javascript:void(0);"><?=_('My projects');?></a>
 					<ul>
 <?php
-	$projects = $this->project->getOwn();
-	foreach ($projects as $project):
+	foreach ($this->project->getOwn() as $project):
 ?>
-						<li><a href="<?=site_url('projects/detail/' . $project['id']);?>"><?=$project['mediumname'];?></a></li>
+						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
 <?php
 	endforeach;
 ?>
@@ -128,10 +124,9 @@
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 <?php
-	$projects = $this->project->getPublic();
-	foreach ($projects as $project):
+	foreach ($this->project->getPublic() as $project):
 ?>
-						<li><a href="<?=site_url('projects/detail/' . $project['id']);?>"><?=$project['mediumname'];?></a></li>
+						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
 <?php
 	endforeach;
 ?>
