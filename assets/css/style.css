@@ -275,6 +275,14 @@ div.error {
 	font-size: 14px;
 }
 
+#content div.title a.share {
+    background: url(../images/icons/hand-share.png) 6px center no-repeat;
+    padding-left: 28px;
+    font-size: 12px;
+    font-weight: normal;
+	line-height: 12px;
+}
+
 /* Pagination */
 
 .pagination {
@@ -508,13 +516,6 @@ a.down-big {
     width: 18px;
     font-size: 16px;
     padding: 10px 15px;
-}
-
-a.share {
-    background: url(../images/icons/hand-share.png) 6px center no-repeat;
-    padding-left: 28px;
-    font-size: 12px;
-    font-weight: normal;
 }
 
 /* Tabs */
