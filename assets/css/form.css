@@ -45,6 +45,11 @@ input.button {
 	font-size: 12px;
 }
 
+input.submit {
+	padding: 0 4px;
+	font-size: 12px;
+}
+
 select.drop {
 	font-size: 12px;
 	margin: 5px 5px 0 0;
@@ -75,11 +80,14 @@ p.success {
 	color: #008000;
 }
 
-p.error, span.req {
+p.error,
+span.req {
 	color: #d8122d;
 	font-weight: normal;
 }
 
-p.success strong, p.error strong, p.req strong {
+p.success strong,
+p.error strong,
+p.req strong {
 	text-transform: uppercase;
 }

@@ -447,6 +447,11 @@ a.delete {
     padding-left: 30px;
 }
 
+a.edit {
+    background: url(../images/icons/pencil.png) 10px center no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+
 a.flag {
     background: url(../images/icons/flag.png) 10px center no-repeat #f3f3f3;
     padding-left: 30px;
@@ -503,6 +508,13 @@ a.down-big {
     width: 18px;
     font-size: 16px;
     padding: 10px 15px;
+}
+
+a.share {
+    background: url(../images/icons/hand-share.png) 6px center no-repeat;
+    padding-left: 28px;
+    font-size: 12px;
+    font-weight: normal;
 }
 
 /* Tabs */

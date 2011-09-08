@@ -35,6 +35,8 @@ class Projects extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('experiment');
+		$this->load->model('job');
+		$this->load->model('share');
 	}
 
 	/**
@@ -127,19 +129,41 @@ class Projects extends CI_Controller {
 		}
 
 		$this->load->helper('typography');
-		$this->load->model('job');
 
 		$data['project'] = $project;
 		$data['experiments'] = $this->experiment->getByProjectId($id);
 		$data['jobs'] = $this->job->getRecent($id);
+		$data['shares'] = $this->share->getByProjectId($id);
 
 		$this->load->view('projects/detail', $data);
 	}
 
 	/**
+	 * Allows users to share their projects.
+	 *
+	 * @param string $id
+	 */
+	public function share($id) {
+		$project = $this->project->getById($id);
+		if (!$project) {
+			show_404();
+		}
+
+		if (!$this->_checkAccess($id)) {
+			// check if the user has access
+			show_error(_("Sorry, you don't have access to this project."), 403);
+		}
+
+		$data['project'] = $project;
+		$data['shares'] = $this->share->getByProjectId($id);
+
+		$this->load->view('projects/shares', $data);
+	}
+
+	/**
 	 * Allows users to delete a project.
 	 *
-	 * @param integer $projectId
+	 * @param string $id
 	 */
 	public function delete($id) {
 		if (!$this->_checkAccess($id)) { // check if the user has access

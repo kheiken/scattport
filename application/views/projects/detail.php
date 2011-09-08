@@ -3,7 +3,11 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=_('Project details');?></h2>
+		<h2>
+			<?=_('Project');?> &raquo;<?=$project['name'];?>&laquo;
+
+			<a class="share" href="<?=site_url('projects/share/' . $project['id']);?>"><?=_(sprintf('Shared with %s people', count($shares)));?></a>
+		</h2>
 	</div>
 
 	<div class="box">
@@ -14,26 +18,27 @@
 <?php
 	if ($project['default_model'] != ''):
 ?>
-	<canvas id="cv" style="border: #e8e8e8 1px solid;" width="120" height="120"></canvas>
-	<p></p>
+		<canvas id="cv" style="border: #e8e8e8 1px solid;" width="120" height="120"></canvas>
+		<p></p>
 
-	<script type="text/javascript">
-	var canvas = document.getElementById('cv');
-	var viewer = new JSC3D.Viewer(canvas);
-	viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$project['id'];?>/<?=$project['default_model'];?>');
-	viewer.setParameter('InitRotationX', -20);
-	viewer.setParameter('InitRotationY', 20);
-	viewer.setParameter('InitRotationZ', 0);
-	viewer.setParameter('ModelColor', '#cccccc');
-	viewer.setParameter('BackgroundColor1', '#ffffff');
-	viewer.setParameter('BackgroundColor2', '#ffffff');
-	viewer.setParameter('RenderMode', 'flat');
-	viewer.init();
-	viewer.update();
-	</script>
+		<script type="text/javascript">
+		var canvas = document.getElementById('cv');
+		var viewer = new JSC3D.Viewer(canvas);
+		viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$project['id'];?>/<?=$project['default_model'];?>');
+		viewer.setParameter('InitRotationX', -20);
+		viewer.setParameter('InitRotationY', 20);
+		viewer.setParameter('InitRotationZ', 0);
+		viewer.setParameter('ModelColor', '#cccccc');
+		viewer.setParameter('BackgroundColor1', '#ffffff');
+		viewer.setParameter('BackgroundColor2', '#ffffff');
+		viewer.setParameter('RenderMode', 'flat');
+		viewer.init();
+		viewer.update();
+		</script>
 <?php
 	endif;
 ?>
+
 		<h3><?=_('Experiments');?></h3>
 		<table class="tableList">
 			<thead>
@@ -71,7 +76,7 @@
 			</tbody>
 		</table>
 
-		<p><a class="button add" href="<?=site_url('experiments/create/' . $project['id']);?>"><?=_('Create experiment');?></a>
+		<p><a class="button add" href="<?=site_url('experiments/create/' . $project['id']);?>"><?=_('Create experiment');?></a></p>
 	</div>
 
 	<div class="title">

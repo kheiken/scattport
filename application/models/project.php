@@ -95,8 +95,18 @@ class Project extends CI_Model {
 	 * @return array All accessible projects
 	 */
 	public function getAccessible($userId) {
+		$shares = array();
+		$query = $this->db->get_where('shares', array('user_id' => $userId));
+		foreach ($query->result_array() as $share) {
+			$shares[] = $share['project_id'];
+		}
+
 		$this->db->where('public', 1);
 		$this->db->or_where('owner', $userId);
+
+		if (count($shares) > 0) {
+			$this->db->or_where_in('projects.id', $shares);
+		}
 
 		return $this->getAll();
 	}
@@ -147,7 +157,6 @@ class Project extends CI_Model {
 	 * @param type $needle The needle to look for in the haystack.
 	 */
 	public function search($needle) {
-
 		// get matching projects that are public
 		$query = $this->db->query("SELECT * FROM `projects` WHERE `public`='1' AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
 		$public_results = $query->result_array();
