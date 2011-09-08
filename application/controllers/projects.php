@@ -143,7 +143,7 @@ class Projects extends CI_Controller {
 	 *
 	 * @param string $id
 	 */
-	public function share($id) {
+	public function shares($id) {
 		$project = $this->project->getById($id);
 		if (!$project) {
 			show_404();
@@ -154,6 +154,28 @@ class Projects extends CI_Controller {
 			show_error(_("Sorry, you don't have access to this project."), 403);
 		}
 
+		// add a new share
+		if ($this->input->get('action') == 'add') {
+			$data = array(
+				'user_id' => $this->input->post('user_id'),
+				'project_id' => $project['id'],
+				'can_edit' => $this->input->post('rights'),
+			);
+			if ($this->share->create($data)) {
+				redirect('projects/shares/' . $project['id'], 303);
+			}
+		} else if ($this->input->get('action') == 'update') { // update all shares
+			foreach ($_POST['rights'] as $userId => $value) {
+				$this->share->update(array('project_id' => $project['id'], 'user_id' => $userId, 'can_edit' => $value));
+			}
+			redirect('projects/shares/' . $project['id'], 303);
+		} else if ($this->input->get('action') == 'delete') { // delete a share
+			if ($this->share->delete(array('user_id' => $this->input->get('user_id'), 'project_id' => $project['id']))) {
+				redirect('projects/shares/' . $project['id'], 303);
+			}
+		}
+
+		$data = array(); // empty data array
 		$data['project'] = $project;
 		$data['shares'] = $this->share->getByProjectId($id);
 

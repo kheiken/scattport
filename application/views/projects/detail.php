@@ -6,7 +6,7 @@
 		<h2>
 			<?=anchor('projects', _('Projects'));?> &raquo; <?=$project['name'];?>
 
-			<a class="share" href="<?=site_url('projects/share/' . $project['id']);?>"><?=_(sprintf('Shared with %s people', count($shares)));?></a>
+			<a class="share" href="<?=site_url('projects/shares/' . $project['id']);?>"><?=_(sprintf('Shared with %s people', count($shares)));?></a>
 		</h2>
 	</div>
 

@@ -53,7 +53,7 @@ class Share extends CI_Model {
 	 * @return array
 	 */
 	public function getByProjectId($projectId) {
-		$this->db->select('shares.*, users.firstname, users.lastname');
+		$this->db->select('shares.*, users.username, users.firstname, users.lastname');
 		$this->db->join('users', 'users.id = shares.user_id', 'left');
 
 		return $this->db->get_where('shares', array('project_id' => $projectId))->result_array();
@@ -79,7 +79,16 @@ class Share extends CI_Model {
 	 * @return boolean
 	 */
 	public function create($data) {
-		$this->db->insert('shares', $data);
+		if (!isset($data['project_id']) || !isset($data['user_id'])) {
+			return false;
+		}
+
+		$this->db->query('REPLACE INTO `shares` (`project_id`, `user_id`, `can_edit`) VALUES ('
+				. $this->db->escape($data['project_id']) . ', '
+				. $this->db->escape($data['user_id']) . ', '
+				. $this->db->escape($data['can_edit']) . ')');
+
+		//$this->db->insert('shares', $data);
 		return $this->db->affected_rows() == 1;
 	}
 

@@ -7,34 +7,38 @@
 	</div>
 
 	<div class="box">
-		<table class="tableList">
-			<thead>
-				<tr>
-					<th scope="col"><?=_('User');?></th>
-					<th scope="col"><?=_('Rights');?></th>
-					<th scope="col"><?=_('Actions');?></th>
-				</tr>
-			</thead>
-			<tbody>
+		<form method="post" name="updateShares" action="?action=update">
+			<table class="tableList">
+				<thead>
+					<tr>
+						<th scope="col"><?=_('User');?></th>
+						<th scope="col"><?=_('Rights');?></th>
+						<th scope="col"><?=_('Actions');?></th>
+					</tr>
+				</thead>
+				<tbody>
 <?php
 	foreach ($shares as $share):
 ?>
-				<tr>
-					<td><a href="<?=site_url('users/profile/' . $share['user_id']);?>"><?=$share['firstname'];?> <?=$share['lastname'];?></a></td>
-					<td><?=form_dropdown('rights', array('Can edit', 'Can view'), $share['can_edit'], 'class="drop"')?></td>
-					<td><a href="?action=delete&user_id=<?=$share['user_id'];?>"><?=_('Delete');?></a></td>
-				</tr>
+					<tr>
+						<td><a href="<?=site_url('users/profile/' . $share['username']);?>"><?=$share['firstname'];?> <?=$share['lastname'];?></a></td>
+						<td><?=form_dropdown('rights[' . $share['user_id'] . ']', array('Can view', 'Can edit'), $share['can_edit'], 'class="drop"')?></td>
+						<td><a href="?action=delete&user_id=<?=$share['user_id'];?>"><?=_('Delete');?></a></td>
+					</tr>
 <?php
 	endforeach;
 ?>
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</form>
 
-		<form method="post" name="addShare" action="<?=site_url('projects/share/' . $project['id']);?>">
+		<p><a class="button save" href="javascript:void(0);" onclick="$('form[name=updateShares]').submit();"><?=_('Save and back');?></a></p>
+
+		<h3><?=_('Share with someone');?></h3>
+		<form method="post" name="addShare" action="?action=add">
 			<ul>
 				<li>
 					<div>
-						<?=form_label(_('Add person:'), 'user_id');?>
 						<select name="user_id" id="user_id" class="drop">
 <?php
 	foreach ($this->user->getAll() as $user):
@@ -44,13 +48,12 @@
 	endforeach;
 ?>
 						</select>
-						<?=form_submit('', _('Share'), 'class="submit"');?>
+						<?=form_dropdown('rights', array('Can view', 'Can edit'), $share['can_edit'], 'class="drop"')?>
+						<?=form_submit('add', _('Share'), 'class="submit"');?>
 					</div>
 				</li>
 			</ul>
 		</form>
-
-		<p><a class="button save" href="javascript:history.back();"><?=_('Save and back');?></a></p>
 	</div>
 
 </div>
