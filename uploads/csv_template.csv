@@ -1,0 +1,2 @@
+Parameter,Human-readable name,Unit,Type,Default value,Description
+test_var,Test varialble 1,testest,string,testtest,This is a variable for testing.
