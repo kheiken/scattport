@@ -106,7 +106,31 @@
 					<a href="javascript:void(0);"><?=_('My projects');?></a>
 					<ul>
 <?php
-	foreach ($this->project->getOwn() as $project):
+	$projects = $this->project->getOwn();
+	if (count($projects) > 0):
+		foreach ($this->project->getOwn() as $project):
+?>
+						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
+<?php
+		endforeach;
+	else:
+?>
+						<li><?=_("You haven't created a project yet.");?></li>
+						<li><?=anchor('projects/create', _('Create a project now'));?></li>
+<?php
+	endif;
+?>
+					</ul>
+				</li>
+<?php
+	$projects = $this->project->getShared();
+	if (count($projects) > 0):
+?>
+				<li class="togglable" id="nav_shared_projects">
+					<a href="javascript:void(0);"><?=_('Projects shared with me');?></a>
+					<ul>
+<?php
+	foreach ($projects as $project):
 ?>
 						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
 <?php
@@ -114,17 +138,17 @@
 ?>
 					</ul>
 				</li>
-				<li class="togglable" id="nav_shared_projects">
-					<a href="javascript:void(0);"><?=_('Projects shared with me');?></a>
-					<ul>
-						<li><a href="#">Prisma</a></li>
-					</ul>
-				</li>
+<?php
+	endif;
+
+	$projects = $this->project->getPublic();
+	if (count($projects) > 0):
+?>
 				<li class="togglable" id="nav_public_projects">
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 <?php
-	foreach ($this->project->getPublic() as $project):
+	foreach ($projects as $project):
 ?>
 						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
 <?php
@@ -132,6 +156,9 @@
 ?>
 					</ul>
 				</li>
+<?php
+	endif;
+?>
 			</ul>
 		</div>
 

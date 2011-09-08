@@ -69,7 +69,7 @@ class Project extends CI_Model {
 	 *
 	 * @return array The shared projects.
 	 */
-	private function getShared() {
+	public function getShared() {
 		$this->load->library('session');
 		$this->db->select('*')->from('shares')->order_by('lastaccess', 'desc')->where(array('user_id' => $this->session->userdata('user_id')));
 		$this->db->join('projects', 'projects.id = shares.project_id');
