@@ -110,9 +110,9 @@
 					<ul>
 <?php
 	$projects = $this->project->getOwn();
-	foreach($projects as $project):
+	foreach ($projects as $project):
 ?>
-						<li><a href="<?=site_url('projects/detail/'.$project['id']);?>"><?=$project['mediumname'];?></a></li>
+						<li><a href="<?=site_url('projects/detail/' . $project['id']);?>"><?=$project['mediumname'];?></a></li>
 <?php
 	endforeach;
 ?>
@@ -128,6 +128,14 @@
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
 						<li><a href="#">Beispielprojekt</a></li>
+<?php
+	$projects = $this->project->getPublic();
+	foreach ($projects as $project):
+?>
+						<li><a href="<?=site_url('projects/detail/' . $project['id']);?>"><?=$project['mediumname'];?></a></li>
+<?php
+	endforeach;
+?>
 					</ul>
 				</li>
 			</ul>

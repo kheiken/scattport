@@ -79,16 +79,26 @@ class Project extends CI_Model {
 	}
 
 	/**
-	 * Get all publicly available projects.
+	 * Gets all publicly available projects.
 	 *
-	 * @return array All public projects.
+	 * @return array All public projects
 	 */
-	private function getPublic() {
-		$query = $this->db->where(array('public' => '1'))
-			->order_by('name', 'asc')
-			->get('projects');
-
+	public function getPublic() {
+		$query = $this->db->order_by('name ASC')->get_where('projects', array('public' => 1));
 		return $this->_addShortNames($query->result_array());
+	}
+
+	/**
+	 * Gets all accessible projects for a user.
+	 *
+	 * @param string $userId
+	 * @return array All accessible projects
+	 */
+	public function getAccessible($userId) {
+		$this->db->where('public', 1);
+		$this->db->or_where('owner', $userId);
+
+		return $this->getAll();
 	}
 
 	/**
@@ -96,13 +106,15 @@ class Project extends CI_Model {
 	 *
 	 * @param type $project_id The project to get.
 	 */
-	public function getById($project_id) {
-		$result = $this->db->get_where('projects', array('id' => $project_id))->row_array();
-		$this->db->where('id', $project_id)->update('projects', array(
-			'lastaccess' => mysql_now(),
-		));
+	public function getById($projectId) {
+		$result = $this->db->get_where('projects', array('id' => $projectId))->row_array();
+		$this->db->where('id', $projectId)->update('projects', array('lastaccess' => mysql_now()));
 
-		return $this->_addShortName($result);
+		if ($result) {
+			return $this->_addShortName($result);
+		} else {
+			return false;
+		}
 	}
 
 	/**

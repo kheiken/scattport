@@ -41,9 +41,13 @@ class Projects extends CI_Controller {
 	 * Shows a list of all projects.
 	 */
 	public function index() {
-		$tpl['projects'] = $this->project->getAll();
+		if ($this->access->isAdmin()) {
+			$data['projects'] = $this->project->getAll();
+		} else {
+			$data['projects'] = $this->project->getAccessible($this->session->userdata('user_id'));
+		}
 
-		$this->load->view('projects/list', $tpl);
+		$this->load->view('projects/list', $data);
 	}
 
 	/**
@@ -55,6 +59,7 @@ class Projects extends CI_Controller {
 			$data = array(
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
+					'public' => $this->input->post('public'),
 			);
 
 			$data['project_id'] = $this->project->create($data);
@@ -112,14 +117,17 @@ class Projects extends CI_Controller {
 	 * @param integer $id The ID of the project to show
 	 */
 	public function detail($id) {
-		$this->load->helper('typography');
-		$this->load->model('job');
-
 		$project = $this->project->getById($id);
 		if (!$project) {
-			$this->messages->add(_('The project could not be loaded.'), 'error');
-			redirect('projects', 303);
+			show_404();
 		}
+
+		if (!$this->_checkAccess($id)) { // check if the user has access
+			show_error(_("Sorry, you don't have access to this project."), 403);
+		}
+
+		$this->load->helper('typography');
+		$this->load->model('job');
 
 		$data['project'] = $project;
 		$data['experiments'] = $this->experiment->getByProjectId($id);
@@ -134,10 +142,26 @@ class Projects extends CI_Controller {
 	 * @param integer $projectId
 	 */
 	public function delete($id) {
+		if (!$this->_checkAccess($id)) { // check if the user has access
+			show_error(_("Sorry, you don't have access to this project."), 403);
+		}
+
 		if ($this->project->delete($id)) {
 			$this->messages->add(_('The project was deleted.'), 'success');
 		}
 		redirect('projects', 303);
 	}
 
+	/**
+	 * Checks if users have access to a project.
+	 *
+	 * @param string $projectId
+	 */
+	private function _checkAccess($projectId) {
+		$project = $this->project->getById($projectId);
+		return $this->access->isAdmin() || $project['public'] == 1;
+	}
 }
+
+/* End of file projects.php */
+/* Location: ./application/controllers/projects.php */

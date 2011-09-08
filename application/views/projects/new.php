@@ -45,6 +45,12 @@
 					<label class="note"><?=_('Upload a configuration that is used as a default for new experiments.<br/>This configuration can be changed for every experiment.');?></label>
 				</li>
 				<li>
+					<?=form_label(_('Make the project public?'), 'public');?>
+					<div>
+						<?=form_yesno('public', set_value('public'), 'id="public" class="drop"');?>
+					</div>
+				</li>
+				<li>
 					<a href="#" onclick="document.forms.createproject.submit()" class="button"><?=_('Save');?></a>
 				</li>
 			</ul>

@@ -232,6 +232,11 @@ $config['projects/create'] = array(
 				'label' => _('Default configuration'),
 				'rules' => 'file_allowed_type[calc]',
 		),
+		array(
+				'field' => 'public',
+				'label' => _('Make the project public'),
+				'rules' => 'integer',
+		),
 );
 
 /**
