@@ -127,7 +127,6 @@
 				<li class="togglable" id="nav_public_projects">
 					<a href="javascript:void(0);"><?=_('Public projects');?></a>
 					<ul>
-						<li><a href="#">Beispielprojekt</a></li>
 <?php
 	$projects = $this->project->getPublic();
 	foreach ($projects as $project):
