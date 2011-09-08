@@ -36,6 +36,8 @@
 	// get the active project, if there is one
 	if ($this->input->get('active_project'))
 		$active_project = $this->project->getById($this->input->get('active_project'));
+	else if (isset($project['id']))
+		$active_project = $project;
 	else
 		$active_project = false;
 
@@ -46,7 +48,7 @@
 	endif;
 	foreach ($this->project->getAll() as $project):
 ?>
-			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id']) . '?active_project=' . $project['id'];?>"<?=($active_project == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
+			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id']) . '?active_project=' . $project['id'];?>"<?=($active_project['id'] == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
 <?php
 	endforeach;
 ?>
