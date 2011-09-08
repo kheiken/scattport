@@ -3,7 +3,7 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=_('Project');?> &raquo;<?=$project['name'];?>&laquo;</h2>
+		<h2><?=anchor('projects', _('Projects'));?> &raquo; <?=anchor('projects/detail/' . $project['id'], $project['name']);?> &raquo; <?=_('Shares');?></h2>
 	</div>
 
 	<div class="box">
