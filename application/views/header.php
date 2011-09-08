@@ -112,7 +112,7 @@
 	if (count($projects) > 0):
 		foreach ($this->project->getOwn() as $project):
 ?>
-						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
+						<li><a href="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"<?=($project['public'] == 1) ? ' class="public"' : (($project['shares'] > 0) ? ' class="share"' : ' class="folder"');?>><?=$project['mediumname'];?></a></li>
 <?php
 		endforeach;
 	else:
@@ -134,7 +134,7 @@
 <?php
 	foreach ($projects as $project):
 ?>
-						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
+						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname'], 'class="folder"');?></li>
 <?php
 	endforeach;
 ?>
@@ -152,7 +152,7 @@
 <?php
 	foreach ($projects as $project):
 ?>
-						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname']);?></li>
+						<li><?=anchor('projects/detail/' . $project['id'] . '?active_project=' . $project['id'], $project['mediumname'], 'class="folder"');?></li>
 <?php
 	endforeach;
 ?>

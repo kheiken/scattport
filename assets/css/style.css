@@ -215,6 +215,21 @@ div.error {
 	color: #0088cc;
 }
 
+.navigation a.share {
+	background: url(../images/icons/blue-folder-share.png) 0 center no-repeat;
+	padding-left: 22px;
+}
+
+.navigation a.public {
+	background: url(../images/icons/users.png) 0 center no-repeat;
+	padding-left: 22px;
+}
+
+.navigation a.folder {
+	background: url(../images/icons/blue-folder.png) 0 center no-repeat;
+	padding-left: 22px;
+}
+
 /* Search */
 
 #search-form {
@@ -276,7 +291,7 @@ div.error {
 }
 
 #content div.title a.share {
-    background: url(../images/icons/hand-share.png) 6px center no-repeat;
+    background: url(../images/icons/user-share.png) 6px center no-repeat;
     padding-left: 28px;
     font-size: 12px;
     font-weight: normal;
