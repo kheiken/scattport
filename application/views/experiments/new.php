@@ -29,7 +29,7 @@
 						</div>
 					</li>
 					<li>
-						<h4><?=_('3D model');?></h4>
+						<?=form_label(_('3D model'), '3dmodel');?>
 <?php
 	if (!is_null($project['default_model'])):
 ?>
@@ -37,6 +37,10 @@
 							<strong><?=_('There is a default model set for this project.');?></strong><br />
 							<?=_('If you want to use a different model for this experiment, you can upload it here.');?>
 						</div>
+<?php
+	else:
+?>
+						<span class="req">*</span>
 <?php
 	endif;
 ?>
