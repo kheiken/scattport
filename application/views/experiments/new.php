@@ -3,7 +3,7 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=_('Create a new experiment');?></h2>
+		<h2><?=anchor('projects', _('Projects'));?> &raquo; <?=anchor('projects/detail/' . $project['id'], $project['name']);?> &raquo; <?=_('Create experiment');?></h2>
 	</div>
 
 	<form name="newExperiment" method="post" action="<?=site_url('experiments/create/' . $project['id']);?>" enctype="multipart/form-data">
