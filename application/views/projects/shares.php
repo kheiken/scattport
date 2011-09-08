@@ -18,7 +18,8 @@
 				</thead>
 				<tbody>
 <?php
-	foreach ($shares as $share):
+	if (count($shares) > 0):
+		foreach ($shares as $share):
 ?>
 					<tr>
 						<td><a href="<?=site_url('users/profile/' . $share['username']);?>"><?=$share['firstname'];?> <?=$share['lastname'];?></a></td>
@@ -26,7 +27,14 @@
 						<td><a href="?action=delete&user_id=<?=$share['user_id'];?>"><?=_('Delete');?></a></td>
 					</tr>
 <?php
-	endforeach;
+		endforeach;
+	else:
+?>
+					<tr>
+						<td colspan="3"><?=_('This project is not yet shared with anyone.');?></td>
+					</tr>
+<?php
+	endif;
 ?>
 				</tbody>
 			</table>
@@ -48,7 +56,7 @@
 	endforeach;
 ?>
 						</select>
-						<?=form_dropdown('rights', array('Can view', 'Can edit'), $share['can_edit'], 'class="drop"')?>
+						<?=form_dropdown('rights', array('Can view', 'Can edit'), 0, 'class="drop"')?>
 						<?=form_submit('add', _('Share'), 'class="submit"');?>
 					</div>
 				</li>
