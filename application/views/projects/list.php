@@ -22,7 +22,7 @@
 ?>
 				<tr>
 					<td><a href="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"><abbr title="<?=$project['name'] . "\n\n" . $project['description'];?>"><?=$project['mediumname'];?></abbr></a></td>
-					<td><?=$project['firstname'] . " " . $project['lastname'];?></td>
+					<td><a href="<?=site_url('users/profile/' . $project['username']);?>" title="<?=_('Show profile');?>"><?=$project['firstname'] . ' ' . $project['lastname'];?></a></td>
 					<td><span class="active"><?=_('Successfully finished');?></span></td>
 					<td><a href="#"><?=_('Show results');?></a> | <?=anchor('projects/delete/' . $project['id'], _('Delete'));?>
 					</td>
