@@ -37,6 +37,7 @@ class Auth extends CI_Controller {
 		}
 
 		$data['messages'] = $this->messages->get('success');
+		$this->messages->clear(); // clear all messages
 
 		if ($this->form_validation->run() === true) {
 			// check for "remember me"
