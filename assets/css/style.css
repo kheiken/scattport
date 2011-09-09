@@ -676,3 +676,11 @@ html ul.tabs li.active a:hover {
 .jtip {
 	cursor: help;
 }
+
+#dashboard a.button {
+	text-align: center;
+}
+
+#dashboard a.button strong {
+	font-size: 2.5em;
+}
