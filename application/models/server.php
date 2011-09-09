@@ -52,7 +52,11 @@ class Server extends CI_Model {
 	 * @return array List of all available servers.
 	 */
 	public function getAll() {
-		return $this->db->get('servers')->result_array();
+		$servers = $this->db->get('servers')->result_array();
+		return array_map(function($var) {
+			$var['available'] = time_diff($var['last_update'], mysql_now()) < 120 ? true : false;
+			return $var;
+		}, $servers);
 	}
 
 	/**
