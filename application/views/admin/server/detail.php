@@ -17,10 +17,11 @@
 		<h3>Technical information</h3>
 		<h4>Hardware &amp; OS</h4>
 		<p>
-			CPU: Intel Xeon E5540, 2533 MHz<br />
-			Uptime: 254 Tage, 13 Stunden<br />
-			OS: Debian/GNU 5.0r1<br />
-			Workload: 2.01, 1.05, 0.85
+			CPU: <?=$server->hardware;?><br />
+			Uptime: <?=$server->uptimestring;?><br />
+			OS: <?=$server->os;?><br />
+			Workload: <?=sprintf('%.02f', $server->workload);?><br />
+			Last heartbeat: <?=$server->lastheartbeat;?>
 		</p>
 
 		<h4>ScattPort-Statistics</h4>
