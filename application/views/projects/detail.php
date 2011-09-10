@@ -54,7 +54,7 @@
 		foreach ($experiments as $experiment):
 ?>
 				<tr>
-					<td><a href="<?=site_url('experiments/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
+					<td><a href="<?=site_url('experiments/detail/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
 					<td><span class="active"><?=_('Completed');?></span></td>
 					<td>
 						<a href="<?=site_url('experiments/results/' . $experiment['id']);?>" title="<?=sprintf(_('Show results for this experiment'), $experiment['name']);?>"><?=_('Show results');?></a> |
