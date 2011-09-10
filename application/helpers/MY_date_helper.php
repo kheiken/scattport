@@ -73,28 +73,54 @@ if ( ! function_exists('time_diff'))
  * @param boolean $includeseconds should seconds be appended to the string?
  * @return string
  */
-if ( ! function_exists('secondsToString')) 
+if ( ! function_exists('prettyTime')) 
 {
-	function secondsToString($secs, $includeseconds = false) 
+	function prettyTime($secs, $includeseconds = false) 
 	{
-		$days = intval($secs / 86400);
-		$hours = intval($secs / 3600 % 24);
-		$minutes = intval($secs / 60 % 60);
-		$seconds = intval($secs % 60);
-		if (($minutes + $hours + $days) < 1)
-			return (sprintf(_('%d seconds'), $seconds));
-		else if (($minutes + $hours) < 1)
-			$string = sprintf(_('%d minutes'), $minutes);
-		else if ($days < 1)
-			$string = sprintf(_('%d hours, %d minutes'), $hours, $minutes);
+		if(!defined('SECOND')) define("SECOND", 1);
+		if(!defined('MINUTE')) define("MINUTE", 60 * SECOND);
+		if(!defined('HOUR')) define("HOUR", 60 * MINUTE);
+		if(!defined('DAY')) define("DAY", 24 * HOUR);
+		if(!defined('MONTH')) define("MONTH", 30 * DAY);
+	
+		if ($secs < 1 * MINUTE)
+		{
+			return sprintf(ngettext('one second ago', '%d seconds ago', $secs), $secs);
+		}
+		if ($secs < 2 * MINUTE)
+		{
+			return _('a minute ago');
+		}
+		if ($secs < 45 * MINUTE)
+		{
+			return _('%d minutes ago', floor($secs / MINUTE));
+		}
+		if ($secs < 90 * MINUTE)
+		{
+			return _('an hour ago');
+		}
+		if ($secs < 24 * HOUR)
+		{
+			return _('%d hours ago', floor($secs / HOUR));
+		}
+		if ($secs < 48 * HOUR)
+		{
+			return _('yesterday');
+		}
+		if ($secs < 30 * DAY)
+		{
+			return sprintf(_('%d days ago'), floor($secs / DAY));
+		}
+		if ($secs < 12 * MONTH)
+		{
+			$months = floor($secs / DAY / 30);
+			return sprintf(ngettext('one month ago', '%d months ago', $months), $months);
+		}
 		else
-			$string = sprintf(_('%d days, %d hours, %d minutes'), $days, $hours,
-					$minutes);
-	
-		if ($includeseconds)
-			$string .= ' ' . sprintf(_('and %d seconds'), $seconds);
-	
-		return $string;
+		{
+			$years = floor($secs / DAY / 365);
+			return sprintf(ngettext('one year ago', '%d years ago', $years), $years);
+		}
 	}
 }
 
