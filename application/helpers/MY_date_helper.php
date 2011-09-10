@@ -77,50 +77,38 @@ if ( ! function_exists('prettyTime'))
 {
 	function prettyTime($secs, $includeseconds = false) 
 	{
+		
 		if(!defined('SECOND')) define("SECOND", 1);
 		if(!defined('MINUTE')) define("MINUTE", 60 * SECOND);
 		if(!defined('HOUR')) define("HOUR", 60 * MINUTE);
 		if(!defined('DAY')) define("DAY", 24 * HOUR);
 		if(!defined('MONTH')) define("MONTH", 30 * DAY);
-	
-		if ($secs < 1 * MINUTE)
-		{
-			return sprintf(ngettext('one second ago', '%d seconds ago', $secs), $secs);
+		
+		$days = intval($secs / 86400);
+		$hours = intval($secs / 3600 % 24);
+		$minutes = intval($secs / 60 % 60);
+		$seconds = intval($secs % 60);
+		
+		$d = sprintf(ngettext('%d day', '%d days', $days), $days);
+		$h = sprintf(ngettext('%d hour', '%d hours', $hours), $hours);
+		$m = sprintf(ngettext('%d minute', '%d minutes', $minutes), $minutes);
+		$s = sprintf(ngettext('%d second', '%d seconds', $seconds), $seconds);
+		
+		$output = "";
+		if($days > 0) {
+			$output .= $d;
 		}
-		if ($secs < 2 * MINUTE)
-		{
-			return _('a minute ago');
+		if($hours > 0) {
+			$output .= !empty($output) ? ", ". $h : "". $h;
 		}
-		if ($secs < 45 * MINUTE)
-		{
-			return _('%d minutes ago', floor($secs / MINUTE));
+		if($minutes > 0) {
+			$output .= !empty($output) ? ", ". $m : "". $m;
 		}
-		if ($secs < 90 * MINUTE)
-		{
-			return _('an hour ago');
+		if($includeseconds || empty($output)) {
+			$output .= !empty($output) ? ", ". $s : "". $s;
 		}
-		if ($secs < 24 * HOUR)
-		{
-			return _('%d hours ago', floor($secs / HOUR));
-		}
-		if ($secs < 48 * HOUR)
-		{
-			return _('yesterday');
-		}
-		if ($secs < 30 * DAY)
-		{
-			return sprintf(_('%d days ago'), floor($secs / DAY));
-		}
-		if ($secs < 12 * MONTH)
-		{
-			$months = floor($secs / DAY / 30);
-			return sprintf(ngettext('one month ago', '%d months ago', $months), $months);
-		}
-		else
-		{
-			$years = floor($secs / DAY / 365);
-			return sprintf(ngettext('one year ago', '%d years ago', $years), $years);
-		}
+		
+		return $output;
 	}
 }
 
