@@ -88,8 +88,7 @@
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Experiment');?></th>
-					<th scope="col"><?=_('Started');?></th>
-					<th scope="col"><?=_('Finished');?></th>
+					<th scope="col"><?=_('Status');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
 			</thead>
@@ -97,11 +96,20 @@
 <?php
 	if (count($jobs) > 0):
 		foreach ($jobs as $job):
+			if($job['status'] == 'pending') {
+				$job['humanstatus'] = _('Pending');
+				$job['cssclass'] = 'closed';
+			} elseif($job['status'] == 'running') {
+				$job['humanstatus'] = _('Simulation running');
+				$job['cssclass'] = 'pending';
+			} elseif($job['status'] == 'complete') {
+				$job['humanstatus'] = _('Simulation complete');
+				$job['cssclass'] = 'active';
+			}
 ?>
 				<tr>
 					<td><?=$job['name'];?></td>
-					<td><?=$job['started_at'];?></td>
-					<td><?=$job['finished_at'] != '0000-00-00 00:00:00' ? $job['finished_at'] : _('Currently running');?></td>
+					<td><span class="<?=$job['cssclass'];?>"><?=$job['humanstatus'];?></span></td>
 					<td>
 						<a href="<?=site_url('experiments/results/' . $job['id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a> |
 						<a href="<?=site_url('experiments/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit this experiment'), $job['name']);?>"><?=_('Edit');?></td>

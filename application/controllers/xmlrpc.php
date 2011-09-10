@@ -108,7 +108,9 @@ class Xmlrpc extends CI_Controller {
 
 		$update = array(
 			'os' => $parameters[0],
-			'workload' => $parameters[1],
+			'uptime' => $parameters[1],
+			'workload' => $parameters[3],
+			'hardware' => $parameters[2],
 			'last_update' => mysql_now()
 		);
 		$this->server->update($server->id, $update);

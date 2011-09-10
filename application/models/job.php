@@ -81,7 +81,17 @@ class Job extends CI_Model {
 			$this->db->where('project_id', $projectId);
 		}
 
-		return $this->db->get('jobs')->result_array();
+		$jobs = $this->db->get('jobs')->result_array();
+		return array_map(function($var) {
+			if($var['started_at'] == '0000-00-00 00:00:00') {
+				$var['status'] = 'pending';
+			} elseif($var['finished_at'] == '0000-00-00 00:00:00') {
+				$var['status'] = 'running';
+			} else {
+				$var['status'] = 'complete';
+			}
+			return $var;
+		}, $jobs);
 	}
 
 	/**

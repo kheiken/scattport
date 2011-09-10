@@ -27,7 +27,7 @@
 class Dashboard extends CI_Controller {
 
 	/**
-	* Constructor.
+	 * Constructor.
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -35,7 +35,46 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function index() {
-		$this->load->view('dashboard');
+		$tpl['action_buttons'] = array(
+			array(
+				'icon' => 'tango/folder-new.png',
+				'text' => _('New project'),
+				'target' => site_url('projects/create'),
+			),
+			array(
+				'icon' => 'tango/document-open.png',
+				'text' => _('Recent results'),
+				'target' => site_url('jobs/results'),
+			),
+		);
+		
+		$tpl['recent_buttons'] = array(
+			array(
+				'count' => 4,
+				'text' => _('Jobs finished'),
+				'title' => sprintf(_('%d jobs finished recently'), 3),
+				'target' => '#',
+			),
+			array(
+				'count' => 2,
+				'text' => _('Newly shared projects'),
+				'title' => sprintf(_('You were invited to join %d projects'), 2),
+				'target' => '#',
+			),
+			array(
+				'count' => 1,
+				'text' => _('Job running'),
+				'title' => sprintf(_('There is %d job currently running'), 1),
+				'target' => '#',
+			),
+			array(
+				'count' => 2,
+				'text' => _('Jobs pending'),
+				'title' => sprintf(_('There are %2 job currently pending'), 1),
+				'target' => '#',
+			),
+		);
+		$this->load->view('dashboard', $tpl);
 	}
 }
 

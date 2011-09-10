@@ -21,7 +21,7 @@
 <?
 	foreach ($servers as $server):
 		if ($server['available']) {
-			if ($server['workload'] > 2) {
+			if ($server['workload'] > 0.8) {
 				$server['class'] = "pending";
 				$server['status'] = 'busy';
 			} else {

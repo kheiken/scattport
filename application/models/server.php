@@ -52,7 +52,11 @@ class Server extends CI_Model {
 	 * @return array List of all available servers.
 	 */
 	public function getAll() {
-		return $this->db->get('servers')->result_array();
+		$servers = $this->db->get('servers')->result_array();
+		return array_map(function($var) {
+			$var['available'] = time_diff($var['last_update'], mysql_now()) < 120 ? true : false;
+			return $var;
+		}, $servers);
 	}
 
 	/**
@@ -97,7 +101,12 @@ class Server extends CI_Model {
 	 * @param string $serverId
 	 */
 	public function getById($serverId) {
-		return $this->db->get_where('servers', array('id' => $serverId))->row();
+		$this->load->helper('date');
+		$server = $this->db->get_where('servers', array('id' => $serverId))->row();
+		$server->uptimestring = secondsToString($server->uptime);
+		$server->lastheartbeat = sprintf(_('%s ago'), 
+				secondsToString(time_diff($server->last_update, mysql_now())));
+		return $server;
 	}
 }
 

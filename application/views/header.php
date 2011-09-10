@@ -175,16 +175,4 @@
 			</form>
 		</div>
 
-		<div class="title">
-			<h2><?=_('Recent events');?></h2>
-		</div>
-
-		<div class="box">
-			<ul id="blog">
-				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
-				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
-				<li><h4><a href="#" title="<?=_('Calculation done');?>"><?=_('Calculation done');?></a> <abbr title="22.07.2011">22.07.2011</abbr></h4><p><?=sprintf(_('Calculation successfully finished for project &quot;%s&quot;'), 'Gerstenkorn');?></i></p></li>
-			</ul>
-		</div>
-
 	</div>
