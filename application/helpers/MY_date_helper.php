@@ -73,28 +73,42 @@ if ( ! function_exists('time_diff'))
  * @param boolean $includeseconds should seconds be appended to the string?
  * @return string
  */
-if ( ! function_exists('secondsToString')) 
+if ( ! function_exists('prettyTime')) 
 {
-	function secondsToString($secs, $includeseconds = false) 
+	function prettyTime($secs, $includeseconds = false) 
 	{
+		
+		if(!defined('SECOND')) define("SECOND", 1);
+		if(!defined('MINUTE')) define("MINUTE", 60 * SECOND);
+		if(!defined('HOUR')) define("HOUR", 60 * MINUTE);
+		if(!defined('DAY')) define("DAY", 24 * HOUR);
+		if(!defined('MONTH')) define("MONTH", 30 * DAY);
+		
 		$days = intval($secs / 86400);
 		$hours = intval($secs / 3600 % 24);
 		$minutes = intval($secs / 60 % 60);
 		$seconds = intval($secs % 60);
-		if (($minutes + $hours + $days) < 1)
-			return (sprintf(_('%d seconds'), $seconds));
-		else if (($minutes + $hours) < 1)
-			$string = sprintf(_('%d minutes'), $minutes);
-		else if ($days < 1)
-			$string = sprintf(_('%d hours, %d minutes'), $hours, $minutes);
-		else
-			$string = sprintf(_('%d days, %d hours, %d minutes'), $days, $hours,
-					$minutes);
-	
-		if ($includeseconds)
-			$string .= ' ' . sprintf(_('and %d seconds'), $seconds);
-	
-		return $string;
+		
+		$d = sprintf(ngettext('%d day', '%d days', $days), $days);
+		$h = sprintf(ngettext('%d hour', '%d hours', $hours), $hours);
+		$m = sprintf(ngettext('%d minute', '%d minutes', $minutes), $minutes);
+		$s = sprintf(ngettext('%d second', '%d seconds', $seconds), $seconds);
+		
+		$output = "";
+		if($days > 0) {
+			$output .= $d;
+		}
+		if($hours > 0) {
+			$output .= !empty($output) ? ", ". $h : "". $h;
+		}
+		if($minutes > 0) {
+			$output .= !empty($output) ? ", ". $m : "". $m;
+		}
+		if($includeseconds || empty($output)) {
+			$output .= !empty($output) ? ", ". $s : "". $s;
+		}
+		
+		return $output;
 	}
 }
 

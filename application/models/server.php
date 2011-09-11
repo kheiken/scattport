@@ -103,9 +103,8 @@ class Server extends CI_Model {
 	public function getById($serverId) {
 		$this->load->helper('date');
 		$server = $this->db->get_where('servers', array('id' => $serverId))->row();
-		$server->uptimestring = secondsToString($server->uptime);
-		$server->lastheartbeat = sprintf(_('%s ago'), 
-				secondsToString(time_diff($server->last_update, mysql_now())));
+		$server->uptimestring = prettyTime($server->uptime);
+		$server->lastheartbeat = prettyTime(time_diff($server->last_update, mysql_now()));
 		return $server;
 	}
 }
