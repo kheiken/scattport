@@ -37,7 +37,7 @@ class Dashboard extends CI_Controller {
 	public function index() {
 		$tpl['action_buttons'] = array(
 			array(
-				'icon' => 'icons-big/folder-new.png',
+				'icon' => 'icons-big/blue-folder-new.png',
 				'text' => _('New project'),
 				'target' => site_url('projects/create'),
 			),
