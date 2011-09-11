@@ -37,17 +37,17 @@ class Dashboard extends CI_Controller {
 	public function index() {
 		$tpl['action_buttons'] = array(
 			array(
-				'icon' => 'tango/folder-new.png',
+				'icon' => 'icons-big/folder-new.png',
 				'text' => _('New project'),
 				'target' => site_url('projects/create'),
 			),
 			array(
-				'icon' => 'tango/document-open.png',
+				'icon' => 'icons-big/blue-folder-open-document.png',
 				'text' => _('Recent results'),
 				'target' => site_url('jobs/results'),
 			),
 		);
-		
+
 		$tpl['recent_buttons'] = array(
 			array(
 				'count' => 4,
