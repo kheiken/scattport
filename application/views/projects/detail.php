@@ -130,4 +130,14 @@
 
 </div>
 
+<script>
+$('.editInPlace').editInPlace({
+
+	url: BASE_URL + 'ajax/update_project/' + '<?=$project['id']?>',
+	saving_image: SITE_URL + 'images/ajax-loader.gif',
+	update_value: 'description',
+	value_required: true
+});
+</script>
+
 <?php $this->load->view('footer');?>

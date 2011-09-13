@@ -684,3 +684,22 @@ html ul.tabs li.active a:hover {
 #dashboard a.button strong {
 	font-size: 24px;
 }
+
+/* Inplace editor */
+
+input.inplace_field, textarea.inplace_field {
+	margin: 5px 0 5px 0;
+	padding: 3px 5px;
+	border: 1px solid #d2d2d2;
+	font-size: 12px;
+}
+
+a.inplace_save {
+    background: url(../images/icons/tick.png) 10px center no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+
+a.inplace_cancel {
+    background: url(../images/icons/slash.png) 10px center no-repeat #f3f3f3;
+    padding-left: 30px;
+}

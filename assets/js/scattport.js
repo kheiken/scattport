@@ -98,48 +98,12 @@ var CookieList = function(cookieName) {
 };
 
 /**
- * Saves the changes done by in-place edit.
- *
- * @param obj
- * @param cancel
- */
-function saveChanges(obj, cancel) {
-	var a;
-
-	if (!cancel) {
-		a = $(obj).parent().siblings(0).val();
-		$.post(SITE_URL + 'ajax/save_project', { content: a }, function(response) {
-			alert("Die Änderungen wurden gespeichert.");
-		});
-	} else {
-		a = cancel;
-	}
-
-	$(obj).parent().parent().after('<div class="editInPlace">' + a + '</div>').remove();
-}
-
-/**
  * Alternates the table rows.
  */
 $.fn.alternateRowColors = function() {
 	$('tbody tr:odd', this).removeClass('even').addClass('odd');
 	$('tbody tr:even', this).removeClass('odd').addClass('even');
 	return this;
-};
-
-/**
- * Replaces html line breaks with newlines.
- */
-$.fn.br2nl = function() {
-	return $(this).html().replace(/(<br>)|(<br \/>)|(<p>)|(<\/p>)/g, "");
-};
-
-/**
- * Similar to PHP's nl2br function.
- */
-$.fn.nl2br = function() {
-	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-	return $(this).html().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
 };
 
 /**
@@ -153,7 +117,7 @@ $(document).ready(function() {
 	$('ul.tabs li:first').addClass('active').show(); // activate first tab
 	$('.tab_content:first').show(); // show first tab content
 
-	// onClick event
+	// on-click event
 	$('ul.tabs li').click(function() {
 		$('ul.tabs li').removeClass('active'); // remove any 'active' class
 		$(this).addClass('active'); // add 'active' class to selected tab
@@ -249,28 +213,6 @@ $(document).ready(function() {
 		$(this).find('td.drag_handle').addClass('drag_handle-show');
 	}, function() {
 		$(this).find('td.drag_handle').removeClass('drag_handle-show');
-	});
-
-	/*
-	 * In-place editor
-	 */
-	$('.editInPlace').click(function() {
-		var textarea = '<div><textarea rows="6" cols="60">' + $(this).br2nl() + '</textarea><p></p>';
-		var button = '<p><a class="button save" href="javascript:void(0);">Speichern</a> <a class="button cancel" href="javascript:void(0);">Abbrechen</a></div>';
-		var revert = $(this).html();
-
-		$(this).after(textarea + button).remove();
-
-		$('.save').click(function() {
-			saveChanges(this, false);
-		});
-		$('.cancel').click(function() {
-			saveChanges(this, revert);
-		});
-	}).mouseover(function() {
-		$(this).addClass('editable');
-	}).mouseout(function() {
-		$(this).removeClass('editable');
 	});
 
 	/*

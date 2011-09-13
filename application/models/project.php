@@ -213,7 +213,7 @@ class Project extends CI_Model {
 	 * @param integer $projectId The ID of the project to update
 	 * @param array $data Array with data to update
 	 */
-	public function update($projectId, $data) {
+	public function update($data, $projectId) {
 		return $this->db->where('id', $projectId)->update('projects', $data);
 	}
 

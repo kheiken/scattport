@@ -35,6 +35,11 @@ class Ajax extends CI_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
+
+		// security check
+		if (!$this->input->is_ajax_request()) {
+			show_error(_('No AJAX request was made.'));
+		}
 	}
 
 	/**
@@ -49,12 +54,31 @@ class Ajax extends CI_Controller {
 	}
 
 	/**
-	 * Saves a projects description.
+	 * Saves the projects description.
+	 *
+	 * @param string $projectId
 	 */
-	public function save_project() {
+	public function update_project($projectId) {
 		$this->load->model('project');
-		$data['description'] = $this->input->post('content');
-		$this->project->update($this->session->userdata('active_project'), $data);
+
+		$data['description'] = $this->input->post('description');
+		$this->project->update($data, $projectId);
+
+		$this->output->set_output($data['description']);
+	}
+
+	/**
+	 * Saves the experiments description.
+	 *
+	 * @param string $experimentId
+	 */
+	public function update_experiment($experimentId) {
+		$this->load->model('experiment');
+
+		$data['description'] = $this->input->post('description');
+		$this->experiment->update($data, $experimentId);
+
+		$this->output->set_output($data['description']);
 	}
 
 	/**
@@ -67,6 +91,8 @@ class Ajax extends CI_Controller {
 
 	/**
 	 * Displays the description of parameters.
+	 *
+	 * @param string $parameterId
 	 */
 	public function parameter_help($parameterId) {
 		$this->load->model('parameter');

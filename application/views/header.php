@@ -13,7 +13,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
 
-<?=js_asset('tablednd.jquery.js');?>
+<?=js_asset('jquery.editinplace.js');?>
+<?=js_asset('jquery.tablednd.js');?>
+
+<?=js_asset('minmax.js');?>
 <?=js_asset('jsc3d.min.js');?>
 <?=js_asset('scattport.js');?>
 <?=js_asset('jtip.js');?>
