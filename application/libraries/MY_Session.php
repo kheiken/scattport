@@ -90,11 +90,11 @@ class MY_Session extends CI_Session {
 	 */
 	public function sess_create() {
 		$this->userdata = array(
-        	'session_id' => $this->generateHash(),
-        	'ip_address' => $this->CI->input->ip_address(),
-        	'user_agent' => substr($this->CI->input->user_agent(), 0, 50),
-        	'last_activity' => $this->now,
-        	'user_id' => null,
+	        	'session_id' => $this->generateHash(),
+	        	'ip_address' => $this->CI->input->ip_address(),
+	        	'user_agent' => substr($this->CI->input->user_agent(), 0, 120),
+	        	'last_activity' => $this->now,
+	        	'user_id' => null,
 		);
 
 		// save data to the DB if needed
@@ -117,10 +117,11 @@ class MY_Session extends CI_Session {
 			return;
 		}
 
-		$oldSessionID = $this->userdata['session_id'];
-		$newSessionID = $this->generateHash();
+		$oldSessionId = $this->userdata['session_id'];
+		$newSessionId = $this->generateHash();
 
-		$this->userdata['session_id'] = $newSessionID;
+		// update the session data in the session data array
+		$this->userdata['session_id'] = $newSessionId;
 		$this->userdata['last_activity'] = $this->now;
 		$this->userdata['user_id'] = array_key_exists('user_id', $this->userdata) ? $this->userdata['user_id'] : null;
 
@@ -134,7 +135,7 @@ class MY_Session extends CI_Session {
 				$cookieData[$val] = $this->userdata[$val];
 			}
 
-			$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->now, 'user_id' => $this->userdata['user_id'], 'session_id' => $newSessionID), array('session_id' => $oldSessionID));
+			$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->now, 'user_id' => $this->userdata['user_id'], 'session_id' => $newSessionId), array('session_id' => $oldSessionId));
 
 			// update users table if user is logged in
 			if (array_key_exists('user_id', $this->userdata) && !is_null($this->userdata['user_id'])) {
