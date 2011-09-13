@@ -91,7 +91,7 @@ class Assets {
 //				$httpHeaders .= '';
 //			}
 //			$code = $httpHeaders . "\n" . $code;
-//			file_put_contents(FCPATH . $this->cacheFolder . $type . '_' . md5($code) . EXT, $code);
+//			file_put_contents(FCPATH . $this->cacheFolder . $type . '_' . md5($code) . '.php', $code);
 			$output = '<script src="' . $this->CI->config->slash_item('base_url') . $filepath . '" language="javascript" type="text/javascript"></script>';
 			$output .= "\n";
 			break;

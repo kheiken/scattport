@@ -79,13 +79,13 @@ class MY_Lang extends CI_Lang {
 	 * @see CI_Lang::load()
 	 */
 	public function load($langfile = '', $idiom = '', $return = false, $add_suffix = true, $alt_path = '') {
-		$langfile = str_replace(EXT, '', $langfile);
+		$langfile = str_replace('.php', '', $langfile);
 
 		if ($add_suffix == true) {
 			$langfile = str_replace('_lang.', '', $langfile) . '_lang';
 		}
 
-		$langfile .= EXT;
+		$langfile .= '.php';
 
 		if (in_array($langfile, $this->is_loaded, true)) {
 			return;

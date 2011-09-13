@@ -183,7 +183,7 @@ class DataMapper {
 		$path = APPPATH . 'models';
 
 		// Prepare file
-		$file = $path . '/' . $class . EXT;
+		$file = $path . '/' . $class . '.php';
 
 		// Check if file exists, require_once if it does
 		if (file_exists($file))
@@ -222,7 +222,7 @@ class DataMapper {
 					$recursive_path = $path . '/' . $dir;
 
 					// Prepare file
-					$file = $recursive_path . '/' . $class . EXT;
+					$file = $recursive_path . '/' . $class . '.php';
 
 					// Check if file exists, require_once if it does
 					if (file_exists($file))
@@ -564,7 +564,7 @@ class DataMapper {
 					if (count($data) == 1 && isset($data[$this->updated_field]))
 					{
 						// Revert updated
-						$this->{$this->updated_field} = $this->stored->{$this->updated_field}; 
+						$this->{$this->updated_field} = $this->stored->{$this->updated_field};
 
 						// Unset it
 						unset($data[$this->updated_field]);
@@ -811,7 +811,7 @@ class DataMapper {
 
 		return FALSE;
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -1896,7 +1896,7 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @return	void
-	 */		
+	 */
 	function start_cache()
 	{
 		$this->db->start_cache();
@@ -1911,7 +1911,7 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @return	void
-	 */		
+	 */
 	function stop_cache()
 	{
 		$this->db->stop_cache();
@@ -1926,9 +1926,9 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @return	void
-	 */	
+	 */
 	function flush_cache()
-	{	
+	{
 		$this->db->flush_cache();
 	}
 
@@ -1952,8 +1952,8 @@ class DataMapper {
 	 * This permits transactions to be disabled at run-time.
 	 *
 	 * @access	public
-	 * @return	void		
-	 */	
+	 * @return	void
+	 */
 	function trans_off()
 	{
 		$this->db->trans_enabled = FALSE;
@@ -1971,8 +1971,8 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @param	bool
-	 * @return	void		
-	 */	
+	 * @return	void
+	 */
 	function trans_strict($mode = TRUE)
 	{
 		$this->db->trans_strict($mode);
@@ -1988,9 +1988,9 @@ class DataMapper {
 	 * @access	public
 	 * @param	bool
 	 * @return	void
-	 */	
+	 */
 	function trans_start($test_mode = FALSE)
-	{	
+	{
 		$this->db->trans_start($test_mode);
 	}
 
@@ -2002,8 +2002,8 @@ class DataMapper {
 	 * Complete a transaction.
 	 *
 	 * @access	public
-	 * @return	bool		
-	 */	
+	 * @return	bool
+	 */
 	function trans_complete()
 	{
 		return $this->db->trans_complete();
@@ -2019,9 +2019,9 @@ class DataMapper {
 	 * @access	public
 	 * @param	bool
 	 * @return	bool
-	 */	
+	 */
 	function trans_begin($test_mode = FALSE)
-	{	
+	{
 		return $this->db->trans_begin($test_mode);
 	}
 
@@ -2033,8 +2033,8 @@ class DataMapper {
 	 * Lets you retrieve the transaction flag to determine if it has failed.
 	 *
 	 * @access	public
-	 * @return	bool		
-	 */	
+	 * @return	bool
+	 */
 	function trans_status()
 	{
 		return $this->_trans_status;
@@ -2049,7 +2049,7 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @return	bool
-	 */	
+	 */
 	function trans_commit()
 	{
 		return $this->db->trans_commit();
@@ -2064,7 +2064,7 @@ class DataMapper {
 	 *
 	 * @access	public
 	 * @return	bool
-	 */	
+	 */
 	function trans_rollback()
 	{
 		return $this->db->trans_rollback();
@@ -2080,7 +2080,7 @@ class DataMapper {
 	 * @access	public
 	 * @param	bool
 	 * @return	bool
-	 */	
+	 */
 	function _auto_trans_begin()
 	{
 		// Begin auto transaction
@@ -2100,7 +2100,7 @@ class DataMapper {
 	 * @access	public
 	 * @param	string
 	 * @return	bool
-	 */	
+	 */
 	function _auto_trans_complete($label = 'complete')
 	{
 		// Complete auto transaction
@@ -2363,7 +2363,7 @@ class DataMapper {
 				{
 					// And it has an existing relation
 					$query = $this->db->get_where($relationship_table, array($this->model . '_id' => $this->id), 1, 0);
-						
+
 					if ($query->num_rows() > 0)
 					{
 						// Find and update the other objects existing relation to relate with this object
@@ -2547,7 +2547,7 @@ class DataMapper {
 	 * @param	mixed
 	 * @param	string
 	 * @return	bool
-	 */	
+	 */
 	function _related_required($object, $model)
 	{
 		return ($this->_count_related($model, $object) == 0) ? FALSE : TRUE;
@@ -2559,7 +2559,7 @@ class DataMapper {
 	 * Related Min Size (pre-process)
 	 *
 	 * Checks if the value of a property is at most the minimum size.
-	 * 
+	 *
 	 * @access	private
 	 * @param	mixed
 	 * @param	string
@@ -2577,7 +2577,7 @@ class DataMapper {
 	 * Related Max Size (pre-process)
 	 *
 	 * Checks if the value of a property is at most the maximum size.
-	 * 
+	 *
 	 * @access	private
 	 * @param	mixed
 	 * @param	string
@@ -2612,7 +2612,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	bool
-	 */	
+	 */
 	function _alpha_dash_dot($field)
 	{
 		return ( ! preg_match('/^([\.-a-z0-9_-])+$/i', $this->{$field})) ? FALSE : TRUE;
@@ -2628,7 +2628,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	bool
-	 */	
+	 */
 	function _alpha_slash_dot($field)
 	{
 		return ( ! preg_match('/^([\.\/-a-z0-9_-])+$/i', $this->{$field})) ? FALSE : TRUE;
@@ -2641,7 +2641,7 @@ class DataMapper {
 	 *
 	 * Match one field to another.
 	 * This replaces the version in CI_Form_validation.
-	 * 
+	 *
 	 * @access	private
 	 * @param	string
 	 * @param	string
@@ -2658,7 +2658,7 @@ class DataMapper {
 	 * Min Date (pre-process)
 	 *
 	 * Checks if the value of a property is at least the minimum date.
-	 * 
+	 *
 	 * @access	private
 	 * @param	string
 	 * @param	string
@@ -2675,7 +2675,7 @@ class DataMapper {
 	 * Max Date (pre-process)
 	 *
 	 * Checks if the value of a property is at most the maximum date.
-	 * 
+	 *
 	 * @access	private
 	 * @param	string
 	 * @param	string
@@ -2692,7 +2692,7 @@ class DataMapper {
 	 * Min Size (pre-process)
 	 *
 	 * Checks if the value of a property is at least the minimum size.
-	 * 
+	 *
 	 * @access	private
 	 * @param	string
 	 * @param	integer
@@ -2709,7 +2709,7 @@ class DataMapper {
 	 * Max Size (pre-process)
 	 *
 	 * Checks if the value of a property is at most the maximum size.
-	 * 
+	 *
 	 * @access	private
 	 * @param	string
 	 * @param	integer
@@ -2777,7 +2777,7 @@ class DataMapper {
 			if ($query->num_rows() > 0)
 			{
 				$row = $query->row();
-				
+
 				// If unique pair value does not belong to this object
 				if ($this->id != $row->id)
 				{
@@ -2868,7 +2868,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	void
-	 */	
+	 */
 	function _encode_php_tags($field)
 	{
 		$this->{$field} = encode_php_tags($this->{$field});
@@ -2885,7 +2885,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	void
-	 */	
+	 */
 	function _prep_for_form($field)
 	{
 		$this->{$field} = $this->form_validation->prep_for_form($this->{$field});
@@ -2902,7 +2902,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	void
-	 */	
+	 */
 	function _prep_url($field)
 	{
 		$this->{$field} = $this->form_validation->prep_url($this->{$field});
@@ -2919,7 +2919,7 @@ class DataMapper {
 	 * @access	private
 	 * @param	string
 	 * @return	void
-	 */	
+	 */
 	function _strip_image_tags($field)
 	{
 		$this->{$field} = strip_image_tags($this->{$field});
@@ -2937,7 +2937,7 @@ class DataMapper {
 	 * @param	string
 	 * @param	bool
 	 * @return	void
-	 */	
+	 */
 	function _xss_clean($field, $is_image = FALSE)
 	{
 		$this->{$field} = xss_clean($this->{$field}, $is_image);
@@ -2977,7 +2977,7 @@ class DataMapper {
 			{
 				continue;
 			}
-			
+
 			$data[$field] = $this->{$field};
 		}
 
