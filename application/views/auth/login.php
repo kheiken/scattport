@@ -3,19 +3,25 @@
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7,9; chrome=1" />
 
 <title>ScattPort | <?=_('Login');?></title>
 
-<?=asset('css', 'login.css');?>
-<?=asset('css', 'form.css');?>
+<?=css_asset('login.css');?>
+<?=css_asset('form.css');?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
-<?=asset('js', 'assets/js/minmax.js');?>
-<?=asset('js', 'assets/js/scattport.js');?>
+
+<?=js_asset('minmax.js');?>
+<?=js_asset('scattport.js');?>
+
 <script type="text/javascript">
-	var SITE_URL = '<?=site_url()?>';
+	var SITE_URL = '<?=site_url();?>';
+	var BASE_URL = '<?=base_url();?>';
 </script>
+
 </head>
+
 <body>
 
 <div id="wrapper">
