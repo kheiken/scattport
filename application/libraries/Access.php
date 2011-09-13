@@ -210,6 +210,7 @@ class Access {
 	/**
 	 * Kept for backwards compatibility.
 	 *
+	 * @deprecated 14-09-2011
 	 * @see Access::isLoggedIn()
 	 */
 	public function loggedIn() {
