@@ -43,6 +43,8 @@ class Messages {
 		if (empty($messages)) {
 			$this->clear();
 		}
+
+		log_message('debug', "Messages Class Extension Initialized");
 	}
 
 	/**
