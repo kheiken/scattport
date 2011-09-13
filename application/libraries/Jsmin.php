@@ -1,4 +1,5 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
+
 /**
  * Jsmin.php - PHP implementation of Douglas Crockford's JSMin.
  *
@@ -36,7 +37,7 @@
  * SOFTWARE.
  * --
  *
- * @package CodeIgniter
+ * @package ScattPort
  * @author Ryan Grove <ryan@wonko.com>
  * @copyright 2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
  * @copyright 2008 Ryan Grove <ryan@wonko.com> (PHP port)

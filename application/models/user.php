@@ -233,10 +233,7 @@ class User extends CI_Model {
 	 */
 	public function profile($username = '', $isCode = false) {
 		if (empty($username)) {
-			@$username = $this->session->userdata('username');
-			if (empty($username)) {
-				return false;
-			}
+			return false;
 		}
 
 		$this->db->select('users.*, groups.name AS `group`, groups.description AS `group_description`');

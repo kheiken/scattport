@@ -1,48 +1,66 @@
-<?php defined('BASEPATH') || exit("No direct script access allowed");
+<?php defined('BASEPATH') || exit('No direct script access allowed');
+/*
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 /**
  * Simple auth system.
  *
+ * @package ScattPort
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Access {
 
 	/**
 	 * Contains the CI instance.
+	 *
+	 * @var object
 	 */
-	protected $ci;
+	private $CI;
 
 	/**
-	 * Contains occured messages (using the language file).
+	 * Contains cached stuff.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $messages = array();
-
-	/**
-	 * Contains occured errors (using the language file).
-	 *
-	 * @var string
-	 */
-	protected $errors = array();
+	private $cache = array();
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->ci =& get_instance();
-		$this->ci->load->config('auth', true);
-		$this->ci->load->library('email');
-		$this->ci->lang->load('auth');
-		$this->ci->load->model('user');
-		$this->ci->load->model('group');
-		$this->ci->load->helper('cookie');
+		$this->CI =& get_instance();
+		$this->CI->load->config('auth', true);
+		$this->CI->load->library('email');
+		$this->CI->load->model('user');
+		$this->CI->load->model('group');
+		$this->CI->load->helper('cookie');
 
 		// auto-login the user if they are remembered
-		if (!$this->loggedIn() && get_cookie('username') && get_cookie('remember_code')) {
-			$this->ci->access = $this;
-			$this->ci->user->loginRememberedUser();
+		if (!$this->isloggedIn() && get_cookie('username') && get_cookie('remember_code')) {
+			$this->CI->access = $this;
+			$this->CI->user->loginRememberedUser();
 		}
+
+		log_message('debug', "Access Class Initialized");
 	}
 
 	/**
@@ -54,12 +72,12 @@ class Access {
 	 * @return boolean
 	 */
 	public function changePassword($username, $old, $new) {
-		if ($this->ci->user->changePassword($username, $old, $new)) {
-			$this->ci->messages->add(_('Password successfully changed'), 'success');
+		if ($this->CI->user->changePassword($username, $old, $new)) {
+			$this->CI->messages->add(_('Password successfully changed'), 'success');
 			return true;
 		}
 
-		$this->ci->messages->add(_('Unable to change password'), 'error');
+		$this->CI->messages->add(_('Unable to change password'), 'error');
 		return false;
 	}
 
@@ -70,34 +88,34 @@ class Access {
 	 * @return void
 	 */
 	public function forgottenPassword($email) {
-		if ($this->ci->user->forgottenPassword($email)) {
+		if ($this->CI->user->forgottenPassword($email)) {
 			// get user information
-			$user = $this->ci->user->getUserByEmail($email);
+			$user = $this->CI->user->getUserByEmail($email);
 
 			$data = array(
                 'username' => $user['username'],
                 'forgotten_password_code' => $user['forgotten_password_code'],
 			);
 
-			$message = $this->ci->load->view('auth/email/forgot_password', $data, true);
-			$this->ci->email->clear();
-			$config['mailtype'] = $this->ci->config->item('email_type', 'auth');
-			$this->ci->email->initialize($config);
-			$this->ci->email->set_newline("\r\n");
-			$this->ci->email->from($this->ci->config->item('admin_email', 'auth'), 'Scattport');
-			$this->ci->email->to($user['email']);
-			$this->ci->email->subject('ScattPort - Forgotten Password Verification');
-			$this->ci->email->message($message);
+			$message = $this->CI->load->view('auth/email/forgot_password', $data, true);
+			$this->CI->email->clear();
+			$config['mailtype'] = $this->CI->config->item('email_type', 'auth');
+			$this->CI->email->initialize($config);
+			$this->CI->email->set_newline("\r\n");
+			$this->CI->email->from($this->CI->config->item('admin_email', 'auth'), 'Scattport');
+			$this->CI->email->to($user['email']);
+			$this->CI->email->subject('ScattPort - Forgotten Password Verification');
+			$this->CI->email->message($message);
 
-			if ($this->ci->email->send()) {
-				$this->ci->messages->add(_('Password reset email sent'), 'success');
+			if ($this->CI->email->send()) {
+				$this->CI->messages->add(_('Password reset email sent'), 'success');
 				return true;
 			} else {
-				$this->ci->messages->add(_('Unable to send password reset email'), 'error');
+				$this->CI->messages->add(_('Unable to send password reset email'), 'error');
 				return false;
 			}
 		} else {
-			$this->ci->messages->add(_('This email address is not registered'), 'error');
+			$this->CI->messages->add(_('This email address is not registered'), 'error');
 			return false;
 		}
 	}
@@ -109,14 +127,14 @@ class Access {
 	 * @return void
 	 */
 	public function forgottenPasswordComplete($code) {
-		$profile  = $this->ci->user->profile($code, true); // pass the code to profile
+		$profile  = $this->CI->user->profile($code, true); // pass the code to profile
 
 		if (!is_object($profile)) {
-			$this->ci->messages->add(_('Unable to change password'), 'error');
+			$this->CI->messages->add(_('Unable to change password'), 'error');
 			return false;
 		}
 
-		$new_password = $this->ci->user->forgottenPasswordComplete($code, $profile->salt);
+		$new_password = $this->CI->user->forgottenPasswordComplete($code, $profile->salt);
 
 		if ($new_password) {
 			$data = array(
@@ -124,27 +142,27 @@ class Access {
                 'new_password' => $new_password
 			);
 
-			$message = $this->ci->load->view('auth/email/forgot_password_complete', $data, true);
+			$message = $this->CI->load->view('auth/email/forgot_password_complete', $data, true);
 
-			$this->ci->email->clear();
-			$config['mailtype'] = $this->ci->config->item('email_type', 'auth');
-			$this->ci->email->initialize($config);
-			$this->ci->email->set_newline("\r\n");
-			$this->ci->email->from($this->ci->config->item('admin_email', 'auth'), $this->ci->config->item('site_title', 'auth'));
-			$this->ci->email->to($profile->email);
-			$this->ci->email->subject('ScattPort - New Password');
-			$this->ci->email->message($message);
+			$this->CI->email->clear();
+			$config['mailtype'] = $this->CI->config->item('email_type', 'auth');
+			$this->CI->email->initialize($config);
+			$this->CI->email->set_newline("\r\n");
+			$this->CI->email->from($this->CI->config->item('admin_email', 'auth'), $this->CI->config->item('site_title', 'auth'));
+			$this->CI->email->to($profile->email);
+			$this->CI->email->subject('ScattPort - New Password');
+			$this->CI->email->message($message);
 
-			if ($this->ci->email->send()) {
-				$this->ci->messages->add(_('Password successfully changed'), 'success');
+			if ($this->CI->email->send()) {
+				$this->CI->messages->add(_('Password successfully changed'), 'success');
 				return true;
 			} else {
-				$this->ci->messages->add(_('Unable to change password'), 'error');
+				$this->CI->messages->add(_('Unable to change password'), 'error');
 				return false;
 			}
 		}
 
-		$this->ci->messages->add(_('Unable to change password'), 'error');
+		$this->CI->messages->add(_('Unable to change password'), 'error');
 		return false;
 	}
 
@@ -157,10 +175,10 @@ class Access {
 	 * @return boolean
 	 */
 	public function login($username, $password, $remember = false) {
-		if ($this->ci->user->login($username, $password, $remember)) {
+		if ($this->CI->user->login($username, $password, $remember)) {
 			return true;
 		} else {
-			$this->ci->messages->add(_('Incorrect username or password'), 'error');
+			$this->CI->messages->add(_('Incorrect username or password'), 'error');
 			return false;
 		}
 	}
@@ -171,9 +189,9 @@ class Access {
 	 * @return boolean
 	 */
 	public function logout() {
-		$this->ci->session->unset_userdata('username');
-		$this->ci->session->unset_userdata('group');
-		$this->ci->session->unset_userdata('user_id');
+		$this->CI->session->unset_userdata('username');
+		$this->CI->session->unset_userdata('group');
+		$this->CI->session->unset_userdata('user_id');
 
 		// delete the remember cookies if they exist
 		if (get_cookie('username')) {
@@ -182,11 +200,20 @@ class Access {
 			delete_cookie('remember_code');
 		}
 
-		$this->ci->session->sess_destroy();
-		$this->ci->session->sess_create();
+		$this->CI->session->sess_destroy();
+		$this->CI->session->sess_create();
 
-		$this->ci->messages->add(_('Logged out successfully'), 'success');
+		$this->CI->messages->add(_('Logged out successfully'), 'success');
 		return true;
+	}
+
+	/**
+	 * Kept for backwards compatibility.
+	 *
+	 * @see Access::isLoggedIn()
+	 */
+	public function loggedIn() {
+		return $this->isLoggedIn();
 	}
 
 	/**
@@ -194,8 +221,8 @@ class Access {
 	 *
 	 * @return boolean
 	 */
-	public function loggedIn() {
-		return (boolean) $this->ci->session->userdata('username');
+	public function isLoggedIn() {
+		return (boolean) $this->CI->session->userdata('username');
 	}
 
 	/**
@@ -205,18 +232,18 @@ class Access {
 	 */
 	public function isAdmin() {
 		$adminGroup = 'admins';
-		$userGroup  = $this->ci->session->userdata('group');
+		$userGroup  = $this->CI->session->userdata('group');
 		return $userGroup == $adminGroup;
 	}
 
 	/**
-	 * Checks if the current user is assigned to the specified group.
+	 * Checks if the current user is assigned to the speCIfied group.
 	 *
 	 * @param string $checkGroup
 	 * @return boolean
 	 */
 	public function isGroup($checkGroup)  {
-		$userGroup = $this->ci->session->userdata('group');
+		$userGroup = $this->CI->session->userdata('group');
 
 		if (is_array($checkGroup)) {
 			return in_array($userGroup, $checkGroup);
@@ -230,7 +257,7 @@ class Access {
 	 * @return object
 	 */
 	public function getCurrentUser() {
-		return $this->ci->user->getUserByID($this->ci->session->userdata('user_id'));
+		return $this->CI->user->getUserByID($this->CI->session->userdata('user_id'));
 	}
 
 	/**
@@ -239,7 +266,10 @@ class Access {
 	 * @return array
 	 */
 	public function profile() {
-		return $this->ci->user->profile($this->ci->session->userdata('username'));
+		if (!isset($this->cache['profile']->username)) {
+			$this->cache['profile'] = $this->CI->user->profile($this->CI->session->userdata('username'));
+		}
+		return $this->cache['profile'];
 	}
 
 }

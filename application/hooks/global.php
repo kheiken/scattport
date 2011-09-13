@@ -1,7 +1,6 @@
-<?php
-
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +34,10 @@ function check_login() {
 	$public_controllers = array('auth', 'xmlrpc');
 
 	$CI = & get_instance();
-	if (!$CI->input->is_ajax_request() && !$CI->access->loggedIn() && !in_array($CI->router->class, $public_controllers)) {
+	if (!$CI->input->is_ajax_request() && !$CI->access->isLoggedIn() && !in_array($CI->router->class, $public_controllers)) {
 		redirect('auth/login');
 	}
 }
+
+/* End of file global.php */
+/* Location: ./application/hooks/global.php */
