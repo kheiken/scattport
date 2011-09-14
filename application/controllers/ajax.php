@@ -84,6 +84,16 @@ class Ajax extends CI_Controller {
 	}
 
 	/**
+	 *
+	 * @param string $experimentId
+	 */
+	public function rename_experiment($experimentId) {
+		$this->load->model('experiment');
+		$this->experiment->update(array('name' => $this->input->post('title')), $experimentId);
+		$this->output->set_output(site_url('experiments/detail/' . $experimentId));
+	}
+
+	/**
 	 * Sorts a programs parameters.
 	 */
 	public function sort_parameters() {

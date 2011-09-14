@@ -10,19 +10,6 @@ function getNotifications() {
 }
 
 /**
- * Asks the user if he is sure to delete an item.
- *
- * @param url
- */
-function deleteConfirm(url) {
-	var answer = confirm('Are you sure?');
-
-	if (answer) {
-		window.location = url;
-	}
-}
-
-/**
  * Sets a cookie.
  *
  * @param name

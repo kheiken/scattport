@@ -15,6 +15,7 @@
 
 <?=js_asset('jquery.editinplace.js');?>
 <?=js_asset('jquery.tablednd.js');?>
+<?=js_asset('jquery.alerts.js');?>
 
 <?=js_asset('minmax.js');?>
 <?=js_asset('jsc3d.min.js');?>
