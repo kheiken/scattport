@@ -332,7 +332,7 @@ $.extend(InlineEditor.prototype, {
 
 		if ( ! this.settings.show_buttons) {
 				// TODO: Firefox has a bug where blur is not reliably called when focus is lost
-				//       (for example by another editor appearing)
+				//	   (for example by another editor appearing)
 			if ("save" === this.settings.on_blur)
 				form.find(".inplace_field").blur(saveEditorAction);
 			else
