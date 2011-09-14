@@ -1,4 +1,5 @@
 @CHARSET "UTF-8";
+
 /* Table styles */
 
 table {
@@ -44,19 +45,19 @@ table .odd {
 }
 
 table .even {
-    background: #fff;
+	background: #fff;
 }
 
 table .hover {
-    background: #f0f0f0 !important;
+	background: #f0f0f0 !important;
 }
 
 table tbody tr:nth-child(even) {
-    background: #fff;
+	background: #fff;
 }
 
 table tbody tr:nth-child(odd) {
-    background: #f6f6f6;
+	background: #f6f6f6;
 }
 
 td.drag_handle {
