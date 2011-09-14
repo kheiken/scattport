@@ -60,7 +60,7 @@
 						<a href="<?=site_url('experiments/results/' . $experiment['id']);?>" title="<?=sprintf(_('Show results for this experiment'), $experiment['name']);?>"><?=_('Show results');?></a> |
 						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a> |
 						<a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a> |
-						<a href="<?=site_url('experiments/delete/' . $experiment['id']);?>" title="<?=sprintf(_('Delete experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
+						<a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 					</td>
 				</tr>
 <?php
