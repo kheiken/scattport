@@ -103,7 +103,7 @@ class Experiment extends CI_Model {
 	 * @return array
 	 */
 	public function getParameters($experimentId) {
-		$this->db->select('experiments_parameters.*, parameters.name AS `name`, parameters.type AS `type`');
+		$this->db->select('experiments_parameters.*, parameters.readable, parameters.name, parameters.type, parameters.unit');
 		$this->db->join('parameters', 'experiments_parameters.parameter_id = parameters.id', 'left');
 		$this->db->where('experiment_id', $experimentId);
 

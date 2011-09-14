@@ -161,6 +161,7 @@ class Experiments extends CI_Controller {
 		$this->load->helper('typography');
 
 		$data['experiment'] = $experiment;
+		$data['parameters'] = $this->experiment->getParameters($experiment['id']);
 		$data['job'] = $this->job->getByExperimentId($experiment['id']);
 		$data['project'] = $this->project->getById($experiment['project_id']);
 
