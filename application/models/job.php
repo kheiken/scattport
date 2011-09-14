@@ -67,6 +67,22 @@ class Job extends CI_Model {
 	}
 
 	/**
+	 * Gets a specific job.
+	 *
+	 * @param string $experimentId
+	 * @return array The job data
+	 */
+	public function getByExperimentId($experimentId) {
+		$this->db->select('jobs.*, users.username, users.firstname, users.lastname');
+		$this->db->join('users', 'jobs.started_by = users.id', 'left');
+		$this->db->where('experiment_id', $experimentId);
+
+		$query = $this->db->get('jobs');
+
+		return $query->row_array();
+	}
+
+	/**
 	 * Gets a list of recent jobs.
 	 *
 	 * @param string $projectId The project's ID you want to get the jobs for

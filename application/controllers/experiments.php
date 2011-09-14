@@ -1,6 +1,6 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ class Experiments extends CI_Controller {
 		$this->load->model('parameter');
 		$this->load->model('program');
 		$this->load->model('experiment');
+		$this->load->model('job');
 	}
 
 	/**
@@ -130,6 +131,64 @@ class Experiments extends CI_Controller {
 		$data['project'] = $project;
 
 		$this->load->view('experiments/new', $data);
+	}
+
+	/**
+	 * Copies an experiment.
+	 *
+	 * @param string $experimentId
+	 */
+	public function copy($experimentId = '') {
+		$experiment = $this->experiment->getByID($experimentId);
+		if (isset($experiment['project_id'])) {
+			redirect('experiments/create/' . $experiment['project_id'] . '/' . $experimentId);
+		} else {
+			show_404();
+		}
+	}
+
+	/**
+	 * Shows detailed informations about a specific experiment.
+	 *
+	 * @param string $experimentId
+	 */
+	public function detail($experimentId = '') {
+		$experiment = $this->experiment->getByID($experimentId);
+		if (empty($experimentId) || !isset($experiment['id'])){
+			show_404();
+		}
+
+		$this->load->helper('typography');
+
+		$data['experiment'] = $experiment;
+		$data['job'] = $this->job->getByExperimentId($experiment['id']);
+		$data['project'] = $this->project->getById($experiment['project_id']);
+
+		$this->load->view('experiments/detail', $data);
+	}
+
+	/**
+	 * Allows users to delete an experiment.
+	 *
+	 * @param string $experimentId
+	 */
+	public function delete($experimentId = '') {
+		// TODO: Check user rights
+
+		$experiment = $this->experiment->getByID($experimentId);
+		if (empty($experimentId) || !isset($experiment['id'])){
+			show_404();
+		}
+
+		$this->load->helper('file');
+
+		$experimentPath = FCPATH . 'uploads/' . $experiment['project_id'] . '/' .  $experiment['id'] . '/';
+		if (delete_files($experimentPath, true)) {
+			rmdir($experimentPath);
+		}
+
+		$this->experiment->delete($experimentId);
+		redirect('projects/detail/' . $experiment['project_id'], 303);
 	}
 }
 

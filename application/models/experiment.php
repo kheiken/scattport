@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,15 @@
  * Experiments are used to store different variations of the same project.
  *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Experiment extends CI_Model {
 
 	/**
-	 * Create a new experiment.
+	 * Creates a new experiment.
 	 *
 	 * @param array $data The data of the new experiment
-	 * @return boolean Was the insert successful?
+	 * @return boolean Returns TRUE if the insert was successful.
 	 */
 	public function create($data) {
 		if (!isset($data['project_id'])) {
@@ -51,13 +52,26 @@ class Experiment extends CI_Model {
 	}
 
 	/**
-	 * Deletes a experiment.
+	 * Updates an experiment.
+	 *
+	 * @param array $data
+	 * @param string $experimentId
+	 * @return boolean Returns TRUE if the update was successful.
+	 */
+	public function update($data, $experimentId) {
+		$this->db->update('experiments', $data, array('id' => $experimentId));
+		return $this->db->affected_rows() == 1;
+	}
+
+	/**
+	 * Deletes an experiment.
 	 *
 	 * @param string $experimentId The experiments ID to delete
-	 * @return boolean Was the deletion successful?
+	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
 	public function delete($experimentId) {
-		return $this->db->delete('experiments', array('id' => $experimentId));
+		$this->db->delete('experiments', array('id' => $experimentId));
+		return $this->db->affected_rows() == 1;
 	}
 
 	/**
@@ -99,14 +113,15 @@ class Experiment extends CI_Model {
 	}
 
 	/**
-	 * Gets an experiment by ID.
+	 * Gets an experiment by ID (kept for backwards compatibility).
 	 *
+	 * @deprecated 14-09-2011
+	 * @see Experiment::getById()
 	 * @param string $experimentId The experiment to get
 	 * @return array The experiment
 	 */
 	public function get($experimentId) {
-		$query = $this->db->get_where('experiments', array('id' => $experimentId));
-		return $query->row_array();
+		return $this->getById($experimentId);
 	}
 
 	/**
@@ -143,3 +158,6 @@ class Experiment extends CI_Model {
 		return $results;
 	}
 }
+
+/* End of file group.php */
+/* Location: ./application/controllers/group.php */

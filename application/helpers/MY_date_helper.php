@@ -48,9 +48,9 @@ if ( ! function_exists('mysql_now'))
  * @param        string                                 $end
  * @return       array
  */
-if ( ! function_exists('time_diff')) 
+if ( ! function_exists('time_diff'))
 {
-	function time_diff($start, $end) 
+	function time_diff($start, $end)
 	{
 		$uts['start'] = strtotime($start);
 		$uts['end'] = strtotime($end);
@@ -73,27 +73,27 @@ if ( ! function_exists('time_diff'))
  * @param boolean $includeseconds should seconds be appended to the string?
  * @return string
  */
-if ( ! function_exists('prettyTime')) 
+if ( ! function_exists('prettyTime'))
 {
-	function prettyTime($secs, $includeseconds = false) 
+	function prettyTime($secs, $includeseconds = false)
 	{
-		
+
 		if(!defined('SECOND')) define("SECOND", 1);
 		if(!defined('MINUTE')) define("MINUTE", 60 * SECOND);
 		if(!defined('HOUR')) define("HOUR", 60 * MINUTE);
 		if(!defined('DAY')) define("DAY", 24 * HOUR);
 		if(!defined('MONTH')) define("MONTH", 30 * DAY);
-		
+
 		$days = intval($secs / 86400);
 		$hours = intval($secs / 3600 % 24);
 		$minutes = intval($secs / 60 % 60);
 		$seconds = intval($secs % 60);
-		
+
 		$d = sprintf(ngettext('%d day', '%d days', $days), $days);
 		$h = sprintf(ngettext('%d hour', '%d hours', $hours), $hours);
 		$m = sprintf(ngettext('%d minute', '%d minutes', $minutes), $minutes);
 		$s = sprintf(ngettext('%d second', '%d seconds', $seconds), $seconds);
-		
+
 		$output = "";
 		if($days > 0) {
 			$output .= $d;
@@ -107,7 +107,39 @@ if ( ! function_exists('prettyTime'))
 		if($includeseconds || empty($output)) {
 			$output .= !empty($output) ? ", ". $s : "". $s;
 		}
-		
+
+		return $output;
+	}
+}
+
+/**
+ * Parses any english textual datetime description into a relative date string.
+ *
+ * @author Eike Foken <kontakt@eikefoken.de>
+ * @param string $date
+ * @param boolean $show_seconds
+ * @return string
+ */
+if (!function_exists('relative_time')) {
+	function relative_time($date, $show_seconds = false) {
+		$diff = time() - strtotime($date);
+
+		if ($diff < 120 && !$show_seconds) {
+			$output = _('just now');
+		} else if ($diff < 60 && $show_seconds) {
+			$output = sprintf(ngettext('%d second ago', '%d seconds ago', $diff), $diff);
+		} else if (($diff = round($diff / 60)) < 60) {
+			$output = sprintf(ngettext('%d minute ago', '%d minutes ago', $diff), $diff);
+		} else if (($diff = round($diff / 60)) < 24) {
+			$output = sprintf(ngettext('%d hour ago', '%d hours ago', $diff), $diff);
+		} else if (($diff = round($diff / 24)) < 7) {
+			$output = sprintf(ngettext('%d day ago', '%d days ago', $diff), $diff);
+		} else if (($diff = round($diff / 7)) < 4) {
+			$output = sprintf(ngettext('%d week ago', '%d weeks ago', $diff), $diff);
+		} else {
+			$output = _('on') . ' ' . strftime('%B %Y', strtotime($date));
+		}
+
 		return $output;
 	}
 }
