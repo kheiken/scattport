@@ -1,7 +1,6 @@
-<?php
-
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +22,9 @@
  */
 
 /**
+ *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Jobs extends CI_Controller {
 
@@ -33,7 +34,28 @@ class Jobs extends CI_Controller {
     public function __construct() {
         parent::__construct();
 		$this->load->model('job');
+		$this->load->model('experiment');
+		$this->load->model('program');
     }
+
+    /**
+     * Starts a job for the specified experiment.
+     *
+     * @param string $experimentId
+     */
+	public function start($experimentId = '') {
+		$experiment = $this->experiment->getByID($experimentId);
+		if (isset($experiment['id'])) {
+			// execute program runner
+			$program = $this->program->getById($experiment['program_id']);
+			$this->load->library('program_runner', array('program_driver' => $program['driver']));
+			$this->program_runner->createJob($experiment['id']);
+
+			redirect('experiments/detail/' . $experiment['id']);
+		} else {
+			show_404();
+		}
+	}
 
 	/**
 	 * Get jobs belonging to projects owned by the user.
