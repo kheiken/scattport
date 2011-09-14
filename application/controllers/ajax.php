@@ -60,11 +60,12 @@ class Ajax extends CI_Controller {
 	 */
 	public function update_project($projectId) {
 		$this->load->model('project');
+		$this->load->helper('typography');
 
 		$data['description'] = $this->input->post('description');
 		$this->project->update($data, $projectId);
 
-		$this->output->set_output($data['description']);
+		$this->output->set_output(auto_typography($data['description']));
 	}
 
 	/**
@@ -74,11 +75,12 @@ class Ajax extends CI_Controller {
 	 */
 	public function update_experiment($experimentId) {
 		$this->load->model('experiment');
+		$this->load->helper('typography');
 
 		$data['description'] = $this->input->post('description');
 		$this->experiment->update($data, $experimentId);
 
-		$this->output->set_output($data['description']);
+		$this->output->set_output(auto_typography($data['description']));
 	}
 
 	/**
