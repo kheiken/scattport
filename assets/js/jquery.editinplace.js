@@ -247,7 +247,7 @@ $.extend(InlineEditor.prototype, {
 	},
 
 	replaceContentWithEditor: function() {
-		var buttons_html  = (this.settings.show_buttons) ? this.settings.save_button + ' ' + this.settings.cancel_button : '';
+		var buttons_html  = (this.settings.show_buttons) ? this.settings.save_button + '' + this.settings.cancel_button : '';
 		var editorElement = this.createEditorElement(); // needs to happen before anything is replaced
 		/* insert the new in place form after the element they click, then empty out the original element */
 		this.dom.html('<form class="inplace_form" style="display: inline; margin: 0; padding: 0;"></form>')
