@@ -130,6 +130,14 @@ class Job extends CI_Model {
 	}
 
 	/**
+	 *
+	 */
+	public function getUnnotifiedResults() {
+		$this->db->where('notified', 0);
+		return $this->getUnseenResults();
+	}
+
+	/**
 	 * Gets a list of jobs that have not yet started running.
 	 *
 	 * @return mixed
@@ -137,6 +145,33 @@ class Job extends CI_Model {
 	public function getWaitingJob() {
 		$query = $this->db->order_by('created_at', 'asc')->get_where('jobs', array('started_at' => '0000-00-00 00:00:00'), 1);
 		return $this->db->count_all_results() > 0 ? $query->row() : FALSE;
+	}
+
+	/**
+	 * Counts all unseen jobs.
+	 *
+	 * @return integer
+	 */
+	public function countUnseenResults() {
+		return $this->db->where(array('finished_at !=' => 0, 'seen' => 0))->count_all_results('jobs');
+	}
+
+	/**
+	 * Counts all running jobs.
+	 *
+	 * @return integer
+	 */
+	public function countRunning() {
+		return $this->db->where(array('started_at !=' => 0, 'finished_at' => 0))->count_all_results('jobs');
+	}
+
+	/**
+	 * Counts all pending jobs.
+	 *
+	 * @return integer
+	 */
+	public function countPending() {
+		return $this->db->where('started_at', 0)->count_all_results('jobs');
 	}
 }
 

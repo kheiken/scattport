@@ -50,26 +50,30 @@ class Dashboard extends CI_Controller {
 
 		$tpl['recent_buttons'] = array(
 			array(
-				'count' => 4,
+				'count' => $this->job->countUnseenResults(),
 				'text' => _('Jobs finished'),
+				'id' => 'jobs_finished',
 				'title' => sprintf(_('%d jobs finished recently'), 3),
 				'target' => '#',
 			),
 			array(
-				'count' => 2,
+				'count' => 0,
 				'text' => _('Newly shared projects'),
+				'id' => 'shared_projects',
 				'title' => sprintf(_('You were invited to join %d projects'), 2),
 				'target' => '#',
 			),
 			array(
-				'count' => 1,
+				'count' => $this->job->countRunning(),
 				'text' => _('Job running'),
+				'id' => 'jobs_running',
 				'title' => sprintf(_('There is %d job currently running'), 1),
 				'target' => '#',
 			),
 			array(
-				'count' => 2,
+				'count' => $this->job->countPending(),
 				'text' => _('Jobs pending'),
+				'id' => 'jobs_pending',
 				'title' => sprintf(_('There are %2 job currently pending'), 1),
 				'target' => '#',
 			),

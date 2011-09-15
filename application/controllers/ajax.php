@@ -61,13 +61,23 @@ class Ajax extends CI_Controller {
 		$unseen = $this->job->getUnseenResults();
 
 		foreach ($unseen as $job) {
-			$this->job->update($job['id'], array('seen' => 1));
+			if ($job['notified'] == 0) {
+				$this->job->update($job['id'], array('notified' => 1));
 
-			$experiment = anchor('experiments/detail/' . $job['experiment_id'], $job['experiment_name']);
-			$project = anchor('projects/detail/' . $job['project_id'], $job['project_name']);
+				$experiment = anchor('experiments/detail/' . $job['experiment_id'], $job['experiment_name']);
+				$project = anchor('projects/detail/' . $job['project_id'], $job['project_name']);
 
-			$this->messages->add(sprintf(_('The job for %s in project %s is ready.'), $experiment, $project), 'success');
+				$this->messages->add(sprintf(_('The job for %s in project %s is ready.'), $experiment, $project), 'success');
+			}
 		}
+
+		$data = array(
+			'jobs_finished' => count($unseen),
+			'jobs_running' => $this->job->countRunning(),
+			'jobs_pending' => $this->job->countPending(),
+		);
+
+		$this->output->set_output(json_encode($data));
 	}
 
 	/**

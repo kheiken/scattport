@@ -46,7 +46,7 @@
 			} else {
 				$button['class'] = 'middle';
 			}
-?><a class="button <?=$button['class'];?> big" href="<?=$button['target'];?>" title="<?=$button['title'];?>"><strong><?=$button['count'];?></strong><br /><?=$button['text'];?></a><?
+?><a class="button <?=$button['class'];?> big" id="<?=$button['id'];?>" href="<?=$button['target'];?>" title="<?=$button['title'];?>"><strong><?=$button['count'];?></strong><br /><?=$button['text'];?></a><?
 			$i++;
 		endforeach;
 	endif;

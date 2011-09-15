@@ -13,7 +13,11 @@ function getNotifications() {
  * Looks for finished jobs.
  */
 function jobDaemon() {
-	$.get(SITE_URL + 'ajax/check_jobs');
+	$.getJSON(SITE_URL + 'ajax/check_jobs', function(data) {
+		$.each(data, function(key, value) {
+			$('#' + key).find('strong').html(value);
+		});
+	});
 }
 
 /**
@@ -128,6 +132,7 @@ $(document).ready(function() {
 	$('#notifications').hide();
 	getNotifications();
 	setInterval('getNotifications()', '5000');
+	jobDaemon();
 	setInterval('jobDaemon()', JOBS_CHECK_INTERVAL * 1000);
 
 	/*
