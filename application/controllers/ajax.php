@@ -69,6 +69,16 @@ class Ajax extends CI_Controller {
 	}
 
 	/**
+	 *
+	 * @param string $experimentId
+	 */
+	public function rename_project($projectId) {
+		$this->load->model('project');
+		$this->project->update(array('name' => $this->input->post('title')), $projectId);
+		$this->output->set_output(site_url('projects/detail/' . $projectId));
+	}
+
+	/**
 	 * Saves the experiments description.
 	 *
 	 * @param string $experimentId

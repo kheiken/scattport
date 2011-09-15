@@ -12,33 +12,18 @@
 
 	<div class="box">
 		<h3><?=_('Description');?></h3>
-		<div class="editInPlace"><?=auto_typography($project['description']);?></div>
-		<p></p>
+		<p>
+			<div class="editInPlace"><?=auto_typography($project['description']);?></div>
+		</p>
 
-<?php
-	if ($project['default_model'] != ''):
-?>
-		<canvas id="cv" style="border: #e8e8e8 1px solid;" width="120" height="120"></canvas>
-		<p></p>
+		<h3><?=_('Actions');?></h3>
+		<p>
+			<a href="javascript:deleteConfirm('<?=site_url('projects/delete/' . $project['id']);?>');" class="button delete"><?=_('Delete project');?></a>
+			<a href="javascript:changeTitle('<?=$project['name'];?>', '<?=site_url('ajax/rename_project/' . $project['id']);?>');" class="button project_rename"><?=_('Change title');?></a>
+		</p>
+	</div>
 
-		<script type="text/javascript">
-		var canvas = document.getElementById('cv');
-		var viewer = new JSC3D.Viewer(canvas);
-		viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$project['id'];?>/<?=$project['default_model'];?>');
-		viewer.setParameter('InitRotationX', -20);
-		viewer.setParameter('InitRotationY', 20);
-		viewer.setParameter('InitRotationZ', 0);
-		viewer.setParameter('ModelColor', '#cccccc');
-		viewer.setParameter('BackgroundColor1', '#ffffff');
-		viewer.setParameter('BackgroundColor2', '#ffffff');
-		viewer.setParameter('RenderMode', 'flat');
-		viewer.init();
-		viewer.update();
-		</script>
-<?php
-	endif;
-?>
-
+	<div class="box">
 		<h3><?=_('Experiments');?></h3>
 		<table class="tableList">
 			<thead>
@@ -52,15 +37,34 @@
 <?php
 	if (count($experiments) > 0):
 		foreach ($experiments as $experiment):
+			if (empty($experiment['job_id'])) {
+				$job['css'] = '';
+				$job['status'] = _('No job started');
+			} else if ($experiment['started_at'] == 0) {
+				$job['css'] = 'closed';
+				$job['status'] = _('Waiting');
+			} else if ($experiment['finished_at'] == 0) {
+				$job['css'] = 'pending';
+				$job['status'] = _('Running');
+			} else {
+				$job['css'] = 'active';
+				$job['status'] = _('Completed');
+			}
 ?>
 				<tr>
 					<td><a href="<?=site_url('experiments/detail/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
-					<td><span class="active"><?=_('Completed');?></span></td>
+					<td><span class="<?=$job['css'];?>"><?=$job['status'];?></span></td>
 					<td>
+<?php
+			if ($experiment['finished_at'] != 0):
+?>
 						<a href="<?=site_url('experiments/results/' . $experiment['id']);?>" title="<?=sprintf(_('Show results for this experiment'), $experiment['name']);?>"><?=_('Show results');?></a> |
+<?php
+			endif;
+?>
 						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a> |
 						<a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a> |
-						<a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
+						<a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 					</td>
 				</tr>
 <?php
@@ -75,15 +79,10 @@
 ?>
 			</tbody>
 		</table>
-
-		<p><a class="button add" href="<?=site_url('experiments/create/' . $project['id']);?>"><?=_('Create experiment');?></a></p>
-	</div>
-
-	<div class="title">
-		<h2><?=_('Recent jobs');?></h2>
 	</div>
 
 	<div class="box">
+		<h3><?=_('Recent jobs');?></h3>
 		<table class="tableList">
 			<thead>
 				<tr>

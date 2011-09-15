@@ -141,7 +141,11 @@ class Experiment extends CI_Model {
 	 * @return array
 	 */
 	public function getByProjectId($projectId) {
+		$this->db->select('experiments.*, jobs.id AS job_id, jobs.started_at, jobs.finished_at, jobs.progress');
+		$this->db->join('jobs', 'jobs.experiment_id = experiments.id', 'left');
+
 		$query = $this->db->get_where('experiments', array('project_id' => $projectId));
+
 		return $query->result_array();
 	}
 
