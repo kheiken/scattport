@@ -200,9 +200,9 @@
 		</div>
 
 		<div class="box">
-			<form id="search-form" method="get" action="#">
-				<input type="text" name="search" id="search-input" class="search-input" />
-				<input type="image" src="<?=asset_url('images', 'button-search.gif');?>" id="search-submit" class="search-submit" />
+			<form id="search-form" method="get" action="<?=site_url('search');?>">
+				<input type="text" name="query" id="search-input" class="search-input" />
+				<input type="submit" id="search-submit" class="search-submit" value="<?=_('Search');?>" />
 			</form>
 		</div>
 

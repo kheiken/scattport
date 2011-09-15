@@ -152,14 +152,17 @@ class Experiment extends CI_Model {
 	/**
 	 * Search for a specific experiment and return a list of possible results.
 	 *
-	 * @param string $needle The needle to look for in the haystack.
+	 * @param string $needle The needle to look for in the haystack
+	 * @param string $projectId
 	 */
-	public function search($project, $needle) {
-		$query = $this->db->where('project_id', $project)
-				->like('name', $needle)->get('experiments');
-		$results = $query->result_array();
+	public function search($needle, $projectId = false) {
+		if ($projectId) {
+			$this->db->where('project_id', $projectId);
+		}
 
-		return $results;
+		$query = $this->db->like('name', $needle)->get('experiments');
+
+		return $query->result_array();
 	}
 }
 

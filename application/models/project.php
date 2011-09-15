@@ -155,14 +155,15 @@ class Project extends CI_Model {
 	/**
 	 * Search for a specific project and return a list of possible results.
 	 *
-	 * @param type $needle The needle to look for in the haystack.
+	 * @param string $needle The needle to look for in the haystack.
 	 */
 	public function search($needle) {
 		// get matching projects that are public
-		$query = $this->db->query("SELECT * FROM `projects` WHERE `public`='1' AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
+		$query = $this->db->where('public', 1)->like('name', $needle)->get('projects');
 		$public_results = $query->result_array();
 
 		// or belong directly to the user
+		$query = $this->db->where('owner', $this->session->userdata('user_id'));
 		$query = $this->db->query("SELECT * FROM `projects` WHERE `owner`=".$this->db->escape($this->session->userdata('user_id'))
 				." AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
 		$own_results = $query->result_array();
@@ -177,7 +178,7 @@ class Project extends CI_Model {
 
 		$shared_results = $query->result_array();
 
-		return $this->_addShortNames(array_merge($own_results, $shared_results));
+		return $this->_addShortNames(array_merge($public_results, $own_results, $shared_results));
 	}
 
 	/**
