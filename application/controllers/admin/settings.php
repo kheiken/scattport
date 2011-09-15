@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
  * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
