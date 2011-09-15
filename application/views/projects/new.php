@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="box">
-		<form method="post" name="createproject" action="<?=site_url('projects/create');?>" enctype="multipart/form-data">
+		<form method="post" name="createProject" action="<?=site_url('projects/create');?>" enctype="multipart/form-data">
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
@@ -51,7 +51,7 @@
 					</div>
 				</li>
 				<li>
-					<a href="#" onclick="document.forms.createproject.submit()" class="button"><?=_('Save');?></a>
+					<a href="javascript:void(0);" onclick="$('form[name=createProject]').submit();" class="button save"><?=_('Save');?></a>
 				</li>
 			</ul>
 		</form>
