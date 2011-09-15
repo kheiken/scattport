@@ -560,8 +560,13 @@ a.job_start {
 	padding-left: 30px;
 }
 
-a.rename {
+a.experiment_rename {
 	background: url(../images/icons/document-rename.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
+a.project_rename {
+	background: url(../images/icons/blue-folder-rename.png) 10px center no-repeat #f3f3f3;
 	padding-left: 30px;
 }
 

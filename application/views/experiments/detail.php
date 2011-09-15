@@ -26,7 +26,7 @@
 ?>
 			<a href="<?=site_url('experiments/copy/' . $experiment['id']);?>" class="button left copy"><?=_('Copy experiment');?>
 			</a><a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" class="button right delete"><?=_('Delete experiment');?></a>
-			<a href="javascript:changeTitle('<?=$experiment['name'];?>', '<?=site_url('ajax/rename_experiment/' . $experiment['id']);?>');" class="button rename"><?=_('Change title');?></a>
+			<a href="javascript:changeTitle('<?=$experiment['name'];?>', '<?=site_url('ajax/rename_experiment/' . $experiment['id']);?>');" class="button experiment_rename"><?=_('Change title');?></a>
 		</p>
 	</div>
 
