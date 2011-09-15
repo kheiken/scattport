@@ -34,7 +34,7 @@
 <div id="header">
 	<h1><?=anchor('', image_asset('logo.png'));?></h1>
 	<div class="status">
-		<?=_('Current project:');?>&nbsp;
+		<?=_('Current project');?>:&nbsp;
 		<select name="activeProject">
 <?php
 	// get the active project, if there is one
@@ -65,26 +65,53 @@
 <div id="notifications"></div>
 
 	<div id="sidebar">
-
-		<div class="title">
-			<h2><?=_('Actions');?></h2>
-		</div>
-		<div class="navigation">
-			<ul>
 <?php
 	if ($active_project):
 ?>
-				<li>
-					<a href="javascript:void(0);" onclick="$(this).parent().toggleClass('active').find('ul').toggle();"><?=_('Project');?> <?=$active_project['shortname'];?></a>
-					<ul>
-						<li><a href="<?=site_url('projects/detail/' . $active_project['id']);?>" title="<?=_('Show overview');?>"><?=_('Overview');?></a></li>
-						<li><a href="<?=site_url('experiments/create/' . $active_project['id']);?>" title="<?=sprintf(_('Create a new experiment for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('New experiment');?></a></li>
-						<li><a href="<?=site_url('results/project/' . $active_project['id']);?>" title="<?=sprintf(_('Show results for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('Show results');?></a></li>
-					</ul>
-				</li>
+		<div class="title">
+			<h2><?=_('Current project');?></h2>
+		</div>
+
+		<div class="box">
+<?php
+		if ($active_project['default_model'] != ''):
+?>
+			<canvas id="model" width="190" height="160"></canvas>
+
+			<script type="text/javascript">
+			var canvas = document.getElementById('model');
+			var viewer = new JSC3D.Viewer(canvas);
+			viewer.setParameter('SceneUrl', BASE_URL + 'uploads/<?=$active_project['id'];?>/<?=$active_project['default_model'];?>');
+			viewer.setParameter('InitRotationX', -20);
+			viewer.setParameter('InitRotationY', 20);
+			viewer.setParameter('InitRotationZ', 0);
+			viewer.setParameter('ModelColor', '#cccccc');
+			viewer.setParameter('BackgroundColor1', '#ffffff');
+			viewer.setParameter('BackgroundColor2', '#ffffff');
+			viewer.setParameter('RenderMode', 'flat');
+			viewer.init();
+			viewer.update();
+			</script>
+<?php
+		endif;
+?>
+			<p>
+				<strong><?=_('Name');?>:</strong> <?=anchor('projects/detail/' . $active_project['id'], $active_project['shortname']);?><br />
+				<strong><?=_('Experiments');?>:</strong> <?=$this->project->countExperiments($active_project['id']);?><br />
+			</p>
+			<p>
+				<a href="<?=site_url('experiments/create/' . $active_project['id']);?>" class="button add" title="<?=sprintf(_('Create a new experiment for the project &quot;%s&quot;'), $active_project['name']);?>"><?=_('New experiment');?></a>
+			</p>
+		</div>
+
 <?php
 	endif;
 ?>
+		<div class="title">
+			<h2><?=_('Navigation');?></h2>
+		</div>
+		<div class="navigation">
+			<ul>
 				<li class="togglable" id="nav_projects">
 					<a href="javascript:void(0);"><?=_('Projects');?></a>
 					<ul>

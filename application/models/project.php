@@ -143,16 +143,13 @@ class Project extends CI_Model {
 	}
 
 	/**
-	 * Get all available configurations from a specific project.
+	 * Counts all experiments for the specified project.
 	 *
-	 * @param array $project_id The project to get the configuration from.
+	 * @param string $projectId
+	 * @return integer
 	 */
-	public function getConfigurations($project_id) {
-		$query = $this->db->get_where('configurations', array('project_id' => $project_id));
-
-		$configurations = $query->result_array();
-
-		return $configurations;
+	public function countExperiments($projectId) {
+		return $this->db->get_where('experiments', array('project_id' => $projectId))->num_rows();
 	}
 
 	/**
