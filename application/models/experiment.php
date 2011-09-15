@@ -153,14 +153,30 @@ class Experiment extends CI_Model {
 	 * Search for a specific experiment and return a list of possible results.
 	 *
 	 * @param string $needle The needle to look for in the haystack
-	 * @param string $projectId
+	 * @param string $projectId Search only in a specific project
+	 * @param boolean $searchAll Search all experiments
+	 * @return array Returns an array of all found experiments.
 	 */
-	public function search($needle, $projectId = false) {
+	public function search($needle, $projectId = false, $searchAll = false) {
 		if ($projectId) {
-			$this->db->where('project_id', $projectId);
+			$this->db->where('projects.id', $projectId);
 		}
 
-		$query = $this->db->like('name', $needle)->get('experiments');
+		if ($searchAll) {
+			$query = $this->db->like('name', $needle)->get('experiments');
+		} else {
+			$this->db->select('experiments.*')->from('experiments');
+			$this->db->join('projects', 'projects.id = experiments.project_id');
+			$this->db->join('shares', 'shares.project_id = projects.id');
+
+			$this->db->where("(`shares`.`user_id` = " . $this->db->escape($this->session->userdata('user_id'))
+					. " OR `projects`.`owner` = " . $this->db->escape($this->session->userdata('user_id'))
+					. " OR `projects`.`public` = 1)");
+
+			$this->db->like('experiments.name', $needle);
+
+			$query = $this->db->get();
+		}
 
 		return $query->result_array();
 	}

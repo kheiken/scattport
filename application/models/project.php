@@ -155,30 +155,27 @@ class Project extends CI_Model {
 	/**
 	 * Search for a specific project and return a list of possible results.
 	 *
-	 * @param string $needle The needle to look for in the haystack.
+	 * @param string $needle The needle to look for in the haystack
+	 * @param boolean $searchAll Search all projects
+	 * @return array Returns an array of all found projects.
 	 */
-	public function search($needle) {
-		// get matching projects that are public
-		$query = $this->db->where('public', 1)->like('name', $needle)->get('projects');
-		$public_results = $query->result_array();
+	public function search($needle, $searchAll = false) {
+		if ($searchAll) {
+			$query = $this->db->like('name', $needle)->get('projects');
+		} else {
+			$this->db->select('projects.*')->from('projects');
+			$this->db->join('shares', 'shares.project_id = projects.id');
 
-		// or belong directly to the user
-		$query = $this->db->where('owner', $this->session->userdata('user_id'));
-		$query = $this->db->query("SELECT * FROM `projects` WHERE `owner`=".$this->db->escape($this->session->userdata('user_id'))
-				." AND `name` LIKE ".$this->db->escape('%'.$needle.'%'));
-		$own_results = $query->result_array();
+			$this->db->where("(`shares`.`user_id` = " . $this->db->escape($this->session->userdata('user_id'))
+					. " OR `projects`.`owner` = " . $this->db->escape($this->session->userdata('user_id'))
+					. " OR `projects`.`public` = 1)");
 
+			$this->db->like('projects.name', $needle);
 
-		// get matching projects that are shared to the user
-		$this->db->select('*')->from('shares')
-				->where(array('user_id' => $this->session->userdata('user_id')))
-				->like('name', $needle);
-		$this->db->join('projects', 'projects.id = shares.project_id');
-		$query = $this->db->get();
+			$query = $this->db->get();
+		}
 
-		$shared_results = $query->result_array();
-
-		return $this->_addShortNames(array_merge($public_results, $own_results, $shared_results));
+		return $this->_addShortNames($query->result_array());
 	}
 
 	/**

@@ -23,8 +23,8 @@ class Search extends CI_Controller {
 		if ($this->input->get('query') != '') {
 			$query = explode(" ", $this->input->get('query'));
 
-			$data['projects'] = $this->project->search($this->input->get('query'));
-			$data['experiments'] = $this->experiment->search($this->input->get('query'));
+			$data['projects'] = $this->project->search($this->input->get('query'), $this->access->isAdmin());
+			$data['experiments'] = $this->experiment->search($this->input->get('query'), false, $this->access->isAdmin());
 
 			$this->load->view('search/results', $data);
 		} else {
