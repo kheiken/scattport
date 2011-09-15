@@ -582,14 +582,9 @@ a.results {
 	padding-left: 30px;
 }
 
-a.up {
-	background: url(../images/button-sprite.png)  13px -131px no-repeat #f3f3f3;
-	width: 18px;
-}
-
-a.down {
-	background: url(../images/button-sprite.png)  13px -166px no-repeat #f3f3f3;
-	width: 18px;
+a.search {
+	background: url(../images/icons/magnifier.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
 }
 
 a.save-big {
