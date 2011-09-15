@@ -75,7 +75,7 @@ $config['auth/settings'] = array(
 		array(
 				'field' => 'job_check_interval',
 				'label' => _('Job checking interval'),
-				'rules' => 'greater_than[4]',
+				'rules' => 'greater_than[9]',
 		),
 		array(
 				'field' => 'projects_sort_recently',
