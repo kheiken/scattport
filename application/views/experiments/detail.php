@@ -32,44 +32,40 @@
 
 	<div class="box">
 		<h3><?=_('Configuration');?></h3>
-		<p>
-			<div>
-				<table>
-					<thead>
-						<tr>
-							<th scope="col" width="40%"><?=_('Parameter');?></th>
-							<th scope="col" width="40%"><?=_('Value');?></th>
-							<th scope="col"><?=_('Unit');?></th>
-						</tr>
-					</thead>
-					<tbody>
+		<table class="tableList">
+			<thead>
+				<tr>
+					<th scope="col" width="40%"><?=_('Parameter');?></th>
+					<th scope="col" width="40%"><?=_('Value');?></th>
+					<th scope="col"><?=_('Unit');?></th>
+				</tr>
+			</thead>
+			<tbody>
 <?php
 	foreach ($parameters as $param):
 ?>
-						<tr>
-							<td width="40%"><?=$param['readable'];?></td>
-							<td width="41%">
-								<input type="text" name="param-<?=$param['parameter_id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['parameter_id']]) ? $this->input->post('param-' . $param['parameter_id']) : $param['value']);?>" />
+				<tr>
+					<td width="40%"><?=$param['readable'];?></td>
+					<td width="41%">
+						<input type="text" name="param-<?=$param['parameter_id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['parameter_id']]) ? $this->input->post('param-' . $param['parameter_id']) : $param['value']);?>" />
 <?php
-	if (!empty($param['description'])):
+		if (!empty($param['description'])):
 ?>
-								<span class="form_info">
-									<a href="<?=site_url('ajax/parameter_help/' . $param['parameter_id']);?>" name="<?=_('Description');?>" id="<?=$param['parameter_id'];?>" class="jtip">&nbsp;</a>
-								</span>
+						<span class="form_info">
+							<a href="<?=site_url('ajax/parameter_help/' . $param['parameter_id']);?>" name="<?=_('Description');?>" id="<?=$param['parameter_id'];?>" class="jtip">&nbsp;</a>
+						</span>
 <?php
-	endif;
+		endif;
 ?>
-								<?=form_error('params');?>
-							</td>
-							<td><?=$param['unit'];?></td>
-						</tr>
+						<?=form_error('params');?>
+					</td>
+					<td><?=$param['unit'];?></td>
+				</tr>
 <?php
 	endforeach;
 ?>
-					</tbody>
-				</table>
-			</div>
-		</p>
+			</tbody>
+		</table>
 		<p>
 			<a href="javascript:void(0);" class="button save"><?=_('Save changes');?></a>
 		</p>
