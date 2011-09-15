@@ -54,6 +54,23 @@ class Ajax extends CI_Controller {
 	}
 
 	/**
+	 *
+	 */
+	public function check_jobs() {
+		$this->load->model('job');
+		$unseen = $this->job->getUnseenResults();
+
+		foreach ($unseen as $job) {
+			$this->job->update($job['id'], array('seen' => 1));
+
+			$experiment = anchor('experiments/detail/' . $job['experiment_id'], $job['experiment_name']);
+			$project = anchor('projects/detail/' . $job['project_id'], $job['project_name']);
+
+			$this->messages->add(sprintf(_('The job for %s in project %s is ready.'), $experiment, $project), 'success');
+		}
+	}
+
+	/**
 	 * Saves the projects description.
 	 *
 	 * @param string $projectId

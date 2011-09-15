@@ -25,6 +25,7 @@
 <script type="text/javascript">
 	var SITE_URL = '<?=site_url("/");?>';
 	var BASE_URL = '<?=base_url("/");?>';
+	var JOBS_CHECK_INTERVAL = <?=$this->access->settings('jobs_check_interval');?>;
 </script>
 
 </head>

@@ -116,15 +116,17 @@ class Job extends CI_Model {
 	 * @return array
 	 */
 	public function getUnseenResults() {
-		$query = $this->db->order_by('started_at', 'asc')
-			->get_where('jobs', array('started_by' => $this->session->userdata('user_id'), 'seen' => '0'));
-		$jobs = $query->result_array();
+		$this->db->select('jobs.*, experiments.name AS experiment_name, projects.id AS project_id, projects.name AS project_name');
+		$this->db->join('experiments', 'experiments.id = jobs.experiment_id', 'left');
+		$this->db->join('projects', 'projects.id = experiments.project_id', 'left');
 
-		for($i=0; $i<count($jobs); $i++) {
-			$jobs[$i]['project_name'] = $this->db->select('name')->get_where('projects', array('id' => $jobs[$i]['project_id']))->row()->name;
-		}
+		$this->db->where('started_by', $this->session->userdata('user_id'));
+		$this->db->where('finished_at !=', 0);
+		$this->db->where('seen', 0);
 
-		return $jobs;
+		$this->db->order_by('started_at ASC');
+
+		return $this->db->get('jobs')->result_array();
 	}
 
 	/**

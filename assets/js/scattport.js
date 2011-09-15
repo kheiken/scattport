@@ -10,6 +10,13 @@ function getNotifications() {
 }
 
 /**
+ * Looks for finished jobs.
+ */
+function jobDaemon() {
+	$.get(SITE_URL + 'ajax/check_jobs');
+}
+
+/**
  * Sets a cookie.
  *
  * @param name
@@ -121,6 +128,7 @@ $(document).ready(function() {
 	$('#notifications').hide();
 	getNotifications();
 	setInterval('getNotifications()', '5000');
+	setInterval('jobDaemon()', JOBS_CHECK_INTERVAL * 1000);
 
 	/*
 	 * Tables
