@@ -22,23 +22,38 @@
  */
 
 /**
- * Static license page.
+ * Extends CI's controller.
  *
- * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
-class License extends MY_Controller {
+class MY_Controller extends CI_Controller {
 
 	/**
-	 * Constructor.
+	 * Contains a list of public controllers.
+	 *
+	 * @var array
+	 */
+	private $public_controllers = array('auth', 'xmlrpc');
+
+	/**
+	 * Calls the parent contructor.
 	 */
 	public function __construct() {
 		parent::__construct();
-	}
 
-	public function index() {
-		$this->load->view('license');
+		if (!in_array($this->router->class, $this->public_controllers)) {
+			// redirect if the user is not logged in
+			if (!$this->input->is_ajax_request() && !$this->access->isLoggedIn()) {
+				redirect('auth/login');
+			}
+
+			// show message if side is marked as offline
+			if ($this->setting->get('offline') == 1 && !$this->access->isAdmin()) {
+				show_error($this->setting->get('offline_message'));
+			}
+		}
 	}
 }
 
-/* End of file license.php */
-/* Location: ./application/controllers/license.php */
+/* End of file MY_Controller.php */
+/* Location: ./application/core/MY_Controller.php */

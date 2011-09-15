@@ -1,6 +1,6 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
  * @author Karsten Heiken <karsten@disposed.de>
  * @author Eike Foken <kontakt@eikefoken.de>
  */
-class Projects extends CI_Controller {
+class Projects extends MY_Controller {
 
 	/**
 	 * Constructor.
@@ -36,7 +36,6 @@ class Projects extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('experiment');
 		$this->load->model('job');
-		$this->load->model('share');
 	}
 
 	/**

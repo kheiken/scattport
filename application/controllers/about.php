@@ -1,6 +1,6 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,11 @@
  */
 
 /**
- * Static about page
+ * Static about page.
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class About extends CI_Controller {
+class About extends MY_Controller {
 
 	/**
 	 * Constructor.

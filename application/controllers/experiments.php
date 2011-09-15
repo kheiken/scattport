@@ -27,7 +27,7 @@
  * @author Karsten Heiken <karsten@disposed.de>
  * @author Eike Foken <kontakts@eikefoken.de>
  */
-class Experiments extends CI_Controller {
+class Experiments extends MY_Controller {
 
 	/**
 	 * Constructor.

@@ -10,12 +10,6 @@
 |
  */
 
-$hook['post_controller_constructor'] = array(
-		'class' => '',
-		'function' => 'check_login',
-		'filename' => 'global.php',
-		'filepath' => 'hooks'
-);
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

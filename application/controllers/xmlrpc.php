@@ -1,6 +1,6 @@
-<?php
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,11 @@
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
-class Xmlrpc extends CI_Controller {
+class Xmlrpc extends MY_Controller {
 
+	/**
+	 * Calls the parent constructor.
+	 */
 	function __construct() {
 		parent::__construct();
 
@@ -120,6 +123,11 @@ class Xmlrpc extends CI_Controller {
 		return $this->xmlrpc->send_response($response);
 	}
 
+	/**
+	 *
+	 * @param mixed $request
+	 * @return mixed
+	 */
 	function _job_done($request) {
 		$this->load->model('job');
 		$parameters = $request->output_parameters();
@@ -142,5 +150,7 @@ class Xmlrpc extends CI_Controller {
 			), 'struct');
 		return $this->xmlrpc->send_response($response);
 	}
-
 }
+
+/* End of file xmlrpc.php */
+/* Location: ./application/controllers/xmlrpc.php */

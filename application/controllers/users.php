@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Eike Foken <kontakt@eikefoken.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,13 @@
  *
  * @author Eike Foken <kontakt@eikefoken.de>
  */
-class Users extends CI_Controller {
+class Users extends MY_Controller {
 
 	/**
 	 * Calls the parent constructor.
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('user');
 	}
 
 	/**
