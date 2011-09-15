@@ -347,8 +347,7 @@ div.error {
 	background: #fff;
 	border: 1px solid #e8e8e8;
 	padding: 15px;
-	height: 35px;
-	line-height: 36px;
+	height: 12px;
 	clear: both;
 }
 
@@ -358,7 +357,16 @@ div.error {
 
 #footer .right {
 	float: right;
-	margin-left: 6px;
+}
+
+#copyright {
+	padding: 10px 0;
+	text-align: right;
+}
+
+#copyright img {
+	margin-left: 4px;
+	float: right;
 }
 
 /* Buttons */
