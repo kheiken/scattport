@@ -169,6 +169,15 @@ class Experiments extends CI_Controller {
 	}
 
 	/**
+	 * Allows users to edit an experiment.
+	 *
+	 * @param string $experimentId
+	 */
+	public function edit($experimentId) {
+		redirect('experiments/detail/' . $experimentId);
+	}
+
+	/**
 	 * Allows users to delete an experiment.
 	 *
 	 * @param string $experimentId
