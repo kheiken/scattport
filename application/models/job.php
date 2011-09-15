@@ -153,6 +153,7 @@ class Job extends CI_Model {
 	 * @return integer
 	 */
 	public function countUnseenResults() {
+		$this->db->where('started_by', $this->session->userdata('user_id'));
 		return $this->db->where(array('finished_at !=' => 0, 'seen' => 0))->count_all_results('jobs');
 	}
 
@@ -162,6 +163,7 @@ class Job extends CI_Model {
 	 * @return integer
 	 */
 	public function countRunning() {
+		$this->db->where('started_by', $this->session->userdata('user_id'));
 		return $this->db->where(array('started_at !=' => 0, 'finished_at' => 0))->count_all_results('jobs');
 	}
 
@@ -171,6 +173,7 @@ class Job extends CI_Model {
 	 * @return integer
 	 */
 	public function countPending() {
+		$this->db->where('started_by', $this->session->userdata('user_id'));
 		return $this->db->where('started_at', 0)->count_all_results('jobs');
 	}
 }
