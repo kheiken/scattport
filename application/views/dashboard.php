@@ -58,7 +58,8 @@
 			<p>
 				<a class="button left big" href="<?=site_url('admin/servers');?>"><strong><?=image_asset('icons-big/server.png');?></strong><br /><?=_('Manage servers');?>
 				</a><a class="button middle big" href="<?=site_url('admin/programs');?>"><strong><?=image_asset('icons-big/application.png');?></strong><br /><?=_('Manage programs');?>
-				</a><a class="button right big" href="<?=site_url('admin/users');?>"><strong><?=image_asset('icons-big/user.png');?></strong><br /><?=_('Manage users');?></a>
+				</a><a class="button middle big" href="<?=site_url('admin/users');?>"><strong><?=image_asset('icons-big/user.png');?></strong><br /><?=_('Manage users');?>
+				</a><a class="button right big" href="<?=site_url('admin/settings');?>"><strong><?=image_asset('icons-big/switch.png');?></strong><br /><?=_('Global settings');?></a>
 			</p>
 		</div>
 	</div>

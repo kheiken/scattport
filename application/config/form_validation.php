@@ -85,6 +85,24 @@ $config['auth/settings'] = array(
 );
 
 /**
+ * Rules for global settingsa.
+ *
+ * @var array
+ */
+$config['settings/index'] = array(
+		array(
+				'field' => 'offline',
+				'label' => _('Offline mode'),
+				'rules' => 'required|integer',
+		),
+		array(
+				'field' => 'offline_message',
+				'label' => _('Offline message'),
+				'rules' => 'trim',
+		),
+);
+
+/**
  * Rules for creating users.
  *
  * @var array
