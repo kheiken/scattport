@@ -6,7 +6,6 @@
 			<h2><?=_('Dashboard');?></h2>
 		</div>
 
-
 		<div class="box">
 			<h3><?=_('Quick actions');?></h3>
 			<p>
@@ -53,6 +52,9 @@
 ?>
 			</p>
 		</div>
+<?php
+	if ($this->access->isAdmin()):
+?>
 		<div class="box">
 			<h3><?=_('Administration');?></h3>
 			<p>
@@ -62,6 +64,9 @@
 				</a><a class="button right big" href="<?=site_url('admin/settings');?>"><strong><?=image_asset('icons-big/switch.png');?></strong><br /><?=_('Global settings');?></a>
 			</p>
 		</div>
+<?php
+	endif;
+?>
 	</div>
 </div>
 
