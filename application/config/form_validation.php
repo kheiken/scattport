@@ -72,6 +72,16 @@ $config['auth/settings'] = array(
 				'label' => _('New password'),
 				'rules' => 'min_length[6]|matches[new_password_confirm]',
 		),
+		array(
+				'field' => 'job_check_interval',
+				'label' => _('Job checking interval'),
+				'rules' => 'greater_than[4]',
+		),
+		array(
+				'field' => 'projects_sort_recently',
+				'label' => _('Sort projects by last access'),
+				'rules' => 'integer',
+		),
 );
 
 /**

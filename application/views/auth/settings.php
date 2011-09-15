@@ -57,9 +57,17 @@
 			<div id="settings" class="tab_content">
 				<ul>
 					<li>
-						<input type="checkbox" id="projects_sortrecently" name="projects_sortrecently" value="1" class="checkbox"/>
-						<label for="projects_sortrecently"><?=_('Sort projects by date of the last access');?></label><br />
+						<input type="checkbox" id="projects_sort_recently" name="projects_sort_recently" value="1" class="checkbox" <?=set_checkbox('projects_sort_recently', 1, (boolean) $this->access->settings('projects_sort_recently'));?> />
+						<?=form_label(_('Sort projects by last access'), 'projects_sort_recently');?><br />
 						<label class="note"><?=_('If the projects are sorted by the data of the last access, the rarely used projects &quot;slip&quot; to the end of the list.');?></label>
+					</li>
+					<li>
+						<?=form_label(_('Job checking interval'), 'jobs_check_interval');?><br />
+						<label class="note"><?=_('Check for new jobs every x seconds.');?></label>
+						<div>
+							<input type="text" name="jobs_check_interval" id="jobs_check_interval" class="text" value="<?=set_value('jobs_check_interval', $this->access->settings('jobs_check_interval'));?>" />
+							<?=form_error('jobs_check_interval');?>
+						</div>
 					</li>
 				</ul>
 			</div>

@@ -273,6 +273,22 @@ class Access {
 		return $this->cache['profile'];
 	}
 
+	/**
+	 * Gets the settings of the current user.
+	 *
+	 * @return array
+	 */
+	public function settings($key) {
+		if ((boolean) $this->CI->session->userdata('settings')) {
+			$settings = $this->CI->session->userdata('settings');
+		} else {
+			$settings = $this->CI->user->getSettings($this->CI->session->userdata('user_id'));
+			$this->CI->session->set_userdata('settings', $settings);
+		}
+
+		return isset($settings[$key]) ? $settings[$key] : false;
+	}
+
 }
 
 /* End of file Access.php */

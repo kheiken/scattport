@@ -455,6 +455,17 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Gets a users settings.
+	 *
+	 * @param string $userId
+	 * @return array
+	 */
+	public function getSettings($userId) {
+		$query = $this->db->get_where('users_settings', array('user_id' => $userId));
+		return $query->row_array();
+	}
+
+	/**
 	 * Updates a user.
 	 *
 	 * @param string $id
@@ -476,6 +487,21 @@ class User extends CI_Model {
 
 			$this->db->update('users', $data, array('id' => $id));
 		}
+
+		return $this->db->affected_rows() > 0;
+	}
+
+	/**
+	 *
+	 */
+	public function updateSettings($data, $userId) {
+		foreach ($data as $key => $value) {
+			$data[$key] = $this->db->escape($value);
+		}
+
+		$query = $this->db->query("REPLACE INTO `users_settings` (`user_id`, "
+				. implode(", ", array_keys($data)) . ") VALUES ('" . $userId . "', "
+				. implode(", ", array_values($data)) . ")");
 
 		return $this->db->affected_rows() > 0;
 	}

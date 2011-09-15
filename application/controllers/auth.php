@@ -128,8 +128,17 @@ class Auth extends CI_Controller {
 				'phone' => $this->input->post('phone')
 			);
 
+			// update the users settings
+			$settings = array(
+				'projects_sort_recently' => $this->input->post('projects_sort_recently'),
+				'jobs_check_interval' => $this->input->post('jobs_check_interval'),
+			);
+
+			$this->user->updateSettings($settings, $user['id']);
+			$this->session->unset_userdata('settings'); // clear saved settings
+
 			if ($this->user->update($user['id'], $data)) {
-				$this->messages->add(_("Settings saved successfully"), 'success');
+				$this->messages->add(_("Changes saved successfully"), 'success');
 				redirect('auth/settings', 303);
 			}
 		}
