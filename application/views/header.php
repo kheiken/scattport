@@ -51,7 +51,12 @@
 			<option disabled="disabled" selected="selected"><strong><?=_('Select a project');?></strong></option>
 <?php
 	endif;
-	foreach ($this->project->getAll() as $project):
+	if ($this->access->isAdmin()) {
+		$theProjects = $this->project->getAll();
+	} else {
+		$theProjects = $this->project->getAccessible();
+	}
+	foreach ($theProjects as $project):
 ?>
 			<option title="<?=$project['name']?>" value="<?=site_url('projects/detail/' . $project['id']) . '?active_project=' . $project['id'];?>"<?=($active_project['id'] == $project['id']) ? ' selected' : '';?>><?=$project['mediumname'];?></option>
 <?php
