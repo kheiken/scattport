@@ -98,7 +98,11 @@ class Project extends CI_Model {
 	 * @param string $userId
 	 * @return array All accessible projects
 	 */
-	public function getAccessible($userId) {
+	public function getAccessible($userId = '') {
+		if (empty($userId)) {
+			$userId = $this->session->userdata('user_id');
+		}
+
 		$shares = array();
 		$query = $this->db->get_where('shares', array('user_id' => $userId));
 		foreach ($query->result_array() as $share) {
