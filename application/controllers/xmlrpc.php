@@ -32,14 +32,15 @@ class Xmlrpc extends MY_Controller {
 	 * Calls the parent constructor.
 	 */
 	function __construct() {
-		unset($this->session); // unload sessions
-
 		parent::__construct();
 
 		$this->load->library('xmlrpc');
 		$this->load->library('xmlrpcs');
 
 		$this->load->model('server');
+
+		$this->session->sess_destroy();
+		unset($this->session); // unload sessions
 	}
 
 	/**
