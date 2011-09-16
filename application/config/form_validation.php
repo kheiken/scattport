@@ -235,6 +235,29 @@ $config['parameters/create'] = array(
 );
 
 /**
+ * Rules for creating servers.
+ *
+ * @var array
+ */
+$config['servers/edit'] = array(
+		array(
+				'field' => 'description',
+				'label' => _('Description'),
+				'rules' => 'required|trim',
+		),
+		array(
+				'field' => 'location',
+				'label' => _('Location'),
+				'rules' => 'required|max_length[255]|trim',
+		),
+		array(
+				'field' => 'owner',
+				'label' => _('Owner'),
+				'rules' => 'required|alpha_numeric|trim',
+		),
+);
+
+/**
  * Rules for creating projects.
  *
  * @var array

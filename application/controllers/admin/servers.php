@@ -30,33 +30,88 @@ require_once APPPATH . 'core/Admin_Controller.php';
 class Servers extends Admin_Controller {
 
 	/**
-	 * Constructor.
+	 * Calls the parent constructor.
 	 */
 	function __construct() {
 		parent::__construct();
 		$this->load->model('server');
+		$this->load->library('form_validation');
 	}
 
 	/**
-	 * List all servers.
+	 * Lists all servers.
 	 */
 	function index() {
-		$tpl->servers = $this->server->getAll();
-
-		$this->load->view('admin/server/list', $tpl);
+		$this->load->view('admin/servers/list', array('servers' => $this->server->getAll()));
 	}
 
 	/**
-	 * Retrieve details of a server.
+	 * Shows details of a server.
 	 *
-	 * @param type $server_id
+	 * @param string $serverId
 	 */
-	function detail($server_id) {
-		$tpl->server = $this->server->getById($server_id);
+	function detail($serverId) {
+		$this->load->helper('typography');
 
-		$this->load->view('admin/server/detail', $tpl);
+		$data['server'] = $this->server->getById($serverId);
+		$data['owner'] = $this->user->getUserByID($data['server']->owner);
+
+		$this->load->view('admin/servers/detail', $data);
 	}
 
+	/**
+	 * Allows admins to edit a server.
+	 *
+	 * @param string $serverId
+	 */
+	public function edit($serverId) {
+		$server = $this->server->getById($serverId);
+
+		if (!isset($server) || !is_object($server)) {
+			show_404();
+		}
+
+		if ($this->form_validation->run('servers/edit') === true) {
+			$data = array(
+					'description' => $this->input->post('description'),
+					'location' => $this->input->post('location'),
+					'owner' => $this->input->post('owner'),
+			);
+
+			if ($this->server->update($serverId, $data)) {
+				$this->messages->add(sprintf(_("The server &quot;%s&quot; has been updated successfully."), $server->id), 'success');
+			}
+			redirect('admin/servers', 303);
+		}
+
+		$data = array(); // empty data array
+		$data['server'] = $server;
+
+		$data['users'] = array();
+
+		$users = $this->user->getAll();
+		foreach ($users as $user) {
+			$data['users'][$user['id']] = $user['firstname'] . ' ' . $user['lastname'];
+		}
+
+		$this->load->view('admin/servers/edit', $data);
+	}
+
+	/**
+	 * Allows admins to delete a server.
+	 *
+	 * @param string $serverId
+	 */
+	public function delete($serverId) {
+		$server = $this->server->getById($serverId);
+
+		if (!isset($server) || !is_object($server)) {
+			show_404();
+		} else {
+			$this->server->delete($server->id);
+			redirect('admin/servers', 303);
+		}
+	}
 }
 
 /* End of file servers.php */

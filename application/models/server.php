@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Karsten Heiken <karsten@disposed.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,36 @@
  */
 
 /**
+ *
  * @author Karsten Heiken <karsten@disposed.de>
  */
 class Server extends CI_Model {
 
 	/**
-	 * Create a new server.
+	 * Creates a new server.
 	 *
-	 * @param array $data the server informations
-	 * @return bool was the insert successful
+	 * @param array $data The server informations
+	 * @return boolean Returns TRUE if the insert was successful.
 	 */
 	public function create($data) {
 		return $this->db->insert('servers', $data);
 	}
 
 	/**
-	 * Delete a server.
+	 * Deletes a server.
 	 *
-	 * @param string $server_id
-	 * @return bool was the deletion successful
+	 * @param string $serverId
+	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
-	public function delete($server_id) {
-		return $this->db->delete('servers', array('id' => $server_id));
+	public function delete($serverId) {
+		$this->db->delete('servers', array('id' => $serverId));
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
-	 * Get a list of all available servers.
+	 * Gets a list of all available servers.
 	 *
-	 * @return array List of all available servers.
+	 * @return array The list of all available servers
 	 */
 	public function getAll() {
 		$servers = $this->db->get('servers')->result_array();
@@ -60,22 +62,24 @@ class Server extends CI_Model {
 	}
 
 	/**
-	 * Get a list of servers that could handle another job.
+	 * Gets a list of servers that could handle another job.
 	 *
-	 * @return array List of servers that could handle another job.
+	 * @return array The list of servers that could handle another job
 	 */
 	public function getIdle() {
 		return $this->db->get_where('servers', 'workload <= 2')->result_array();
 	}
 
 	/**
-	 * Update a server.
-	 *	 *
-	 * @param type $secret The server's secret for basic authentication.
-	 * @param type $workload The server's workload.
+	 * Updates a server.
+	 *
+	 * @param type $secret The server's secret for basic authentication
+	 * @param type $workload The server's workload
+	 * @return boolean Returns TRUE if the update was successful.
 	 */
-	public function update($server_id, $data) {
-		return $this->db->where('id', $server_id)->update('servers', $data);
+	public function update($serverId, $data) {
+		$this->db->where('id', $serverId)->update('servers', $data);
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
@@ -101,10 +105,11 @@ class Server extends CI_Model {
 	 * @param string $serverId
 	 */
 	public function getById($serverId) {
-		$this->load->helper('date');
 		$server = $this->db->get_where('servers', array('id' => $serverId))->row();
-		$server->uptimestring = prettyTime($server->uptime);
-		$server->lastheartbeat = prettyTime(time_diff($server->last_update, mysql_now()));
+		if (is_object($server)) {
+			$server->uptimestring = prettyTime($server->uptime);
+			$server->lastheartbeat = prettyTime(time_diff($server->last_update, mysql_now()));
+		}
 		return $server;
 	}
 }
