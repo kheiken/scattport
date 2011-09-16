@@ -18,12 +18,12 @@
 					</div>
 				</li>
 				<li>
-					<?=form_label(_('Description'), 'description');?> <span class="req">*</span>
+					<?=form_label(_('Description'), 'description');?> <span class="req">*</span><br />
+					<label class="note"><?=_('A description is useful if you want to share this project with co-workers.');?></label>
 					<div>
 						<textarea name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
 						<?=form_error('description');?>
 					</div>
-					<label class="note"><?= _('A description is useful if you want to share this project with co-workers.') ?></label>
 				</li>
 			</ul>
 			<h3><?=_('Optional information');?></h3>
