@@ -118,7 +118,6 @@
 					<ul>
 						<li><a href="<?=site_url('projects/create');?>" title="<?=_('Create a new project');?>"><?=_('New project');?></a></li>
 						<li><a href="<?=site_url('projects');?>" title="<?=_('Shows a list of all projects');?>"><?=_('Show projects');?></a></li>
-						<li><a href="<?=site_url('projects/search');?>" title="<?=_('Search for a project');?>"><?=_('Search');?></a></li>
 					</ul>
 				</li>
 				<li class="togglable" id="nav_calculations">
