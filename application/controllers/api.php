@@ -29,6 +29,14 @@
 class Api extends CI_Controller {
 
 	/**
+	 * Unloads the session library.
+	 */
+	public function __construct() {
+		parent::__construct();
+		unset($this->session);
+	}
+
+	/**
 	 * Update the state of a given job.
 	 *
 	 * Because we do not want any access from servers we do not trust,
