@@ -7,6 +7,7 @@
 	</div>
 
 	<div class="box">
+		<h3><?=_('Available projects');?></h3>
 		<table class="tableList paginated sortable">
 			<thead>
 				<tr>
