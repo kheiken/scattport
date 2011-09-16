@@ -3,35 +3,38 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?php printf(_("Edit user '%s'"), $user['username']);?></h2>
+		<h2><?=anchor('admin/users', _('Users'));?> &raquo; <?=sprintf(_('Edit user &quot;%s&quot;'), $user['username']);?></h2>
 	</div>
 
 	<div class="box">
-		<form name="createUser" method="post" action="<?=site_url('admin/users/edit/' . $user['id'])?>">
+		<form name="editUser" method="post" action="<?=site_url('admin/users/edit/' . $user['id'])?>">
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
-					<?=form_label(_('Email address'), 'email');?>
-					<span class="req">*</span>
+					<?=form_label(_('Email address'), 'email');?> <span class="req">*</span>
 					<div>
 						<input type="text" name="email" id="email" class="medium text" value="<?=set_value('email', $user['email']);?>" />
 						<?=form_error('email')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(_('First name'), 'firstname');?>
-					<span class="req">*</span>
+					<?=form_label(_('First name'), 'firstname');?> <span class="req">*</span>
 					<div>
 						<input type="text" name="firstname" id="firstname" class="short text" value="<?=set_value('firstname', $user['firstname']);?>" />
 						<?=form_error('firstname')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(_('Last name'), 'lastname');?>
-					<span class="req">*</span>
+					<?=form_label(_('Last name'), 'lastname');?> <span class="req">*</span>
 					<div>
 						<input type="text" name="lastname" id="lastname" class="short text" value="<?=set_value('lastname', $user['lastname']);?>" />
 						<?=form_error('lastname')?>
+					</div>
+				</li>
+				<li>
+					<?=form_label(_('Group'), 'group_id');?> <span class="req">*</span>
+					<div>
+						<?=form_dropdown('group_id', $groups, $user['group_id'], 'id="group_id" class="drop"');?>
 					</div>
 				</li>
 			</ul>
@@ -54,8 +57,8 @@
 				</li>
 			</ul>
 			<p>
-				<a class="button save" href="javascript:void(0);" onclick="$('form[name=createUser]').submit();"><?=_('Save');?></a>
-				<a class="button cancel" href="<?=site_url('admin/users');?>"><?=_('Cancel');?></a>
+				<a href="javascript:void(0);" onclick="$('form[name=editUser]').submit();" class="button save"><?=_('Save');?></a>
+				<a href="<?=site_url('admin/users');?>" class="button cancel"><?=_('Cancel');?></a>
 			</p>
 		</form>
 	</div>

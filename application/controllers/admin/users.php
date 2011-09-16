@@ -30,11 +30,11 @@ require_once APPPATH . 'core/Admin_Controller.php';
 class Users extends Admin_Controller {
 
 	/**
-	 * Constructor.
+	 * Calls the parent constructor.
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('user');
+		$this->load->model('group');
 		$this->load->library('form_validation');
 	}
 
@@ -42,8 +42,7 @@ class Users extends Admin_Controller {
 	 * Shows a list of all users.
 	 */
 	public function index() {
-		$data['users'] = $this->user->getAll();
-		$this->load->view('admin/users/list', $data);
+		$this->load->view('admin/users/list', array('users' => $this->user->getAll()));
 	}
 
 	/**
@@ -57,16 +56,25 @@ class Users extends Admin_Controller {
 				'firstname' => $this->input->post('firstname'),
 				'lastname' => $this->input->post('lastname'),
 				'institution' => $this->input->post('institution'),
-				'phone' => $this->input->post('phone')
+				'phone' => $this->input->post('phone'),
+				'group_id' => $this->input->post('group_id'),
 			);
 
 			if ($this->user->register($username, $this->input->post('password'), $this->input->post('email'), $data)) {
-				$this->messages->add(sprintf(_("The user '%s' has been created successfully"), $username), 'success');
 				redirect('admin/users', 303);
+			} else {
+				$this->messages->add(_("Something went wrong with the action you performed."), 'error');
 			}
 		}
 
-		$this->load->view('admin/users/create');
+		$data = array(); // empty data array
+		$data['groups'] = $this->group->getAll();
+
+		// get default group
+		$this->load->config('auth');
+		$data['default'] = $this->group->getByName($this->config->item('default_group', 'auth'));
+
+		$this->load->view('admin/users/create', $data);
 	}
 
 	/**
@@ -87,16 +95,21 @@ class Users extends Admin_Controller {
 				'firstname' => $this->input->post('firstname'),
 				'lastname' => $this->input->post('lastname'),
 				'institution' => $this->input->post('institution'),
-				'phone' => $this->input->post('phone')
+				'phone' => $this->input->post('phone'),
+				'group_id' => $this->input->post('group_id'),
 			);
 
 			if ($this->user->update($user['id'], $data)) {
-				$this->messages->add(sprintf(_("The user '%s' has been updated successfully"), $user['username']), 'success');
-				redirect('admin/users', 303);
+				$this->messages->add(sprintf(_("The user &quot;%s&quot; has been updated successfully."), $user['username']), 'success');
 			}
+			redirect('admin/users', 303);
 		}
 
-		$this->load->view('admin/users/edit', array('user' => $user));
+		$data = array(); // empty data array
+		$data['user'] = $user;
+		$data['groups'] = $this->group->getAll();
+
+		$this->load->view('admin/users/edit', $data);
 	}
 
 	/**
@@ -111,7 +124,6 @@ class Users extends Admin_Controller {
 			show_404();
 		} else {
 			$this->user->delete($user['id']);
-			$this->messages->add(_("The selected user has been deleted successfully"), 'success');
 			redirect('admin/users', 303);
 		}
 	}

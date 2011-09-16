@@ -40,8 +40,12 @@ class Group extends CI_Model {
      *
      * @return array
      */
-    public function get() {
-        return $this->db->get('groups')->result_array();
+    public function getAll() {
+    	$groups = array();
+        foreach ($this->db->get('groups')->result_array() as $group) {
+        	$groups[$group['id']] = $group['description'];
+        }
+        return $groups;
     }
 
     /**

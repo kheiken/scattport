@@ -585,6 +585,11 @@ a.project_rename {
 	padding-left: 30px;
 }
 
+a.user_add {
+	background: url(../images/icons/user--plus.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
 a.results {
 	background: url(../images/icons/blue-folder-open-document-text.png) 10px center no-repeat #f3f3f3;
 	padding-left: 30px;
