@@ -590,6 +590,16 @@ a.user_add {
 	padding-left: 30px;
 }
 
+a.program_add {
+	background: url(../images/icons/application--plus.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
+a.parameter_add {
+	background: url(../images/icons/ui-text-field--plus.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
 a.results {
 	background: url(../images/icons/blue-folder-open-document-text.png) 10px center no-repeat #f3f3f3;
 	padding-left: 30px;

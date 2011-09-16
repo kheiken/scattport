@@ -52,11 +52,11 @@ class Parameters extends Admin_Controller {
 		}
 
 		if ($this->form_validation->run('parameters/create') === true) {
-			$paramName = $this->input->post('name');
+			$parameter = $this->input->post('name');
 
 			$data = array(
 				'program_id' => $program['id'],
-				'name' => $paramName,
+				'name' => $parameter,
 				'readable' => $this->input->post('readable'),
 				'unit' => $this->input->post('unit'),
 				'description' => $this->input->post('description'),
@@ -65,7 +65,7 @@ class Parameters extends Admin_Controller {
 			);
 
 			if ($this->parameter->create($data)) {
-				$this->messages->add(sprintf(_("The parameter '%s' has been successfully created."), $paramName), 'success');
+				$this->messages->add(sprintf(_("The parameter &quot;%s&quot; has been created successfully."), $parameter), 'success');
 				redirect('admin/programs/edit/' . $program['id'], 303);
 			}
 		}
@@ -148,13 +148,14 @@ class Parameters extends Admin_Controller {
 			);
 
 			if ($this->parameter->update($data, $id)) {
-				$this->messages->add(sprintf(_("The parameter '%s' has been successfully updated."), $parameter['name']), 'success');
-				redirect('admin/programs/edit/' . $parameter['program_id'], 303);
+				$this->messages->add(sprintf(_("The parameter &quot;%s&quot; has been updated successfully."), $parameter['name']), 'success');
 			}
+			redirect('admin/programs/edit/' . $parameter['program_id'], 303);
 		}
 
 		$data = array(); // empty the data array
 		$data['types'] = $this->parameter->getTypes();
+		$data['program'] = $this->program->getByID($parameter['program_id']);
 		$data['parameter'] = $parameter;
 
 		$this->load->view('admin/parameters/edit', $data);
@@ -172,7 +173,7 @@ class Parameters extends Admin_Controller {
 			show_404();
 		} else {
 			if ($this->parameter->delete($parameter['id'])) {
-				$this->messages->add(_('The selected parameter has been successfully deleted.'), 'success');
+				$this->messages->add(_("The selected parameter has been deleted successfully."), 'success');
 			}
 			redirect('admin/programs/edit/' . $parameter['program_id'], 303);
 		}

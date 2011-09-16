@@ -52,10 +52,10 @@ class Programs extends Admin_Controller {
 	 *
 	 * @param string $id
 	 */
-	public function edit($id = '') {
-		$program = $this->program->getByID($id);
+	public function edit($programId = '') {
+		$program = $this->program->getByID($programId);
 
-		if (empty($id) || !isset($program['id'])){
+		if (empty($programId) || !isset($program['id'])){
 			show_404();
 		}
 
@@ -64,12 +64,13 @@ class Programs extends Admin_Controller {
 				'name' => $this->input->post('name'),
 				'config_template' => $_POST['config_template'],
 			);
-			if ($this->program->update($data, $id)) {
-				$this->messages->add(sprintf(_("The program '%s' has been updated successfully"), $this->input->post('name')), 'success');
-				redirect('admin/programs', 303);
+			if ($this->program->update($data, $programId)) {
+				$this->messages->add(sprintf(_("The program &quot;%s&quot; has been updated successfully"), $this->input->post('name')), 'success');
+				redirect('admin/programs/edit/' . $program['id'], 303);
 			}
 		}
 
+		$data = array(); // empty data array
 		$data['program'] = $program;
 		$data['parameters'] = $this->parameter->getAll($program['id']);
 

@@ -8,7 +8,7 @@
 
 	<div class="box">
 		<h3><?=_('Available programs');?></h3>
-		<table class="tableList paginated">
+		<table class="tableList">
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Name');?></th>
@@ -21,15 +21,20 @@
 ?>
 				<tr>
 					<td><?=$program['name'];?></td>
-					<td><?=anchor('admin/programs/edit/' . $program['id'], _('Edit'));?> | <a href="javascript:deleteConfirm('<?=site_url('admin/programs/delete/' . $program['id']);?>');"><?=_('Delete');?></a></td>
+					<td>
+						<?=anchor('admin/programs/edit/' . $program['id'], _('Edit'));?> |
+						<a href="javascript:deleteConfirm('<?=site_url('admin/programs/delete/' . $program['id']);?>');"><?=_('Delete');?></a>
+					</td>
 				</tr>
 <?php
 	endforeach;
 ?>
 			</tbody>
 		</table>
-
-		<p><a class="button add" href="<?=site_url('admin/programs/create')?>"><?=_('Add program')?></a>
+		<h3><?=_('Actions');?></h3>
+		<p>
+			<a class="button disabled program_add"><?=_('Add program');?></a>
+		</p>
 	</div>
 </div>
 

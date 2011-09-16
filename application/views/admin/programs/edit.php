@@ -16,7 +16,7 @@ $(document).ready(function() {
 	<div id="debug"></div>
 
 	<div class="title">
-		<h2><?php printf(_("Edit program '%s'"), $program['name']);?></h2>
+		<h2><?=anchor('admin/programs', _('Programs'));?> &raquo; <?=sprintf(_("Edit program &quot;%s&quot;"), $program['name']);?></h2>
 	</div>
 
 	<div class="box">
@@ -24,16 +24,14 @@ $(document).ready(function() {
 			<h3><?=_('Required information');?></h3>
 			<ul>
 				<li>
-					<?=form_label(_('Name of the program'), 'name');?>
-					<span class="req">*</span>
+					<?=form_label(_('Name of the program'), 'name');?> <span class="req">*</span>
 					<div>
 						<input type="text" name="name" id="name" class="medium text" value="<?=set_value('name', $program['name']);?>" />
 						<?=form_error('name')?>
 					</div>
 				</li>
 				<li>
-					<?=form_label(_('Config template'), 'config_template');?>
-					<span class="req">*</span>
+					<?=form_label(_('Config template'), 'config_template');?> <span class="req">*</span>
 					<div>
 						<textarea name="config_template" id="config_template" rows="6" cols="60" class="textarea"><?=set_value('config_template', $program['config_template']);?></textarea>
 						<?=form_error('config_template')?>
@@ -47,11 +45,13 @@ $(document).ready(function() {
 				</li>
 			</ul>
 			<p>
-				<a class="button save" href="javascript:void(0);" onclick="$('form[name=editProgram]').submit();"><?=_('Save');?></a>
-				<a class="button cancel" href="<?=site_url('admin/programs');?>"><?=_('Cancel');?></a>
+				<a href="javascript:void(0);" onclick="$('form[name=editProgram]').submit();" class="button save"><?=_('Save');?></a>
+				<a href="<?=site_url('admin/programs');?>" class="button cancel"><?=_('Cancel');?></a>
 			</p>
 		</form>
+	</div>
 
+	<div class="box">
 		<h3><?=_('Parameters');?></h3>
 		<table class="tableList sortable" id="parameters">
 			<thead>
@@ -80,22 +80,28 @@ $(document).ready(function() {
 			</tbody>
 		</table>
 		<p>
-			<a class="button add" href="<?=site_url('admin/parameters/create/' . $program['id']);?>"><?=_('Add new parameter');?></a>
+			<label class="note"><?=_('Entries of this table are draggable.');?></label>
+		</p>
+
+		<h3><?=_('Actions');?></h3>
+		<p>
+			<a class="button parameter_add" href="<?=site_url('admin/parameters/create/' . $program['id']);?>"><?=_('Add parameter');?></a>
 		</p>
 
 		<form name="uploadCSV" method="post" action="<?=site_url('admin/parameters/upload_csv/' . $program['id'])?>" enctype="multipart/form-data">
-		<ul>
-			<li>
-				<?=form_label(_('CSV file'), 'csv_file');?>
-				<div>
-					<input type="file" name="csv_file" id="csv_file" class="file" />
-					<?=form_error('csv_file')?>
-				</div>
-				<label class="note">You can upload a CSV file, containing a bunch of parameters. The rows of the file must be in the following format: <em>parameter name, human-readable name, unit, type, default value, description</em>. The first row is reserved for headlines.</label>
-			</li>
-		</ul>
+			<ul>
+				<li>
+					<?=form_label(_('CSV file'), 'csv_file');?>
+					<div>
+						<input type="file" name="csv_file" id="csv_file" class="file" />
+						<?=form_error('csv_file');?>
+					</div>
+					<label class="note"><?=_('You can upload a CSV file, containing a bunch of parameters.');?> <?=anchor('uploads/csv_template.csv', _('Here you can download a template.'));?></label>
+				</li>
+			</ul>
+		</form>
 		<p>
-			<a class="button upload" href="javascript:void(0);" onclick="$('form[name=uploadCSV]').submit();"><?=_('Upload');?></a>
+			<a href="javascript:void(0);" onclick="$('form[name=uploadCSV]').submit();" class="button upload"><?=_('Upload');?></a>
 		</p>
 	</div>
 </div>
