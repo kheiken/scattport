@@ -89,7 +89,7 @@
 <?php
 		if ($job['finished_at'] != '0000-00-00 00:00:00'):
 ?>
-		<p><a href="<?=site_url('results/show/' . $experiment['id']);?>" class="button results"><?=_('Show results');?></a></p>
+		<p><a href="<?=site_url('results/experiment/' . $experiment['id']);?>" class="button results"><?=_('Show results');?></a></p>
 <?php
 		endif;
 ?>
