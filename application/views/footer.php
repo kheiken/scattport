@@ -10,8 +10,8 @@
 
 	<div id="copyright">
 		<?=image_asset('iwt.png');?>
-		<?=image_asset('uni.png');?>
 		<?=image_asset('dfg.png');?>
+		<?=image_asset('uni.png');?>
 	</div>
 
 </div>

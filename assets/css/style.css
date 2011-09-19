@@ -360,13 +360,12 @@ div.error {
 }
 
 #copyright {
-	padding: 10px 0;
-	text-align: right;
+	padding: 10px 0 0;
+	text-align: center;
 }
 
 #copyright img {
-	margin-left: 4px;
-	float: right;
+	margin-left: 5px;
 }
 
 /* Buttons */
