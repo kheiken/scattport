@@ -118,7 +118,13 @@ class MY_Session extends CI_Session {
 		}
 
 		$oldSessionId = $this->userdata['session_id'];
-		$newSessionId = $this->generateHash();
+
+		// don't change the session ID on ajax requests
+		if ($this->CI->input->is_ajax_request()) {
+			$newSessionId = $oldSessionId;
+		} else {
+			$newSessionId = $this->generateHash();
+		}
 
 		// update the session data in the session data array
 		$this->userdata['session_id'] = $newSessionId;
