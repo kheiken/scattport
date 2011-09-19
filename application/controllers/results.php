@@ -25,6 +25,7 @@
  * Result browser.
  *
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Results extends MY_Controller {
 
@@ -36,6 +37,7 @@ class Results extends MY_Controller {
 		$this->load->model('program');
 		$this->load->model('job');
 		$this->load->model('server');
+		$this->load->model('experiment');
 	}
 
 	/**
@@ -58,6 +60,19 @@ class Results extends MY_Controller {
 	 * @param string $experimentId The experiment for which to get the results
 	 */
 	public function experiment($experimentId) {
+		$experiment = $this->experiment->getById($experimentId);
+
+		// execute program runner
+		$program = $this->program->getById($experiment['program_id']);
+		$this->load->library('program_runner', array('program_driver' => $program['driver']));
+		$results = $this->program_runner->getResults($experiment['id']);
+
+		$data = array(); // empty data array
+		$data['experiment'] = $experiment;
+		$data['project'] = $this->project->getById($experiment['project_id']);
+		$data['results'] = $results;
+
+		$this->load->view('results/experiment', $data);
 	}
 
 	/**

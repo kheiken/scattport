@@ -24,6 +24,7 @@
 /**
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Program_runner {
@@ -72,6 +73,14 @@ class Program_runner {
 			$this->CI->job->create(array('experiment_id' => $experimentId, 'started_by' => $this->CI->session->userdata('user_id')));
 		}
 		return true;
+	}
+
+	/**
+	 *
+	 * @param string $experimentId
+	 */
+	public function getResults($experimentId) {
+		return $this->driver->_getResults($experimentId);
 	}
 
 }
