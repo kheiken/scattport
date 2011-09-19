@@ -1,20 +1,42 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * Helper for generating hash values.
+<?php defined('BASEPATH') || exit('No direct script access allowed');
+/*
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
- * @author Karsten Heiken <karsten@disposed.de>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 /**
- * Generate a pseudo-random SHA1-hash.
+ * Helper for generating hash values.
  *
- * @access	public
- * @return	integer
+ * @package ScattPort
+ * @subpackage Helpers
+ * @author Karsten Heiken <karsten@disposed.de>
  */
-if ( ! function_exists('random_hash'))
-{
-	function random_hash($len = 40)
-	{
+
+if (!function_exists('random_hash')) {
+	/**
+	 * Generates a pseudo-random SHA1-hash.
+	 *
+	 * @param integer $len
+	 * @return integer
+	 */
+	function random_hash($len = 40) {
 		return substr(sha1(rand(1,1000).now().rand(1001,2000)), 0, $len);
 	}
 }

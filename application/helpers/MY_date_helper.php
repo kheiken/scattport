@@ -1,83 +1,82 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') || exit('No direct script access allowed');
+/*
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 /**
  * Extends CI's date helpers.
  *
+ * @package ScattPort
+ * @subpackage Helpers
  * @author Karsten Heiken <karsten@disposed.de>
  */
 
-// ------------------------------------------------------------------------
-
-/**
- * CodeIgniter Date Helpers
- *
- * @package		CodeIgniter
- * @subpackage	Helpers
- * @category	Helpers
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/helpers/date_helper.html
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * Get "now" time formatted for MySQL
- *
- * Returns time() formatted for direct insertion into a DATETIME field.
- *
- * @access	public
- * @return	integer
- */
-if ( ! function_exists('mysql_now'))
-{
-	function mysql_now()
-	{
+if (!function_exists('mysql_now')) {
+	/**
+	 * Get "now" time formatted for MySQL.
+	 *
+	 * Returns time() formatted for direct insertion into a DATETIME field.
+	 *
+	 * @return integer
+	 */
+	function mysql_now() {
 		return mdate('%Y-%m-%d %H:%i:%s', now());
 	}
 }
 
-/**
- * Function to calculate date or time difference.
- *
- * Function to calculate date or time difference. Returns an array or
- * false on error.
- *
- * @author       J de Silva                             <giddomains@gmail.com>
- * @copyright    Copyright &copy; 2005, J de Silva
- * @link         http://www.gidnetwork.com/b-16.html    Get the date / time difference with PHP
- * @param        string                                 $start
- * @param        string                                 $end
- * @return       array
- */
-if ( ! function_exists('time_diff'))
-{
-	function time_diff($start, $end)
-	{
+if (!function_exists('time_diff')) {
+	/**
+	 * Calculates a date or time difference.
+	 *
+	 * @author J de Silva <giddomains@gmail.com>
+	 * @copyright Copyright &copy; 2005, J de Silva
+	 * @link http://www.gidnetwork.com/b-16.html
+	 * @param string $start
+	 * @param string $end
+	 * @return mixed Returns the difference as integer or FALSE on error.
+	 */
+	function time_diff($start, $end) {
 		$uts['start'] = strtotime($start);
 		$uts['end'] = strtotime($end);
 		if ($uts['start'] !== -1 && $uts['end'] !== -1) {
 			if ($uts['end'] >= $uts['start']) {
 				$diff = $uts['end'] - $uts['start'];
 				$diff = intval($diff);
-				return ($diff);
+				return $diff;
 			}
 		}
-		return (false);
+		return false;
 	}
 }
 
-/**
- * Function to convert seconds to a pretty string.
- *
- * @author Karsten Heiken <karsten@disposed.de>
- * @param integer $secs the amount of seconds
- * @param boolean $includeseconds should seconds be appended to the string?
- * @return string
- */
-if ( ! function_exists('prettyTime'))
-{
-	function prettyTime($secs, $includeseconds = false)
-	{
-
+if (!function_exists('prettyTime')) {
+	/**
+	 * Converts seconds to a pretty string.
+	 *
+	 * @author Karsten Heiken <karsten@disposed.de>
+	 * @param integer $secs The amount of seconds
+	 * @param boolean $includeseconds Should seconds be appended to the string?
+	 * @return string
+	 */
+	function prettyTime($secs, $includeseconds = false) {
 		if(!defined('SECOND')) define("SECOND", 1);
 		if(!defined('MINUTE')) define("MINUTE", 60 * SECOND);
 		if(!defined('HOUR')) define("HOUR", 60 * MINUTE);
@@ -112,15 +111,15 @@ if ( ! function_exists('prettyTime'))
 	}
 }
 
-/**
- * Parses any english textual datetime description into a relative date string.
- *
- * @author Eike Foken <kontakt@eikefoken.de>
- * @param string $date
- * @param boolean $show_seconds
- * @return string
- */
 if (!function_exists('relative_time')) {
+	/**
+	 * Parses any english textual datetime description into a relative date string.
+	 *
+	 * @author Eike Foken <kontakt@eikefoken.de>
+	 * @param string $date
+	 * @param boolean $show_seconds
+	 * @return string
+	 */
 	function relative_time($date, $show_seconds = false) {
 		$diff = time() - strtotime($date);
 
