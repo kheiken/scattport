@@ -64,7 +64,7 @@
 ?>
 		</select>
 	</div>
-	<div class="menu"><?=_('Hello,');?> <a href="<?=site_url('users/profile/' . $this->access->profile()->username);?>"><?=$this->access->profile()->firstname;?> <?=$this->access->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <a href="#"><?=_('Help');?></a> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
+	<div class="menu"><?=_('Hello,');?> <a href="<?=site_url('users/profile/' . $this->access->profile()->username);?>"><?=$this->access->profile()->firstname;?> <?=$this->access->profile()->lastname;?></a>! | <?=lang_select('assets/images');?> | <?=anchor('auth/settings', _('Settings'));?> | <?=anchor('auth/logout', _('Logout'));?></div>
 </div>
 
 <div id="wrapper">
