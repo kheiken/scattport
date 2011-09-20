@@ -113,11 +113,6 @@ class Experiments extends MY_Controller {
 					}
 				}
 
-				// TODO: Don't start jobs automatically
-				$program = $this->program->getById($data['program_id']);
-				$this->load->library('program_runner', array('program_driver' => $program['driver']));
-				$this->program_runner->createJob($data['experiment_id']);
-
 				//redirect('/experiments/detail/' . $data['experiment_id'], 303);
 				redirect('/projects/detail/' . $projectId, 303);
 			} else {
