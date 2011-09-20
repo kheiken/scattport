@@ -5,12 +5,14 @@
 	<div class="title">
 		<h2>
 			<?=anchor('projects', _('Projects'));?> &raquo; <?=$project['name'];?>
-
 			<a class="share" href="<?=site_url('projects/shares/' . $project['id']);?>"><?=_(sprintf('Shared with %s people', count($shares)));?></a>
 		</h2>
 	</div>
 
 	<div class="box">
+<?php
+	if ($project['owner'] == $this->access->profile()->id || $this->access->isAdmin()):
+?>
 		<h3><?=_('Description');?></h3>
 		<p>
 			<div class="editInPlace"><?=auto_typography($project['description']);?></div>
@@ -21,6 +23,14 @@
 			<a href="javascript:deleteConfirm('<?=site_url('projects/delete/' . $project['id']);?>');" class="button delete"><?=_('Delete project');?></a>
 			<a href="javascript:changeTitle('<?=$project['name'];?>', '<?=site_url('ajax/rename_project/' . $project['id']);?>');" class="button project_rename"><?=_('Change title');?></a>
 		</p>
+<?php
+	else:
+?>
+		<h3><?=_('Description');?></h3>
+		<?=auto_typography($project['description']);?>
+<?php
+	endif;
+?>
 	</div>
 
 	<div class="box">
@@ -131,7 +141,6 @@
 
 <script>
 $('.editInPlace').editInPlace({
-
 	url: BASE_URL + 'ajax/update_project/' + '<?=$project['id']?>',
 	saving_image: SITE_URL + 'assets/images/ajax-loader.gif',
 	update_value: 'description',
