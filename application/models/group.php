@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 /*
- * Copyright (c) 2011 Eike Foken <kontakt@eikefoken.de>
+ * Copyright (c) 2011 Karsten Heiken, Eike Foken
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,12 +49,12 @@ class Group extends CI_Model {
     }
 
     /**
-     * Gets a specific group.
+     * Gets a specific group by it's ID.
      *
      * @param string $id
      * @return array
      */
-    public function getByID($id) {
+    public function getById($id) {
         return $this->db->get_where('groups', array('id' => $id))->row_array();
     }
 

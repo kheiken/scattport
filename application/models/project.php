@@ -182,26 +182,25 @@ class Project extends CI_Model {
 	}
 
 	/**
-	 * Create a new project.
+	 * Creates a new project.
 	 *
-	 * @param array $data array with "name" and "description"
+	 * @param array $data An array with "name" and "description"
+	 * @return mixed Returns the ID of the created project, or FALSE if the
+	 *                insert was unsuccessful.
 	 */
 	public function create($data) {
-		$this->load->helper(array('hash', 'date'));
-
 		$data['owner'] = $this->session->userdata('user_id');
 		$data['created'] = mysql_now();
 		$data['last_access'] = mysql_now();
 
-		do {
-			$data['id'] = random_hash();
+		do { // generate unique hash
+			$data['id'] = random_string('sha1', 40);
 		} while ($this->db->where('id', $data['id'])->from('projects')->count_all_results() > 0);
-
 
 		if ($this->db->insert('projects', $data)) {
 			return $data['id'];
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 

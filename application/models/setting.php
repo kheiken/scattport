@@ -60,17 +60,18 @@ class Setting extends CI_Model {
 	/**
 	 * Creates a new settings entry.
 	 *
-	 * @param array $data
-	 * @return boolean Returns TRUE on success.
+	 * @param array $data An array with "name" and "value"
+	 * @return boolean Returns the ID of the created settings, or FALSE if the
+	 *                  insert was unsuccessful.
 	 */
 	public function create($data = array()) {
 		do { // generate unique hash
-			$data['id'] = random_hash();
+			$data['id'] = random_string('sha1', 40);
 		} while ($this->db->where('id', $data['id'])->from('settings')->count_all_results() > 0);
 
 		$this->db->insert('settings', $data);
 
-		return $this->db->affected_rows() == 1;
+		return ($this->db->affected_rows() > 0) ? $data['id'] : false;
 	}
 
 	/**

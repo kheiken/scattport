@@ -40,14 +40,11 @@ class Program extends CI_Model {
 	 * Creates a new program.
 	 *
 	 * @param string $name The name of the new program
-	 * @return string|boolean Returns the ID of the new program, or FALSE if
-	 *                        the insert was unsuccessful.
+	 * @return mixed Returns the ID of the created program, or FALSE if the insert was unsuccessful.
 	 */
 	public function create($name) {
-		$this->load->helper('hash');
-
 		do { // generate unique hash
-			$id = random_hash('16');
+			$id = random_string('sha1', 8);
 		} while ($this->db->where('id', $id)->from('programs')->count_all_results() > 0);
 
 		$this->db->insert('programs', array('id' => $id, 'name' => $name));

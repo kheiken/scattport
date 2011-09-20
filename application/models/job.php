@@ -22,25 +22,35 @@
  */
 
 /**
+ * Model for jobs.
+ *
+ * @package ScattPort
+ * @subpackage Models
  * @author Karsten Heiken <karsten@disposed.de>
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Job extends CI_Model {
+
+	/**
+	 * Calls the parent constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+	}
 
 	/**
 	 * Creates a new job.
 	 *
 	 * @param array $data The data of the new job
-	 * @return boolean Returns TRUE if the insert was successful.
+	 * @return mixed Returns the ID of the created job, or FALSE if the insert
+	 *                was unsuccessful.
 	 */
 	public function create($data) {
-		$this->load->helper('date');
-		$this->load->helper('hash');
-
 		do { // generate unique hash
-			$data['id'] = random_hash();
+			$data['id'] = random_string('sha1', 40);
 		} while ($this->db->where('id', $data['id'])->from('jobs')->count_all_results() > 0);
 
-		$data['created_at'] = date('Y-m-d H:i:s', now());
+		$data['created_at'] = mysql_now();
 
 		$this->db->insert('jobs', $data);
 

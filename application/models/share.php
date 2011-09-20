@@ -97,20 +97,19 @@ class Share extends CI_Model {
 	/**
 	 * Creates a share.
 	 *
-	 * @param array $data
-	 * @return boolean
+	 * @param array $data An array with project and user ID to share
+	 * @return boolean Returns TRUE on success.
 	 */
 	public function create($data) {
 		if (!isset($data['project_id']) || !isset($data['user_id'])) {
 			return false;
 		}
 
-		$this->db->query('REPLACE INTO `shares` (`project_id`, `user_id`, `can_edit`) VALUES ('
-				. $this->db->escape($data['project_id']) . ', '
+		$this->db->query('REPLACE INTO `shares` (`project_id`, `user_id`, `can_edit`)'
+				. ' VALUES (' . $this->db->escape($data['project_id']) . ', '
 				. $this->db->escape($data['user_id']) . ', '
 				. $this->db->escape($data['can_edit']) . ')');
 
-		//$this->db->insert('shares', $data);
 		return $this->db->affected_rows() == 1;
 	}
 

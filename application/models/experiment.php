@@ -24,16 +24,26 @@
 /**
  * Experiments are used to store different variations of the same project.
  *
+ * @package ScattPort
+ * @subpackage Models
  * @author Karsten Heiken <karsten@disposed.de>
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Experiment extends CI_Model {
 
 	/**
+	 * Calls the parent constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+	}
+
+	/**
 	 * Creates a new experiment.
 	 *
 	 * @param array $data The data of the new experiment
-	 * @return boolean Returns TRUE if the insert was successful.
+	 * @return boolean Returns the ID of the created experiment, or FALSE if the
+	 *                  insert was unsuccessful.
 	 */
 	public function create($data) {
 		if (!isset($data['project_id'])) {
@@ -41,7 +51,7 @@ class Experiment extends CI_Model {
 		}
 
 		do { // generate unique hash
-			$data['id'] = random_hash();
+			$data['id'] = random_string('sha1', 40);
 		} while ($this->db->where('id', $data['id'])->from('experiments')->count_all_results() > 0);
 
 		if ($this->db->insert('experiments', $data)) {

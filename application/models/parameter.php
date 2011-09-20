@@ -26,6 +26,8 @@
  *
  * Each program has many parameters used for configuration of experiments.
  *
+ * @package ScattPort
+ * @subpackage Models
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Parameter extends CI_Model {
@@ -52,7 +54,7 @@ class Parameter extends CI_Model {
 	 */
 	public function getAll($programId) {
 		return $this->db->order_by('sort_number ASC')
-			->get_where('parameters', array('program_id' => $programId))->result_array();
+				->get_where('parameters', array('program_id' => $programId))->result_array();
 	}
 
 	/**
@@ -79,14 +81,12 @@ class Parameter extends CI_Model {
 	 *                the insert was unsuccessful.
 	 */
 	public function create($data) {
-		$this->load->helper('hash');
-
 		if (!isset($data['program_id'])) {
 			return false;
 		}
 
 		do { // generate unique hash
-			$data['id'] = random_hash('16');
+			$data['id'] = random_string('sha1', 16);
 		} while ($this->db->where('id', $data['id'])->from('parameters')->count_all_results() > 0);
 
 		// put new parameter to the end

@@ -56,7 +56,6 @@ class User extends CI_Model {
 		parent::__construct();
 		$this->load->config('auth', true);
 		$this->load->helper('cookie');
-		$this->load->helper('date');
 
 		$this->storeSalt = $this->config->item('store_salt', 'auth');
 		$this->saltLength = $this->config->item('salt_length', 'auth');
@@ -121,6 +120,32 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Checks entered usernames.
+	 *
+	 * @param string $username
+	 * @return boolean
+	 */
+	private function checkUsername($username = '') {
+		if (empty($username)) {
+			return false;
+		}
+		return $this->db->where('username', $username)->count_all_results('users') > 0;
+	}
+
+	/**
+	 * Checks entered emails.
+	 *
+	 * @param string $email
+	 * @return boolean
+	 */
+	private function checkEmail($email = '') {
+		if (empty($email)) {
+			return false;
+		}
+		return $this->db->where('email', $email)->count_all_results('users') > 0;
+	}
+
+	/**
 	 * Changes the password of the given user.
 	 *
 	 * @param string $username
@@ -130,7 +155,7 @@ class User extends CI_Model {
 	 */
 	public function changePassword($username, $old, $new) {
 		$query = $this->db->select('password, salt')
-				->where('username', $username)->limit(1)->get('users');
+		->where('username', $username)->limit(1)->get('users');
 
 		$result = $query->row();
 
@@ -147,32 +172,6 @@ class User extends CI_Model {
 			return $this->db->affected_rows() == 1;
 		}
 		return false;
-	}
-
-	/**
-	 * Checks entered usernames.
-	 *
-	 * @param string $username
-	 * @return boolean
-	 */
-	public function checkUsername($username = '') {
-		if (empty($username)) {
-			return false;
-		}
-		return $this->db->where('username', $username)->count_all_results('users') > 0;
-	}
-
-	/**
-	 * Checks entered emails.
-	 *
-	 * @param string $email
-	 * @return boolean
-	 */
-	public function checkEmail($email = '') {
-		if (empty($email)) {
-			return false;
-		}
-		return $this->db->where('email', $email)->count_all_results('users') > 0;
 	}
 
 	/**
@@ -258,11 +257,11 @@ class User extends CI_Model {
 	 * @param string $email
 	 * @param array $additionalData
 	 * @param string $groupName
-	 * @return boolean
+	 * @return mixed Returns the ID of the new user, or FALSE if the
+	 *                registration was unsuccessful.
 	 */
 	public function register($username, $password, $email, $additionalData = array(), $groupName = '') {
 		if ($this->checkUsername($username)) {
-			$this->access->setError('account_creation_duplicate_username');
 			return false;
 		}
 
@@ -280,13 +279,16 @@ class User extends CI_Model {
 
 		// users table
 		$data = array(
-			'id' => random_hash(16),
 			'username' => $username,
 			'password' => $password,
 			'email' => $email,
 			'group_id' => $groupID,
 			'last_login' => now(),
 		);
+
+		do { // generate unique hash
+			$data['id'] = random_string('sha1', 16);
+		} while ($this->db->where('id', $data['id'])->count_all_results('users') > 0);
 
 		if ($this->storeSalt) {
 			$data['salt'] = $salt;
@@ -375,21 +377,6 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * Returns the number of users.
-	 *
-	 * @param mixed $group
-	 * @return integer The number of users
-	 */
-	public function count($group = false) {
-		if (is_string($group)) {
-			$this->db->where('groups.name', $group);
-		} else if (is_array($group)) {
-			$this->db->where_in('groups.name', $group);
-		}
-		return $this->db->from('users')->count_all_results();
-	}
-
-	/**
 	 * Gets a user by ID.
 	 *
 	 * @param string $id
@@ -466,6 +453,21 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Returns the number of users.
+	 *
+	 * @param mixed $group
+	 * @return integer The number of users
+	 */
+	public function count($group = false) {
+		if (is_string($group)) {
+			$this->db->where('groups.name', $group);
+		} else if (is_array($group)) {
+			$this->db->where_in('groups.name', $group);
+		}
+		return $this->db->from('users')->count_all_results();
+	}
+
+	/**
 	 * Updates a user.
 	 *
 	 * @param string $id
@@ -507,17 +509,6 @@ class User extends CI_Model {
 	}
 
 	/**
-	 * Deletes a specified user.
-	 *
-	 * @param string $id
-	 * @return boolean Returns TRUE if the deletion was successful.
-	 */
-	public function delete($id) {
-		$this->db->delete('users', array('id' => $id));
-		return $this->db->affected_rows() > 0;
-	}
-
-	/**
 	 * Updates a users last login time.
 	 *
 	 * @param string $id
@@ -526,6 +517,17 @@ class User extends CI_Model {
 	public function updateLastLogin($id) {
 		$this->db->update('users', array('last_login' => now()), array('id' => $id));
 		return $this->db->affected_rows() == 1;
+	}
+
+	/**
+	 * Deletes a specified user.
+	 *
+	 * @param string $id
+	 * @return boolean Returns TRUE if the deletion was successful.
+	 */
+	public function delete($id) {
+		$this->db->delete('users', array('id' => $id));
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
