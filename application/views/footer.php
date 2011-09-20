@@ -4,7 +4,7 @@
 		</span>
 		<span class="left">
 			<?=anchor('about', _('About'));?> |
-			<?=anchor('license', _('License'));?>
+			<?=anchor('about/license', _('License'));?>
 		</span>
 	</div>
 

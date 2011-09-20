@@ -22,7 +22,7 @@
  */
 
 /**
- * Static about page.
+ * Static about pages.
  *
  * @author Karsten Heiken <karsten@disposed.de>
  */
@@ -36,7 +36,11 @@ class About extends MY_Controller {
 	}
 
 	public function index() {
-		$this->load->view('about');
+		$this->load->view('about/about');
+	}
+
+	public function license() {
+		$this->load->view('about/license');
 	}
 }
 
