@@ -73,6 +73,28 @@ class Share extends CI_Model {
 	}
 
 	/**
+	 * Counts all unseen shares.
+	 */
+	public function countUnseen() {
+		return $this->db->where('user_id', $this->session->userdata('user_id'))
+				->where('seen', 0)->count_all_results('shares');
+	}
+
+	/**
+	 * Marks a shared project as seen.
+	 *
+	 * @param string $projectId
+	 * @return boolean Returns TRUE on success.
+	 */
+	public function markSeen($projectId) {
+		$this->db->where('project_id', $projectId)
+				->where('user_id', $this->session->userdata('user_id'))
+				->update('shares', array('seen' => 1));
+
+		return $this->db->affected_rows() > 0;
+	}
+
+	/**
 	 * Creates a share.
 	 *
 	 * @param array $data

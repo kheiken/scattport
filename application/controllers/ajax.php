@@ -74,6 +74,7 @@ class Ajax extends MY_Controller {
 			'jobs_finished' => count($unseen),
 			'jobs_running' => $this->job->countRunning(),
 			'jobs_pending' => $this->job->countPending(),
+			'shared_projects' => $this->share->countUnseen(),
 		);
 
 		$this->output->set_output(json_encode($data));
