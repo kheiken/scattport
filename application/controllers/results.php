@@ -59,8 +59,12 @@ class Results extends MY_Controller {
 	 *
 	 * @param string $experimentId The experiment for which to get the results
 	 */
-	public function experiment($experimentId) {
+	public function experiment($experimentId = '') {
 		$experiment = $this->experiment->getById($experimentId);
+
+		if (!is_array($experiment) || !isset($experiment['id'])) {
+			show_404();
+		}
 
 		// execute program runner
 		$program = $this->program->getById($experiment['program_id']);
