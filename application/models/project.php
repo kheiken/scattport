@@ -190,7 +190,7 @@ class Project extends CI_Model {
 	public function create($data) {
 		$this->load->helper(array('hash', 'date'));
 
-		$data['owner'] = '215cd70f310ae6ae'; //$this->session->userdata('user_id');
+		$data['owner'] = $this->session->userdata('user_id');
 		$data['created'] = mysql_now();
 		$data['last_access'] = mysql_now();
 
@@ -225,7 +225,18 @@ class Project extends CI_Model {
 	 * @param integer $projectId The ID of the project to delete
 	 */
 	public function delete($projectId) {
-		return $this->db->delete('projects', array('id' => $projectId));
+		$this->db->delete('shares', array('project_id' => $projectId));
+
+		$experiments = $this->db->get_where('experiments', array('project_id' => $projectId))->result_array();
+		foreach ($experiments as $experiment) {
+			$this->db->delete('experiments_parameters', array('experiment_id' => $experiment['id']));
+			$this->db->delete('jobs', array('experiment_id' => $experiment['id']));
+			$this->db->delete('experiments', array('id' => $experiment['id']));
+		}
+
+		$this->db->delete('projects', array('id' => $projectId));
+
+		return $this->db->affected_rows() > 0;
 	}
 
 }

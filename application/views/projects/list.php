@@ -37,7 +37,15 @@
 ?>
 					</td>
 					<td><span class="active"><?=_('Successfully finished');?></span></td>
-					<td><a href="#"><?=_('Show results');?></a> | <?=anchor('projects/delete/' . $project['id'], _('Delete'));?>
+					<td>
+						<a href="#"><?=_('Show results');?></a>
+<?php
+		if ($project['owner'] == $this->access->profile()->id):
+?>
+						| <?=anchor('projects/delete/' . $project['id'], _('Delete'));?>
+<?php
+		endif;
+?>
 					</td>
 				</tr>
 <?php

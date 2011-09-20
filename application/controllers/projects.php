@@ -78,7 +78,7 @@ class Projects extends MY_Controller {
 
 					if ($this->upload->do_upload('defaultmodel')) {
 						$default = $this->upload->data();
-						$this->project->update($data['project_id'], array('default_model' => $default['file_name']));
+						$this->project->update(array('default_model' => $default['file_name']), $data['project_id']);
 					} else {
 						$this->messages->add(_('The default model could not be uploaded.'), 'error');
 					}
@@ -118,16 +118,19 @@ class Projects extends MY_Controller {
 			show_404();
 		}
 
-		if (!$this->_checkAccess($id)) { // check if the user has access
+		if (!$this->_checkAccess($project['id'])) { // check if the user has access
 			show_error(_("Sorry, you don't have access to this project."), 403);
 		}
+
+		// mark a shared project as seen
+		$this->share->markSeen($project['id']);
 
 		$this->load->helper('typography');
 
 		$data['project'] = $project;
-		$data['experiments'] = $this->experiment->getByProjectId($id);
-		$data['jobs'] = $this->job->getRecent($id);
-		$data['shares'] = $this->share->getByProjectId($id);
+		$data['experiments'] = $this->experiment->getByProjectId($project['id']);
+		$data['jobs'] = $this->job->getRecent($project['id']);
+		$data['shares'] = $this->share->getByProjectId($project['id']);
 
 		$this->load->view('projects/detail', $data);
 	}
@@ -182,8 +185,16 @@ class Projects extends MY_Controller {
 	 * @param string $id
 	 */
 	public function delete($id) {
-		if (!$this->_checkAccess($id)) { // check if the user has access
-			show_error(_("Sorry, you don't have access to this project."), 403);
+		$project = $this->project->getById($id);
+		if (!$project || $project['owner'] != $this->session->userdata('user_id')) {
+			show_404();
+		}
+
+		$this->load->helper('file');
+
+		$projectPath = FCPATH . 'uploads/' . $id;
+		if (delete_files($projectPath, true)) {
+			rmdir($projectPath);
 		}
 
 		if ($this->project->delete($id)) {
