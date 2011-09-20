@@ -3,11 +3,11 @@
 <div id="content">
 
 	<div class="title">
-		<h2><?=_('Project overview');?></h2>
+		<h2><?=_('Projects');?></h2>
 	</div>
 
 	<div class="box">
-		<h3><?=_('Available projects');?></h3>
+		<h3><?=_('List of all your accessible projects');?></h3>
 		<table class="tableList paginated sortable">
 			<thead>
 				<tr>

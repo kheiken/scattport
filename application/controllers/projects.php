@@ -42,12 +42,7 @@ class Projects extends MY_Controller {
 	 * Shows a list of all projects.
 	 */
 	public function index() {
-		if ($this->access->isAdmin()) {
-			$data['projects'] = $this->project->getAll();
-		} else {
-			$data['projects'] = $this->project->getAccessible($this->session->userdata('user_id'));
-		}
-
+		$data['projects'] = $this->project->getAccessible($this->session->userdata('user_id'));
 		$this->load->view('projects/list', $data);
 	}
 
