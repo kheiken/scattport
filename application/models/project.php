@@ -126,7 +126,6 @@ class Project extends CI_Model {
 	 */
 	public function getById($projectId) {
 		$result = $this->db->get_where('projects', array('id' => $projectId))->row_array();
-		$this->db->where('id', $projectId)->update('projects', array('last_access' => mysql_now()));
 
 		if ($result) {
 			return $this->_addShortName($result);
@@ -214,6 +213,17 @@ class Project extends CI_Model {
 	 */
 	public function update($data, $projectId) {
 		return $this->db->where('id', $projectId)->update('projects', $data);
+	}
+
+	/**
+	 * Updates the last access of a project.
+	 *
+	 * @param string $projectId The ID of the project to update
+	 * @return boolean Returns TRUE on success.
+	 */
+	public function updateLastAccess($projectId) {
+		$this->db->where('id', $projectId)->update('projects', array('last_access' => mysql_now()));
+		return $this->db->affected_rows() == 0;
 	}
 
 	/**

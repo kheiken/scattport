@@ -118,9 +118,13 @@ class Projects extends MY_Controller {
 			show_404();
 		}
 
-		if (!$this->_checkAccess($project['id'])) { // check if the user has access
+		// check if the user has access
+		if (!$this->_checkAccess($project['id'])) {
 			show_error(_("Sorry, you don't have access to this project."), 403);
 		}
+
+		// updates the last access
+		$this->project->updateLastAccess($project['id']);
 
 		// mark a shared project as seen
 		$this->share->markSeen($project['id']);
@@ -186,18 +190,23 @@ class Projects extends MY_Controller {
 	 */
 	public function delete($id) {
 		$project = $this->project->getById($id);
-		if (!$project || $project['owner'] != $this->session->userdata('user_id')) {
+		if (!$project) {
 			show_404();
+		}
+
+		// check if the user has access
+		if ($project['owner'] != $this->session->userdata('user_id') && !$this->access->isAdmin()) {
+			show_error(_("Sorry, you don't have access to this project."), 403);
 		}
 
 		$this->load->helper('file');
 
-		$projectPath = FCPATH . 'uploads/' . $id;
+		$projectPath = FCPATH . 'uploads/' . $project['id'];
 		if (delete_files($projectPath, true)) {
 			rmdir($projectPath);
 		}
 
-		if ($this->project->delete($id)) {
+		if ($this->project->delete($project['id'])) {
 			$this->messages->add(_('The project was deleted.'), 'success');
 		}
 		redirect('projects', 303);
