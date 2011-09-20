@@ -29,20 +29,50 @@
 class Jobs extends MY_Controller {
 
 	/**
-     * Constructor.
-     */
-    public function __construct() {
-        parent::__construct();
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
 		$this->load->model('job');
 		$this->load->model('experiment');
 		$this->load->model('program');
-    }
+	}
 
-    /**
-     * Starts a job for the specified experiment.
-     *
-     * @param string $experimentId
-     */
+	/**
+	 * Shows a list all jobs.
+	 */
+	public function index() {
+		$jobs = $this->job->getRecent();
+
+		$data['running_jobs'] = array();
+		foreach ($jobs as $job) {
+			if ($job['status'] == 'running' && $job['started_by'] == $this->session->userdata('user_id')) {
+				$data['running_jobs'][] = $job;
+			}
+		}
+
+		$data['finished_jobs'] = array();
+		foreach ($jobs as $job) {
+			if ($job['status'] == 'complete' && $job['started_by'] == $this->session->userdata('user_id')) {
+				$data['finished_jobs'][] = $job;
+			}
+		}
+
+		$data['pending_jobs'] = array();
+		foreach ($jobs as $job) {
+			if ($job['status'] == 'pending' && $job['started_by'] == $this->session->userdata('user_id')) {
+				$data['pending_jobs'][] = $job;
+			}
+		}
+
+		$this->load->view('jobs/list', $data);
+	}
+
+	/**
+	 * Allows users to start a job for the specified experiment.
+	 *
+	 * @param string $experimentId
+	 */
 	public function start($experimentId = '') {
 		$experiment = $this->experiment->getByID($experimentId);
 		if (isset($experiment['id'])) {
@@ -55,6 +85,29 @@ class Jobs extends MY_Controller {
 		} else {
 			show_404();
 		}
+	}
+
+	/**
+	 * Allows users to cancel the specified job.
+	 *
+	 * @param string $jobId
+	 */
+	public function cancel($jobId) {
+		$this->job->delete($jobId);
+		redirect('jobs');
+	}
+
+	/**
+	 * Allows users to mark all finished jobs as seen.
+	 */
+	public function mark_all_seen() {
+		$jobs = $this->job->getRecent();
+		foreach ($jobs as $job) {
+			if ($job['status'] == 'complete' && $job['started_by'] == $this->session->userdata('user_id')) {
+				$this->job->markSeen($job['id']);
+			}
+		}
+		redirect('jobs', 303);
 	}
 
 	/**
@@ -114,3 +167,6 @@ class Jobs extends MY_Controller {
 			));
 	}
 }
+
+/* End of file jobs.php */
+/* Location: ./application/controllers/jobs.php */

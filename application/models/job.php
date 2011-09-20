@@ -67,6 +67,22 @@ class Job extends CI_Model {
 	}
 
 	/**
+	 * Marks a finished job as seen.
+	 *
+	 * @param string $jobId
+	 * @return boolean Returns TRUE on success.
+	 */
+	public function markSeen($jobId) {
+		$this->db->where('started_by', $this->session->userdata('user_id'));
+		$this->db->where('finished_at !=', 0);
+		$this->db->where('id', $jobId);
+
+		$query = $this->db->update('jobs', array('seen' => 1));
+
+		return $this->db->affected_rows() > 0;
+	}
+
+	/**
 	 * Gets a specific job.
 	 *
 	 * @param string $experimentId
@@ -91,7 +107,7 @@ class Job extends CI_Model {
 	public function getRecent($projectId = '') {
 		$this->db->select('jobs.*, experiments.project_id, experiments.name');
 		$this->db->join('experiments', 'jobs.experiment_id = experiments.id', 'left');
-		//$this->db->where('finished_at', 0);
+		$this->db->order_by('created_at DESC');
 
 		if (!empty($projectId)) {
 			$this->db->where('project_id', $projectId);
@@ -99,9 +115,9 @@ class Job extends CI_Model {
 
 		$jobs = $this->db->get('jobs')->result_array();
 		return array_map(function($var) {
-			if($var['started_at'] == '0000-00-00 00:00:00') {
+			if ($var['started_at'] == '0000-00-00 00:00:00') {
 				$var['status'] = 'pending';
-			} elseif($var['finished_at'] == '0000-00-00 00:00:00') {
+			} else if ($var['finished_at'] == '0000-00-00 00:00:00') {
 				$var['status'] = 'running';
 			} else {
 				$var['status'] = 'complete';

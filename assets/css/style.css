@@ -41,6 +41,11 @@ li {
 	margin-left: 20px;
 }
 
+img.icon {
+	vertical-align: middle;
+	margin: 0 2px;
+}
+
 .editable {
 	background: #fffbcc;
 }
@@ -566,6 +571,11 @@ a.cancel {
 
 a.copy {
 	background: url(../images/icons/document-copy.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
+a.clear {
+	background: url(../images/icons/broom.png) 10px center no-repeat #f3f3f3;
 	padding-left: 30px;
 }
 
