@@ -377,12 +377,23 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Gets a specified number of new users.
+	 *
+	 * @param integer $limit
+	 * @return array
+	 */
+	public function getNewest($limit = 10) {
+		$this->db->order_by('users.created_on DESC')->limit($limit);
+		return $this->get()->result_array();
+	}
+
+	/**
 	 * Gets a user by ID.
 	 *
 	 * @param string $id
 	 * @return array
 	 */
-	public function getUserByID($id = false) {
+	public function getById($id = false) {
 		if (empty($id)) {
 			return false;
 		}
@@ -393,12 +404,23 @@ class User extends CI_Model {
 	}
 
 	/**
+	 * Gets a user by ID.
+	 *
+	 * @deprecated 21-09-2011
+	 * @param string $id
+	 * @return array
+	 */
+	public function getUserByID($id = false) {
+		return $this->getById($id);
+	}
+
+	/**
 	 * Gets a user by email.
 	 *
 	 * @param string $email
 	 * @return array
 	 */
-	public function getUserByEmail($email) {
+	public function getByEmail($email) {
 		$this->db->where('users.email', $email)->limit(1);
 		return $this->get()->row_array();
 	}
@@ -409,36 +431,9 @@ class User extends CI_Model {
 	 * @param string $username
 	 * @return array
 	 */
-	public function getUserByUsername($username) {
+	public function getByUsername($username) {
 		$this->db->where('users.username', $username)->limit(1);
 		return $this->get()->row_array();
-	}
-
-	/**
-	 * Gets a specified number of new users.
-	 *
-	 * @param integer $limit
-	 * @return array
-	 */
-	public function getNewestUsers($limit = 10) {
-		$this->db->order_by('users.created_on DESC')->limit($limit);
-		return $this->get()->result_array();
-	}
-
-	/**
-	 * Gets a users group.
-	 *
-	 * @param string $id
-	 * @return array
-	 */
-	public function getUsersGroup($id = false) {
-		// if no ID was passed use the current users ID
-		$id || $id = $this->session->userdata('user_id');
-
-		$user = $this->db->select('group_id')->where('id', $id)->get('users')->row();
-
-		return $this->db->select('name, description')
-				->where('id', $user->group_id)->get('groups')->row_array();
 	}
 
 	/**
@@ -475,7 +470,7 @@ class User extends CI_Model {
 	 * @return boolean Returns TRUE if the update was successful.
 	 */
 	public function update($id, $data) {
-		$user = $this->getUserByID($id);
+		$user = $this->getById($id);
 
 		if (array_key_exists('username', $data) && $this->checkUsername($data['username']) && $user['username'] !== $data['username']) {
 			$this->messages->add(_('The entered username is already in use.'), 'error');
@@ -582,7 +577,7 @@ class User extends CI_Model {
 			return false;
 		}
 
-		$user = $this->getUserByID($id);
+		$user = $this->getById($id);
 
 		$salt = sha1($user['password']);
 

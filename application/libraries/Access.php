@@ -25,6 +25,7 @@
  * Simple auth system.
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Access {
@@ -90,7 +91,7 @@ class Access {
 	public function forgottenPassword($email) {
 		if ($this->CI->user->forgottenPassword($email)) {
 			// get user information
-			$user = $this->CI->user->getUserByEmail($email);
+			$user = $this->CI->user->getByEmail($email);
 
 			$data = array(
                 'username' => $user['username'],
@@ -258,7 +259,7 @@ class Access {
 	 * @return object
 	 */
 	public function getCurrentUser() {
-		return $this->CI->user->getUserByID($this->CI->session->userdata('user_id'));
+		return $this->CI->user->getById($this->CI->session->userdata('user_id'));
 	}
 
 	/**
