@@ -146,6 +146,19 @@ class Project extends CI_Model {
 	}
 
 	/**
+	 * Counts all projects.
+	 *
+	 * @param string $userId
+	 * @return integer
+	 */
+	public function count($userId = false) {
+		if ($userId) {
+			$this->db->where('owner', $userId);
+		}
+		return $this->db->count_all_results('projects');
+	}
+
+	/**
 	 * Counts all experiments for the specified project.
 	 *
 	 * @param string $projectId

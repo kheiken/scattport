@@ -160,6 +160,19 @@ class Experiment extends CI_Model {
 	}
 
 	/**
+	 * Counts all experiments.
+	 *
+	 * @param string $userId
+	 * @return integer
+	 */
+	public function count($userId = false) {
+		if ($userId) {
+			$this->db->where('creator_id', $userId);
+		}
+		return $this->db->count_all_results('experiments');
+	}
+
+	/**
 	 * Search for a specific experiment and return a list of possible results.
 	 *
 	 * @param string $needle The needle to look for in the haystack

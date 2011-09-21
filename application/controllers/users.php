@@ -32,6 +32,7 @@ class Users extends MY_Controller {
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('experiment');
 	}
 
 	/**
@@ -40,7 +41,7 @@ class Users extends MY_Controller {
 	 * @param string $username
 	 */
 	public function profile($username) {
-		$data['user'] = $this->user->profile($username);
+		$data['user'] = $this->user->profile(urldecode($username));
 		$this->load->view('users/profile', $data);
 	}
 }

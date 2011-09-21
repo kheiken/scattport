@@ -121,7 +121,11 @@ if (!function_exists('relative_time')) {
 	 * @return string
 	 */
 	function relative_time($date, $show_seconds = false) {
-		$diff = time() - strtotime($date);
+		if (is_integer($date)) {
+			$diff = time() - $date;
+		} else {
+			$diff = time() - strtotime($date);
+		}
 
 		if ($diff < 120 && !$show_seconds) {
 			$output = _('just now');
