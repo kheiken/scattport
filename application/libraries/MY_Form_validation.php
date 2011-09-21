@@ -35,6 +35,7 @@
  * file_image_maxdim[x,y]
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class MY_Form_validation extends CI_Form_validation {

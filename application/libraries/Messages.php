@@ -9,6 +9,7 @@
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Vijay Mahrra & Sheikh Ahmed <webmaster@designbyfail.com>
  * @author Eike Foken <kontakt@eikefoken>
  * @link http://www.designbyfail.com/

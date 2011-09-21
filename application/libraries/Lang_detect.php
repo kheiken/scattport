@@ -25,6 +25,7 @@
  * Language detection library.
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Lang_detect {

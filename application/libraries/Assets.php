@@ -25,6 +25,7 @@
  * Simple library to manage assets.
  *
  * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class Assets {

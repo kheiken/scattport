@@ -25,7 +25,8 @@
  * Extends CI's session class.
  *
  * @package ScattPort
- * @author Eike Foken
+ * @subpackage Libraries
+ * @author Eike Foken <kontakt@eikefoken.de>
  */
 class MY_Session extends CI_Session {
 
