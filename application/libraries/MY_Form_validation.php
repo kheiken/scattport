@@ -374,7 +374,7 @@ class MY_Form_validation extends CI_Form_validation {
 	 */
 	public function file_size_max($file, $maxSize) {
 		if ($file['size'] > $this->letToBit($maxSize)) {
-			$this->set_message('file_size_max', sprintf(_('The selected file is too big. (Maximum allowed is %s)', $maxSize)));
+			$this->set_message('file_size_max', sprintf(_('The selected file is too big (maximum allowed is %s).', $maxSize)));
 			return false;
 		}
 		return true;
@@ -388,7 +388,7 @@ class MY_Form_validation extends CI_Form_validation {
 	 */
 	public function file_size_min($file, $minSize) {
 		if ($file['size'] < $this->letToBit($minSize)) {
-			$this->set_message('file_size_min', sprintf(_('The selected file is too small. (Minimum allowed is %s)'), $minSize));
+			$this->set_message('file_size_min', sprintf(_('The selected file is too small (minimum required is %s).'), $minSize));
 			return false;
 		}
 		return true;
@@ -431,7 +431,7 @@ class MY_Form_validation extends CI_Form_validation {
 		$file_ext = substr(strtolower($file_ext), 1);
 
 		if (!in_array($file_ext, $exts)) {
-			$this->set_message('file_allowed_type', sprintf(_('The selected files type should be %s.'), $type));
+			$this->set_message('file_allowed_type', sprintf(_("The selected file's type should be %s."), $type));
 			return false;
 		} else {
 			return true;

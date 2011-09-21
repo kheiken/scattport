@@ -1,6 +1,5 @@
 <?php
 
-$lang['unique'] = "Ein Projekt mit diesem Namen existiert bereits";
 $lang['required'] = "&quot;%s&quot; ist ein Pflichtfeld.";
 $lang['isset'] = "&quot;%s&quot; muss einen Wert enthalten.";
 $lang['valid_email'] = "&quot;%s&quot; muss eine gültige E-Mail-Adresse enthalten.";
