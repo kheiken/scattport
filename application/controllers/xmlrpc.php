@@ -40,7 +40,6 @@ class Xmlrpc extends MY_Controller {
 		$this->load->model('server');
 
 		$this->session->sess_destroy();
-		unset($this->session); // unload sessions
 	}
 
 	/**
