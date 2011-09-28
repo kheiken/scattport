@@ -52,7 +52,7 @@
 	foreach ($this->user->getAll() as $user):
 
 		// don't list the user himself
-		if($user['id'] === $this->access->profile()->id)
+		if($user['id'] === $this->access->profile()->id || $user['id'] === $project['owner'])
 			continue;
 ?>
 							<option value="<?=$user['id'];?>"><?=$user['firstname'];?> <?=$user['lastname'];?></option>
