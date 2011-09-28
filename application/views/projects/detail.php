@@ -39,6 +39,13 @@
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Name');?></th>
+<?php
+	if (count($shares) > 0 || $project['public'] == 1):
+?>
+					<th scope="col"><?=_('Creator');?></th>
+<?php
+	endif;
+?>
 					<th scope="col"><?=_('Jobs');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
@@ -63,6 +70,20 @@
 ?>
 				<tr>
 					<td><a href="<?=site_url('experiments/detail/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
+<?php
+			if (count($shares) > 0 || $project['public'] == 1):
+				if ($experiment['creator_id'] == $this->access->profile()->id):
+?>
+					<td><?=_('You');?></td>
+<?php
+				else:
+					$user = $this->user->getById($experiment['creator_id']);
+?>
+					<td><?=anchor('users/profile/' . urlencode($user['username']), $user['firstname'].' '.$user['lastname']);?></td>
+<?php
+				endif;
+			endif;
+?>
 					<td><span class="<?=$job['css'];?>"><?=$job['status'];?></span></td>
 					<td>
 <?php
