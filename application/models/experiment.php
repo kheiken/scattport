@@ -80,8 +80,11 @@ class Experiment extends CI_Model {
 	 * @return boolean Returns TRUE if the deletion was successful.
 	 */
 	public function delete($experimentId) {
+		$this->db->delete('jobs', array('experiment_id' => $experimentId));
+		$this->db->delete('experiments_parameters', array('experiment_id' => $experimentId));
 		$this->db->delete('experiments', array('id' => $experimentId));
-		return $this->db->affected_rows() == 1;
+
+		return $this->db->affected_rows() > 1;
 	}
 
 	/**
