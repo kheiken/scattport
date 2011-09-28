@@ -60,9 +60,32 @@ class Scatt extends Program_runner {
 		}
 
 		$data['parameters'] = $this->CI->experiment->getParameters($experimentId);
-
+		
 		@fwrite($handler, $this->CI->parser->parse_string($this->program['config_template'], $data, true));
 		@fclose($handler);
+
+		$dsm_dat  = "&param_scat\n";
+		$dsm_dat .= "filein_name='./default.obj',\n";
+		$dsm_dat .= "tmat_file_name='./default.tma',\n";
+		$dsm_dat .= "scat_diag_file_name='./default.out',\n";
+
+		foreach ($data['parameters'] as $par) {
+			if ($par['type'] == 'float') {
+				$par['value'] = number_format((double) $par['value'], 6, '.', '').'d0';
+			}
+			if ($par['name'] == 'refractive_idx_im') {
+				$refractive_idx_im = $par['value'];
+			} else if ($par['name'] == 'refractive_idx_re') {
+				$refractive_idx_re = $par['value'];
+			} else {
+				$dsm_dat .= "{$par['name']}={$par['value']},\n";
+			}
+		}
+		
+		$dsm_dat .= "ind_ref=({$refractive_idx_re},{$refractive_idx_im})\n";
+		$dsm_dat .= "/\n";
+
+		@file_put_contents($path.'param_dsm.dat', $dsm_dat);
 
 		return true;
 	}
