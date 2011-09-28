@@ -120,11 +120,11 @@
 						<li><a href="<?=site_url('projects');?>" title="<?=_('Shows a list of all projects');?>"><?=_('Show projects');?></a></li>
 					</ul>
 				</li>
-				<li class="togglable" id="nav_calculations">
-					<a href="javascript:void(0);"><?=_('Calculations');?></a>
+				<li class="togglable" id="nav_jobs">
+					<a href="javascript:void(0);"><?=_('Jobs');?></a>
 					<ul>
-						<li><a href="<?=site_url('jobs/results');?>" title="<?=_('Show the newest results');?>"><?=_('Newest results');?></a></li>
-						<li><a href="<?=site_url('jobs/running');?>" title="<?=_('Shows a list of running calculations');?>"><?=_('Running calculations');?></a></li>
+						<li><a href="<?=site_url('jobs#finished');?>" title="<?=_('Show the recent results');?>"><?=_('Recent results');?></a></li>
+						<li><a href="<?=site_url('jobs#running');?>" title="<?=_('Shows a list of running jobs');?>"><?=_('Running jobs');?></a></li>
 					</ul>
 				</li>
 			</ul>
@@ -141,14 +141,14 @@
 <?php
 	$projects = $this->project->getOwn();
 	if (count($projects) > 0):
-		foreach ($this->project->getOwn() as $project):
+		foreach ($projects as $project):
 ?>
 						<li><a href="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"<?=($project['public'] == 1) ? ' class="public"' : (($project['shares'] > 0) ? ' class="share"' : ' class="folder"');?>><?=$project['mediumname'];?></a></li>
 <?php
 		endforeach;
 	else:
 ?>
-						<li><?=_("You haven't created a project yet.");?></li>
+						<li><?=_("You haven't created any projects yet.");?></li>
 						<li><?=anchor('projects/create', _('Create a project now'));?></li>
 <?php
 	endif;
