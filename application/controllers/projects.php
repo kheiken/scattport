@@ -219,7 +219,7 @@ class Projects extends MY_Controller {
 	private function _checkAccess($projectId) {
 		$project = $this->project->getById($projectId);
 		$share = $this->share->get($projectId, $this->session->userdata('user_id'));
-		return $this->access->isAdmin() || $project['public'] == 1 || isset($share['project_id']);
+		return $this->access->isAdmin() || $project['public'] == 1 || isset($share['project_id']) || $project['owner'] === $this->session->userdata('user_id');
 	}
 }
 
