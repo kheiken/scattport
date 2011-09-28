@@ -162,7 +162,7 @@ class Xmlrpc extends MY_Controller {
 					mkdir($job_dir);
 
 				$pathinfo = pathinfo($filename);
-				$newpath = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $job['id'] . '/' . $pathinfo['basename'];
+				$newpath = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $pathinfo['basename'];
 				copy($filename, $newpath);
 			}
 		}
