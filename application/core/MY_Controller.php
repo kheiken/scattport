@@ -24,6 +24,8 @@
 /**
  * Extends CI's controller.
  *
+ * @package ScattPort
+ * @subpackage Libraries
  * @author Eike Foken <kontakt@eikefoken.de>
  */
 class MY_Controller extends CI_Controller {
