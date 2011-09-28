@@ -69,11 +69,11 @@
 			<h4><?=_('Application to use for the computation');?></h4>
 			<input type="hidden" name="program_id" id="program_id" value="<?=set_value('program_id');?>" />
 			<?=form_error('program_id');?>
-			<p>
+			<p class="programs">
 <?php
 	foreach ($programs as $program):
 ?>
-				<a class="button" href="javascript:void(0);" onclick="$('.program-parameters').hide();$('#<?=$program['id'];?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');$('input[name=program_id]').val('<?=$program['id'];?>');return false;"><?=$program['name'];?></a>
+				<a class="button" id="program-<?=$program['id'];?>" href="javascript:void(0);" onclick="$('.program-parameters').hide();$('#<?=$program['id'];?>-params').show();$('.button').removeClass('locked');$(this).addClass('locked');$('input[name=program_id]').val('<?=$program['id'];?>');return false;"><?=$program['name'];?></a>
 <?php
 	endforeach;
 ?>
@@ -95,26 +95,28 @@
 						</thead>
 						<tbody>
 <?php
+	$i = 0;
 	foreach ($parameters[$program['id']] as $param):
 ?>
 							<tr>
 								<td><?=$param['readable'];?></td>
 								<td>
-									<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : $param['default_value']);?>" />
+									<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']);?>" />
 <?php
-	if (!empty($param['description'])):
+		if (!empty($param['description'])):
 ?>
 									<span class="form_info">
 										<a href="<?=site_url('ajax/parameter_help/' . $param['id']);?>" name="<?=_('Description');?>" id="<?=$param['id'];?>" class="jtip">&nbsp;</a>
 									</span>
 <?php
-	endif;
+		endif;
 ?>
 									<?=form_error('params');?>
 								</td>
 								<td><?=$param['unit'];?></td>
 							</tr>
 <?php
+		$i++;
 	endforeach;
 ?>
 						</tbody>
@@ -131,5 +133,12 @@
 	</form>
 
 </div>
+
+<?php if (isset($copy['id'])): ?>
+<script type="text/javascript">
+$('#program-<?=$copy['program_id'];?>').addClass('locked');
+$('#<?=$copy['program_id'];?>-params').show();
+</script>
+<?php endif; ?>
 
 <?php $this->load->view('footer');?>

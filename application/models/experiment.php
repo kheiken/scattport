@@ -96,7 +96,7 @@ class Experiment extends CI_Model {
 			return false;
 		}
 
-		$experiment = $this->get($experimentId);
+		$experiment = $this->getById($experimentId);
 		$parameter = $this->db->get_where('parameters', array('id' => $data['parameter_id']))->row_array();
 
 		if (isset($experiment['id']) && $experiment['program_id'] == $parameter['program_id']) {
@@ -104,6 +104,30 @@ class Experiment extends CI_Model {
 			$this->db->insert('experiments_parameters', $data);
 		}
 		return $this->db->affected_rows() == 1 ? $experimentId : false;
+	}
+
+	/**
+	 * Updates a specific parameter for the specified experiment.
+	 * 
+	 * @param string $value
+	 * @param string $experimentId
+	 * @param string $parameterId
+	 * @return boolean
+	 */
+	public function updateParameter($value, $experimentId, $parameterId) {
+		if (!empty($value)) {
+			// replace into, to overwrite existing parameters
+			$this->db->query("REPLACE INTO `experiments_parameters`"
+					. " (`experiment_id`, `parameter_id`, `value`) VALUES"
+					. " ('{$experimentId}', '{$parameterId}', '{$value}')");
+		} else {
+			// delete table entry, if value is empty
+			$this->db->where('experiment_id', $experimentId);
+			$this->db->where('parameter_id', $parameterId);
+			$this->db->delete('experiments_parameters');
+		}
+
+		return $this->db->affected_rows() > 0;
 	}
 
 	/**
@@ -116,7 +140,8 @@ class Experiment extends CI_Model {
 		$programId = $this->db->get_where('experiments', array('id' => $experimentId))->row()->program_id;
 
 		$query = $this->db->query("SELECT `experiments_parameters`.*, `parameters`.`readable`,"
-				. " `parameters`.`name`, `parameters`.`type`, `parameters`.`unit`"
+				. " `parameters`.`name`, `parameters`.`type`, `parameters`.`unit`,"
+				. " `parameters`.`description`, `parameters`.`id` AS parameter_id"
 				. " FROM `parameters` LEFT JOIN `experiments_parameters`"
 				. " ON (`experiments_parameters`.`parameter_id` = `parameters`.`id`"
 				. " AND `experiment_id` = '{$experimentId}') WHERE `program_id` = '{$programId}' ORDER BY `sort_number` ASC");

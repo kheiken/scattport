@@ -47,14 +47,12 @@ class Experiments extends MY_Controller {
 	 * @param string $projectId
 	 */
 	public function create($projectId = '', $copyId = '') {
-		// TODO: Handle copying of experiments
-
 		$project = $this->project->getByID($projectId);
 
-		if (empty($projectId) || !isset($project['id'])){
+		if (empty($projectId) || !isset($project['id'])) {
 			show_404();
 		}
-
+		
 		$programs = $this->program->getAll();
 
 		// get the parameters for a specific program
@@ -125,6 +123,12 @@ class Experiments extends MY_Controller {
 		$data['programs'] = $programs;
 		$data['project'] = $project;
 
+		// handle copying of experiments
+		if (!empty($copyId)) {
+			$data['copy'] = $this->experiment->getById($copyId);
+			$data['copy_params'] = $this->experiment->getParameters($copyId);
+		}
+
 		$this->load->view('experiments/new', $data);
 	}
 
@@ -154,6 +158,13 @@ class Experiments extends MY_Controller {
 		}
 
 		$this->load->helper('typography');
+
+		// update parameters
+		foreach ($_POST as $key => $value) {
+			if (preg_match('/^param-[0-9a-z]+/', $key)) {
+				$this->experiment->updateParameter($this->input->post($key), $experiment['id'], substr($key, 6, 16));
+			}
+		}
 
 		$data['experiment'] = $experiment;
 		$data['parameters'] = $this->experiment->getParameters($experiment['id']);
