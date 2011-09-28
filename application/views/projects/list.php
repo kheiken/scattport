@@ -19,37 +19,45 @@
 			</thead>
 			<tbody>
 <?php
-	foreach ($projects as $project):
+	if (count($projects) > 0):
+		foreach ($projects as $project):
 ?>
 				<tr>
 					<td><a href="<?=site_url('projects/detail/' . $project['id'] . '?active_project=' . $project['id']);?>"><abbr title="<?=$project['name'] . "\n\n" . $project['description'];?>"><?=$project['mediumname'];?></abbr></a></td>
 					<td>
 <?php
-		if ($project['owner'] == $this->access->profile()->id):
+			if ($project['owner'] == $this->access->profile()->id):
 ?>
 						<?=_('You');?>
 <?php
-		else:
+			else:
 ?>
 						<a href="<?=site_url('users/profile/' . urlencode($project['username']));?>" title="<?=_('Show profile');?>"><?=$project['firstname'] . ' ' . $project['lastname'];?></a>
 <?php
-		endif;
+			endif;
 ?>
 					</td>
 					<td><span class="active"><?=_('Successfully finished');?></span></td>
 					<td>
 						<a href="#"><?=_('Show results');?></a>
 <?php
-		if ($project['owner'] == $this->access->profile()->id):
+			if ($project['owner'] == $this->access->profile()->id):
 ?>
 						| <?=anchor('projects/delete/' . $project['id'], _('Delete'));?>
 <?php
-		endif;
+			endif;
 ?>
 					</td>
 				</tr>
 <?php
-	endforeach;
+		endforeach;
+	else:
+?>
+			<tr>
+				<td colspan="4"><?=_("You haven't created any projects yet.");?></td>
+			</tr>
+<?php
+	endif;
 ?>
 			</tbody>
 		</table>
