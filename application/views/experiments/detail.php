@@ -50,6 +50,11 @@
 <?php
 	endif;
 	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+		if (isset($job['id']) && $job['finished_at'] != '0000-00-00 00:00:00'):
+?>
+			<a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" class="button delete"><?=_('Delete experiment');?></a>
+<?php
+		endif;
 ?>
 			<a href="javascript:changeTitle('<?=$experiment['name'];?>', '<?=site_url('ajax/rename_experiment/' . $experiment['id']);?>');" class="button experiment_rename"><?=_('Change title');?></a>
 <?php

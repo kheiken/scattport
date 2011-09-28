@@ -101,6 +101,10 @@
 						| <a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a>
 						| <a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 <?php
+				elseif ($job['css'] == 'active'):
+?>
+						| <a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
+<?php
 				endif;
 			endif;
 ?>
