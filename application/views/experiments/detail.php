@@ -25,9 +25,17 @@
 			<a href="<?=site_url('jobs/start/' . $experiment['id']);?>" class="button job_start"><?=_('Start job');?></a>
 <?php
 	endif;
+	if (!$disabled):
 ?>
 			<a href="<?=site_url('experiments/copy/' . $experiment['id']);?>" class="button left copy"><?=_('Copy experiment');?>
 			</a><a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" class="button right delete"><?=_('Delete experiment');?></a>
+<?php
+	else:
+?>
+			<a href="<?=site_url('experiments/copy/' . $experiment['id']);?>" class="button copy"><?=_('Copy experiment');?></a>
+<?php
+	endif;
+?>
 			<a href="javascript:changeTitle('<?=$experiment['name'];?>', '<?=site_url('ajax/rename_experiment/' . $experiment['id']);?>');" class="button experiment_rename"><?=_('Change title');?></a>
 		</p>
 	</div>
