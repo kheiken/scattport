@@ -8,22 +8,36 @@
 
 	<div class="box">
 		<h3><?=_('Description');?></h3>
+<?php
+	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+?>
 		<div class="editInPlace"><?=auto_typography($experiment['description']);?></div>
 		<p></p>
+<?php
+	else:
+?>
+		<?=auto_typography($experiment['description']);?>	
+<?php
+	endif;
+?>
 
 		<h3>Actions</h3>
 		<p>
 <?php
-	if (isset($job['id'])):
-		$disabled = ($job['started_at'] != '0000-00-00 00:00:00') ? true : false;
+	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+		if (isset($job['id'])):
+			$disabled = ($job['started_at'] != '0000-00-00 00:00:00') ? true : false;
 ?>
 			<a class="button disabled job_start"><?=_('Start job');?></a>
 <?php
-	else:
-		$disabled = false
+		else:
+			$disabled = false
 ?>
 			<a href="<?=site_url('jobs/start/' . $experiment['id']);?>" class="button job_start"><?=_('Start job');?></a>
 <?php
+		endif;
+	else:
+		$disabled = true;
 	endif;
 	if (!$disabled):
 ?>
@@ -35,14 +49,18 @@
 			<a href="<?=site_url('experiments/copy/' . $experiment['id']);?>" class="button copy"><?=_('Copy experiment');?></a>
 <?php
 	endif;
+	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
 ?>
 			<a href="javascript:changeTitle('<?=$experiment['name'];?>', '<?=site_url('ajax/rename_experiment/' . $experiment['id']);?>');" class="button experiment_rename"><?=_('Change title');?></a>
+<?php
+	endif;
+?>
 		</p>
 	</div>
 
 	<div class="box">
 <?php 
-	if (!$disabled):
+	if (!$disabled && ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin())):
 ?>
 		<form name="editExperiment" method="post" action="<?=site_url('experiments/detail/' . $experiment['id']);?>">
 <?php
@@ -64,17 +82,27 @@
 					<tr>
 						<td width="40%"><?=$param['readable'];?></td>
 						<td width="41%">
+<?php
+		if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+?>
 							<input type="text" name="param-<?=$param['parameter_id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['parameter_id']]) ? $this->input->post('param-' . $param['parameter_id']) : $param['value']);?>"<?=($disabled) ? ' disabled="disabled"' : '';?> />
 <?php
-		if (!empty($param['description'])):
+			if (!empty($param['description'])):
 ?>
 							<span class="form_info">
 								<a href="<?=site_url('ajax/parameter_help/' . $param['parameter_id']);?>" name="<?=_('Description');?>" id="<?=$param['parameter_id'];?>" class="jtip">&nbsp;</a>
 							</span>
 <?php
-		endif;
+			endif;
 ?>
 							<?=form_error('params');?>
+<?php
+		else:
+?>
+							<?=($param['value']) ? $param['value'] : '-';?>
+<?php
+		endif;
+?>
 						</td>
 						<td><?=$param['unit'];?></td>
 					</tr>
@@ -83,14 +111,15 @@
 ?>
 				</tbody>
 			</table>
-<?php 
-	if ($disabled):
+<?php
+	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+		if ($disabled):
 ?>
 			<p>
 				<a class="button save disabled"><?=_('Save changes');?></a>
 			<p>
 <?php
-	else:
+		else:
 ?>
 			<p>
 				<strong><?=_('Note');?>:</strong> <?=_('The existing job will be deleted.');?>
@@ -100,6 +129,7 @@
 			</p>
 		</form>
 <?php
+		endif;
 	endif;
 ?>
 	</div>

@@ -72,13 +72,17 @@
 <?php
 			endif;
 ?>
-						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a> |
-						<a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a>
+						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a>
 <?php
-			if ($job['css'] == 'closed' || $job['css'] == ''):
+			if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+?>
+						| <a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a>
+<?php
+				if ($job['css'] == 'closed' || $job['css'] == ''):
 ?>
 						| <a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 <?php
+				endif;
 			endif;
 ?>
 					</td>
