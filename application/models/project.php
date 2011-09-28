@@ -60,7 +60,7 @@ class Project extends CI_Model {
 	public function getOwn() {
 		$this->db->select('projects.*, COUNT(shares.user_id) AS shares');
 		$this->db->join('shares', 'shares.project_id = projects.id', 'left');
-		$this->db->group_by('shares.project_id');
+		$this->db->group_by('projects.id');
 		$this->db->where(array('owner' => $this->session->userdata('user_id')));
 
 		$query = $this->db->order_by('last_access DESC')->get('projects');
@@ -180,7 +180,7 @@ class Project extends CI_Model {
 			$query = $this->db->like('name', $needle)->get('projects');
 		} else {
 			$this->db->select('projects.*')->from('projects');
-			$this->db->join('shares', 'shares.project_id = projects.id');
+			$this->db->join('shares', 'shares.project_id = projects.id', 'left');
 
 			$this->db->where("(`shares`.`user_id` = " . $this->db->escape($this->session->userdata('user_id'))
 					. " OR `projects`.`owner` = " . $this->db->escape($this->session->userdata('user_id'))
