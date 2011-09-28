@@ -10,7 +10,7 @@
 		<h3><?=_('Personal information');?></h3>
 		<p>
 			<strong><?=_('Name');?>:</strong> <?=$user->firstname;?> <?=$user->lastname;?><br />
-			<strong><?=_('Group');?>:</strong> <?=anchor('users/group/' . urlencode($user->group), $user->group_description);?><br />
+			<strong><?=_('Group');?>:</strong> <?=$user->group_description;?><br />
 			<strong><?=_('Institution');?>:</strong> <?=$user->institution;?><br />
 			<strong><?=_('Phone number');?>:</strong> <?=$user->phone;?><br />
 			<strong><?=_('Last activity');?>:</strong> <?=relative_time((integer) $user->last_activity);?><br />
