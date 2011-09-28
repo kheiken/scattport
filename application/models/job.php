@@ -109,6 +109,23 @@ class Job extends CI_Model {
 	}
 
 	/**
+	 * Gets a job by its id.
+	 */
+	public function getById($job_id) {
+		$job = $this->db->get_where('jobs', array('id' => $job_id))->row_array();
+		return array_map(function($var) {
+			if ($var['started_at'] == '0000-00-00 00:00:00') {
+				$var['status'] = 'pending';
+			} else if ($var['finished_at'] == '0000-00-00 00:00:00') {
+				$var['status'] = 'running';
+			} else {
+				$var['status'] = 'complete';
+			}
+			return $var;
+		}, $job);
+	}
+
+	/**
 	 * Gets a list of recent jobs.
 	 *
 	 * @param string $projectId The project's ID you want to get the jobs for
