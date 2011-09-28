@@ -149,8 +149,18 @@
 					<td><?=$job['name'];?></td>
 					<td><span class="<?=$job['cssclass'];?>"><?=$job['humanstatus'];?></span></td>
 					<td>
-						<a href="<?=site_url('results/experiment/' . $job['id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('experiments/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit this experiment'), $job['name']);?>"><?=_('Edit');?></td>
+<?php
+			if ($job['status'] == 'complete'):
+?>
+						<a href="<?=site_url('results/experiment/' . $job['experiment_id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a>
+<?php
+			else:
+?>
+						-
+<?php
+			endif;
+?>
+					</td>
 				</tr>
 <?php
 		endforeach;
