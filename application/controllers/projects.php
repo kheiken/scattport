@@ -95,7 +95,6 @@ class Projects extends MY_Controller {
 					}
 				}
 
-				$this->messages->add($projectpath, 'notice');
 				redirect('/projects/detail/' . $data['project_id'], 303);
 			} else {
 				$this->messages->add(_('The project could not be created.'), 'error');
