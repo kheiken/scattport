@@ -113,11 +113,13 @@ class Experiment extends CI_Model {
 	 * @return array
 	 */
 	public function getParameters($experimentId) {
-		$this->db->select('experiments_parameters.*, parameters.readable, parameters.name, parameters.type, parameters.unit');
-		$this->db->join('parameters', 'experiments_parameters.parameter_id = parameters.id', 'left');
-		$this->db->where('experiment_id', $experimentId);
+		$programId = $this->db->get_where('experiments', array('id' => $experimentId))->row()->program_id;
 
-		$query = $this->db->get('experiments_parameters');
+		$query = $this->db->query("SELECT `experiments_parameters`.*, `parameters`.`readable`,"
+				. " `parameters`.`name`, `parameters`.`type`, `parameters`.`unit`"
+				. " FROM `parameters` LEFT JOIN `experiments_parameters`"
+				. " ON (`experiments_parameters`.`parameter_id` = `parameters`.`id`"
+				. " AND `experiment_id` = '{$experimentId}') WHERE `program_id` = '{$programId}' ORDER BY `sort_number` ASC");
 
 		return $query->num_rows() > 0 ? $query->result_array() : false;
 	}
