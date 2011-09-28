@@ -26,7 +26,7 @@
 <?php
 	if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
 		if (isset($job['id'])):
-			$disabled = ($job['started_at'] != '0000-00-00 00:00:00') ? true : false;
+			$disabled = true;
 ?>
 			<a class="button disabled job_start"><?=_('Start job');?></a>
 <?php
@@ -62,6 +62,33 @@
 ?>
 		</p>
 	</div>
+<?php
+	if (isset($job['id'])):
+?>
+
+	<div class="box">
+		<h3><?=_('Job details');?></h3>
+		<p>
+			<strong><?=_('Date started');?>:</strong> <?=relative_time($job['created_at']);?><br />
+			<strong><?=_('Starter');?>:</strong> <?=anchor('users/profile/' . urldecode($job['username']), $job['firstname'] . ' ' . $job['lastname']);?><br />
+			<strong><?=_('Server');?>:</strong> <?=(!empty($job['server'])) ? anchor('admin/servers/detail/' . urldecode($job['server']), $job['server']) : _('Not yet picked');?>
+
+			<div class="progress_bar" style="width: 300px;">
+				<strong><?=$job['progress']?>%</strong>
+				<span style="width: <?=$job['progress']?>%;">&nbsp;</span>
+			</div>
+		</p>
+<?php
+		if ($job['finished_at'] != '0000-00-00 00:00:00'):
+?>
+		<p><a href="<?=site_url('results/experiment/' . $experiment['id']);?>" class="button results"><?=_('Show results');?></a></p>
+<?php
+		endif;
+?>
+	</div>
+<?php
+	endif;
+?>
 
 	<div class="box">
 <?php 
@@ -138,34 +165,6 @@
 	endif;
 ?>
 	</div>
-
-<?php
-	if (isset($job['id'])):
-?>
-	<div class="box">
-		<h3><?=_('Job details');?></h3>
-		<p>
-			<strong><?=_('Date started');?>:</strong> <?=relative_time($job['created_at']);?><br />
-			<strong><?=_('Starter');?>:</strong> <?=anchor('users/profile/' . urldecode($job['username']), $job['firstname'] . ' ' . $job['lastname']);?><br />
-			<strong><?=_('Server');?>:</strong> <?=(!empty($job['server'])) ? anchor('admin/servers/detail/' . urldecode($job['server']), $job['server']) : _('Not yet picked');?>
-
-			<div class="progress_bar" style="width: 300px;">
-				<strong><?=$job['progress']?>%</strong>
-				<span style="width: <?=$job['progress']?>%;">&nbsp;</span>
-			</div>
-		</p>
-<?php
-		if ($job['finished_at'] != '0000-00-00 00:00:00'):
-?>
-		<p><a href="<?=site_url('results/experiment/' . $experiment['id']);?>" class="button results"><?=_('Show results');?></a></p>
-<?php
-		endif;
-?>
-	</div>
-<?php
-	endif;
-?>
-
 </div>
 
 <script>
