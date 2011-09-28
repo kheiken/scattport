@@ -43,5 +43,19 @@ if (!function_exists('form_yesno')) {
 	}
 }
 
+if (!function_exists('form_boolean')) {
+	/**
+	 * Shows a boolean selection.
+	 * 
+	 * @param string $name
+	 * @param mixed $selected
+	 * @param string $extra
+	 * @return string
+	 */
+	function form_boolean($name = '', $selected = array(), $extra = '') {
+		return form_dropdown($name, array('true' => _('True'), 'false' => _('False')), $selected, $extra);
+	}
+}
+
 /* End of file MY_form_helper.php */
 /* Location: ./application/helpers/MY_form_helper.php */

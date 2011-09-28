@@ -101,8 +101,16 @@
 							<tr>
 								<td><?=$param['readable'];?></td>
 								<td>
-									<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']);?>" />
 <?php
+		if ($param['type'] == 'boolean'):
+?>
+									<?=form_boolean('param-'.$param['id'], (!empty($_POST['param-'.$param['id']]) ? $_POST('param-'.$param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']), 'class="drop"')?>
+<?php
+		else:
+?>
+		<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']);?>" />
+<?php
+		endif;
 		if (!empty($param['description'])):
 ?>
 									<span class="form_info">
