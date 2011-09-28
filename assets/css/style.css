@@ -896,7 +896,7 @@ div.progress_bar strong {
 }
 
 #jt_copy {
-	padding: 10px;
+	padding: 4px;
 	color: #666;
 }
 
@@ -904,11 +904,15 @@ div.progress_bar strong {
 	background: url(../images/ajax-loader.gif) center center no-repeat;
 	width: 100%;
 	height: 12px;
+	margin: 6px;
 }
 
 #jt_copy p {
 	margin: 0;
-	line-height: 12px;
+}
+
+#jt_copy strong {
+	font-size: 11px;
 }
 
 #jt_copy img {

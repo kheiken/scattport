@@ -148,7 +148,7 @@ class Ajax extends MY_Controller {
 		$this->load->helper('typography');
 
 		$parameter = $this->parameter->getById($parameterId);
-		$this->output->set_output(auto_typography($parameter['description']));
+		$this->output->set_output($this->load->view('global/parameter_help', $parameter, true));
 	}
 
 }
