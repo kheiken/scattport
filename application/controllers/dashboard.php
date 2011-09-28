@@ -54,28 +54,28 @@ class Dashboard extends MY_Controller {
 				'text' => _('Jobs finished'),
 				'id' => 'jobs_finished',
 				'title' => _('Show all finished jobs'),
-				'target' => 'jobs#finished',
+				'target' => site_url('jobs#finished'),
 			),
 			array(
 				'count' => $this->share->countUnseen(),
 				'text' => _('Newly shared projects'),
 				'id' => 'shared_projects',
 				'title' => _('Show all projects shared with me'),
-				'target' => 'shares',
+				'target' => site_url('shares'),
 			),
 			array(
 				'count' => $this->job->countRunning(),
 				'text' => _('Job running'),
 				'id' => 'jobs_running',
 				'title' => _('Show all running jobs'),
-				'target' => 'jobs#running',
+				'target' => site_url('jobs#running'),
 			),
 			array(
 				'count' => $this->job->countPending(),
 				'text' => _('Jobs pending'),
 				'id' => 'jobs_pending',
 				'title' => _('Show all pending jobs'),
-				'target' => 'jobs#pending',
+				'target' => site_url('jobs#pending'),
 			),
 		);
 		$this->load->view('dashboard', $tpl);

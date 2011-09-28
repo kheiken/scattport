@@ -125,7 +125,7 @@
 	else:
 ?>
 				<tr>
-					<td colspan="3"><?=_('No experiments available.');?></td>
+					<td colspan="<?=(count($shares) > 0 || $project['public'] == 1) ? "4" : "3";?>"><?=_('No experiments available.');?></td>
 				</tr>
 <?php
 	endif;
