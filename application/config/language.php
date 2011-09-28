@@ -17,7 +17,7 @@
 */
 $config['supported_languages'] = array(
 		'en' => array('name' => 'English', 'locale' => 'en_US'),
-		'de' => array('name' => 'Deutsch', 'locale' => 'de_DE'),
+		//'de' => array('name' => 'Deutsch', 'locale' => 'de_DE'),
 );
 
 /*

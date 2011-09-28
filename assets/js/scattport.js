@@ -122,8 +122,12 @@ $(document).ready(function() {
 		$('.tab_content').hide(); // hide all tab content
 
 		var activeTab = $(this).find('a').attr('href');
-		$(activeTab).fadeIn(); // fade in the active tab content
-		return false;
+		if (activeTab.match(/^#.*/g)) {
+			$(activeTab).fadeIn(); // fade in the active tab content
+			return false;
+		} else {
+			return true;
+		}
 	});
 
 	/*

@@ -54,6 +54,10 @@ class Scatt extends Program_runner {
 
 		$path = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/';
 		$handler = fopen($path . 'default.calc', "w");
+		
+		if (!file_exists($path . 'default.obj')) {
+			@copy(FCPATH . 'uploads/' . $experiment['project_id'] . '/defaultmodel.obj', $path . 'default.obj');
+		}
 
 		$data['parameters'] = $this->CI->experiment->getParameters($experimentId);
 
