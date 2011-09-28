@@ -138,6 +138,7 @@
 <script type="text/javascript">
 $('#program-<?=$copy['program_id'];?>').addClass('locked');
 $('#<?=$copy['program_id'];?>-params').show();
+$('#program_id').val('<?=$copy['program_id'];?>');
 </script>
 <?php endif; ?>
 
