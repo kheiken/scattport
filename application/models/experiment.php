@@ -219,8 +219,8 @@ class Experiment extends CI_Model {
 			$query = $this->db->like('name', $needle)->get('experiments');
 		} else {
 			$this->db->select('experiments.*')->from('experiments');
-			$this->db->join('projects', 'projects.id = experiments.project_id');
-			$this->db->join('shares', 'shares.project_id = projects.id');
+			$this->db->join('projects', 'projects.id = experiments.project_id', 'left');
+			$this->db->join('shares', 'shares.project_id = projects.id', 'left');
 
 			$this->db->where("(`shares`.`user_id` = " . $this->db->escape($this->session->userdata('user_id'))
 					. " OR `projects`.`owner` = " . $this->db->escape($this->session->userdata('user_id'))
