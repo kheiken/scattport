@@ -44,7 +44,7 @@ class Dashboard extends MY_Controller {
 			array(
 				'icon' => 'icons-big/blue-folder-open-document.png',
 				'text' => _('Recent results'),
-				'target' => site_url('jobs/results'),
+				'target' => site_url('jobs#finished'),
 			),
 		);
 
