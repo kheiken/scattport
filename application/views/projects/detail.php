@@ -39,6 +39,13 @@
 			<thead>
 				<tr>
 					<th scope="col"><?=_('Name');?></th>
+<?php
+	if (count($shares) > 0 || $project['public'] == 1):
+?>
+					<th scope="col"><?=_('Creator');?></th>
+<?php
+	endif;
+?>
 					<th scope="col"><?=_('Jobs');?></th>
 					<th scope="col"><?=_('Actions');?></th>
 				</tr>
@@ -63,6 +70,20 @@
 ?>
 				<tr>
 					<td><a href="<?=site_url('experiments/detail/' . $experiment['id']);?>" title="<?=sprintf(_('Show experiment &quot;%s&quot;'), $experiment['name']);?>"><?=$experiment['name'];?></a></td>
+<?php
+			if (count($shares) > 0 || $project['public'] == 1):
+				if ($experiment['creator_id'] == $this->access->profile()->id):
+?>
+					<td><?=_('You');?></td>
+<?php
+				else:
+					$user = $this->user->getById($experiment['creator_id']);
+?>
+					<td><?=anchor('users/profile/' . urlencode($user['username']), $user['firstname'].' '.$user['lastname']);?></td>
+<?php
+				endif;
+			endif;
+?>
 					<td><span class="<?=$job['css'];?>"><?=$job['status'];?></span></td>
 					<td>
 <?php
@@ -75,10 +96,12 @@
 						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a>
 <?php
 			if ($experiment['creator_id'] == $this->access->profile()->id || $this->access->isAdmin()):
+				if ($job['css'] == 'closed' || $job['css'] == ''):
 ?>
 						| <a href="<?=site_url('experiments/edit/' . $experiment['id']);?>" title="<?=sprintf(_('Edit this experiment'), $experiment['name']);?>"><?=_('Edit');?></a>
+						| <a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 <?php
-				if ($job['css'] == 'closed' || $job['css'] == ''):
+				elseif ($job['css'] == 'active'):
 ?>
 						| <a href="javascript:deleteConfirm('<?=site_url('experiments/delete/' . $experiment['id']);?>');" title="<?=sprintf(_('Delete this experiment'), $experiment['name']);?>"><?=_('Delete');?></a>
 <?php
@@ -130,8 +153,18 @@
 					<td><?=$job['name'];?></td>
 					<td><span class="<?=$job['cssclass'];?>"><?=$job['humanstatus'];?></span></td>
 					<td>
-						<a href="<?=site_url('results/experiment/' . $job['id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a> |
-						<a href="<?=site_url('experiments/edit/' . $job['id']);?>" title="<?= sprintf(_('Edit this experiment'), $job['name']);?>"><?=_('Edit');?></td>
+<?php
+			if ($job['status'] == 'complete'):
+?>
+						<a href="<?=site_url('results/experiment/' . $job['experiment_id']);?>" title="<?= sprintf(_('Show results for this experiment'), $job['name']);?>"><?=_('Show results');?></a>
+<?php
+			else:
+?>
+						-
+<?php
+			endif;
+?>
+					</td>
 				</tr>
 <?php
 		endforeach;
