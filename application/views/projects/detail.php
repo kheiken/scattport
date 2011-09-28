@@ -5,7 +5,17 @@
 	<div class="title">
 		<h2>
 			<?=anchor('projects', _('Projects'));?> &raquo; <?=$project['name'];?>
+<?php
+	if ($project['public'] == 1):
+?>
+			<a class="share" href="<?=site_url('projects/shares/' . $project['id']);?>"><?=_('Public for all');?></a>
+<?php
+	else:
+?>
 			<a class="share" href="<?=site_url('projects/shares/' . $project['id']);?>"><?=_(sprintf('Shared with %s people', count($shares)));?></a>
+<?php
+	endif;
+?>
 		</h2>
 	</div>
 

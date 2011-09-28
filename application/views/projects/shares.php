@@ -7,6 +7,14 @@
 	</div>
 
 	<div class="box">
+		<h3><?=_('Edit shares');?></h3>
+<?php
+	if ($project['public'] == 1):
+?>
+		<p><?=_('This project is public for all');?></p>
+<?php
+	else:
+?>
 		<form method="post" name="updateShares" action="?action=update">
 			<table class="tableList">
 				<thead>
@@ -39,8 +47,9 @@
 				</tbody>
 			</table>
 		</form>
-
-		<p><a class="button save" href="javascript:void(0);" onclick="$('form[name=updateShares]').submit();"><?=_('Save and back');?></a></p>
+		<p>
+			<a class="button save" href="javascript:void(0);" onclick="$('form[name=updateShares]').submit();"><?=_('Save and back');?></a>
+		</p>
 
 		<h3><?=_('Share with someone');?></h3>
 		<form method="post" name="addShare" action="?action=add">
@@ -49,15 +58,14 @@
 					<div>
 						<select name="user_id" id="user_id" class="drop">
 <?php
-	foreach ($this->user->getAll() as $user):
-
-		// don't list the user himself
-		if($user['id'] === $this->access->profile()->id || $user['id'] === $project['owner'])
-			continue;
+		foreach ($this->user->getAll() as $user):
+			// don't list the user himself
+			if ($user['id'] === $this->access->profile()->id || $user['id'] === $project['owner'])
+				continue;
 ?>
 							<option value="<?=$user['id'];?>"><?=$user['firstname'];?> <?=$user['lastname'];?></option>
 <?php
-	endforeach;
+		endforeach;
 ?>
 						</select>
 						<?=form_dropdown('rights', array('Can view', 'Can edit'), 0, 'class="drop"')?>
@@ -67,6 +75,9 @@
 			</ul>
 		</form>
 	</div>
+<?php
+	endif;
+?>
 
 </div>
 
