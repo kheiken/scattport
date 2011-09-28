@@ -127,7 +127,7 @@ class Experiment extends CI_Model {
 			$this->db->delete('experiments_parameters');
 		}
 
-		return $this->db->affected_rows() > 0;
+		return true;
 	}
 
 	/**
