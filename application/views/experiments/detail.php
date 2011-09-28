@@ -15,10 +15,12 @@
 		<p>
 <?php
 	if (isset($job['id'])):
+		$disabled = ($job['started_at'] != '0000-00-00 00:00:00') ? true : false;
 ?>
 			<a class="button disabled job_start"><?=_('Start job');?></a>
 <?php
 	else:
+		$disabled = false
 ?>
 			<a href="<?=site_url('jobs/start/' . $experiment['id']);?>" class="button job_start"><?=_('Start job');?></a>
 <?php
@@ -31,7 +33,13 @@
 	</div>
 
 	<div class="box">
+<?php 
+	if (!$disabled):
+?>
 		<form name="editExperiment" method="post" action="<?=site_url('experiments/detail/' . $experiment['id']);?>">
+<?php
+	endif;
+?>
 			<h3><?=_('Configuration');?></h3>
 			<table class="tableList">
 				<thead>
@@ -48,7 +56,7 @@
 					<tr>
 						<td width="40%"><?=$param['readable'];?></td>
 						<td width="41%">
-							<input type="text" name="param-<?=$param['parameter_id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['parameter_id']]) ? $this->input->post('param-' . $param['parameter_id']) : $param['value']);?>" />
+							<input type="text" name="param-<?=$param['parameter_id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['parameter_id']]) ? $this->input->post('param-' . $param['parameter_id']) : $param['value']);?>"<?=($disabled) ? ' disabled="disabled"' : '';?> />
 <?php
 		if (!empty($param['description'])):
 ?>
@@ -67,10 +75,25 @@
 ?>
 				</tbody>
 			</table>
+<?php 
+	if ($disabled):
+?>
+			<p>
+				<a class="button save disabled"><?=_('Save changes');?></a>
+			<p>
+<?php
+	else:
+?>
+			<p>
+				<strong><?=_('Note');?>:</strong> <?=_('The existing job will be deleted.');?>
+			</p>
 			<p>
 				<a href="javascript:void(0);" onclick="$('form[name=editExperiment]').submit();" class="button save"><?=_('Save changes');?></a>
 			</p>
 		</form>
+<?php
+	endif;
+?>
 	</div>
 
 <?php
@@ -79,7 +102,7 @@
 	<div class="box">
 		<h3><?=_('Job details');?></h3>
 		<p>
-			<strong><?=_('Date started');?>:</strong> <?=relative_time($job['started_at']);?><br />
+			<strong><?=_('Date started');?>:</strong> <?=relative_time($job['created_at']);?><br />
 			<strong><?=_('Starter');?>:</strong> <?=anchor('users/profile/' . urldecode($job['username']), $job['firstname'] . ' ' . $job['lastname']);?><br />
 			<strong><?=_('Server');?>:</strong> <?=(!empty($job['server'])) ? anchor('admin/servers/detail/' . urldecode($job['server']), $job['server']) : _('Not yet picked');?>
 

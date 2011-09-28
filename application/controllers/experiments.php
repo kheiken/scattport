@@ -157,18 +157,28 @@ class Experiments extends MY_Controller {
 			show_404();
 		}
 
-		$this->load->helper('typography');
-
+		$job = $this->job->getByExperimentId($experiment['id']);
+	
 		// update parameters
 		foreach ($_POST as $key => $value) {
 			if (preg_match('/^param-[0-9a-z]+/', $key)) {
-				$this->experiment->updateParameter($this->input->post($key), $experiment['id'], substr($key, 6, 16));
+				$result = $this->experiment->updateParameter($this->input->post($key), $experiment['id'], substr($key, 6, 16));
 			}
 		}
 
+		// delete existing jobs
+		if (isset($result) && $result === true) {
+			if (isset($job['id'])) {
+				$this->job->delete($job['id']);
+			}
+			redirect('experiments/detail/' . $experiment['id'], 303);
+		}
+
+		$this->load->helper('typography');
+
 		$data['experiment'] = $experiment;
 		$data['parameters'] = $this->experiment->getParameters($experiment['id']);
-		$data['job'] = $this->job->getByExperimentId($experiment['id']);
+		$data['job'] = $job;
 		$data['project'] = $this->project->getById($experiment['project_id']);
 
 		$this->load->view('experiments/detail', $data);
