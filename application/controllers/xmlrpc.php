@@ -64,6 +64,8 @@ class Xmlrpc extends MY_Controller {
 	 */
 	function _get_job($request) {
 		$this->load->model('job');
+		$this->load->model('experiment');
+
 		$parameters = $request->output_parameters();
 		$server = $this->server->getBySecret($parameters[0]);
 
@@ -79,10 +81,14 @@ class Xmlrpc extends MY_Controller {
 				'server' => $server->id,
 			);
 			$this->job->update($job->id, $update);
+
+			// which project does this job belong to?
+			$experiment = $this->experiment->getById($job->experiment_id);
 			$response = array(array(
 					'success' => array('true', 'string'),
 					'new_job' => array('true', 'string'),
 					'job_id' => array($job->id, 'string'),
+					'project_id' => array($experiment['project_id'], 'string'),
 					'experiment_id' => array($job->experiment_id, 'string'),
 				), 'struct');
 		} else {
@@ -132,6 +138,8 @@ class Xmlrpc extends MY_Controller {
 	 */
 	function _job_done($request) {
 		$this->load->model('job');
+		$this->load->model('experiment');
+
 		$parameters = $request->output_parameters();
 		$server = $this->server->getBySecret($parameters[0]);
 
@@ -141,6 +149,23 @@ class Xmlrpc extends MY_Controller {
 		$parameters = $parameters[1];
 
 		$job_id = $parameters[0];
+		$files_uploaded = $parameters[1];
+
+		$job = $this->job->getById($job_id);
+		$experiment = $this->experiment->getById($job['experiment_id']);
+		$project = $this->project->getById($experiment['project_id']);
+
+		if($files_uploaded) {
+			foreach (glob("/tmp/sp_incoming/" . $job_id . "/*") as $filename) {
+				$job_dir = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $job['id'];
+				if(!is_dir($job_dir))
+					mkdir($job_dir);
+
+				$pathinfo = pathinfo($filename);
+				$newpath = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $job['id'] . '/' . $pathinfo['basename'];
+				copy($filename, $newpath);
+			}
+		}
 
 		$update = array(
 			'finished_at' => mysql_now(),
