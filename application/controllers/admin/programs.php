@@ -61,8 +61,8 @@ class Programs extends Admin_Controller {
 
 		if ($this->form_validation->run('programs/edit') === true) {
 			$data = array(
-				'name' => $this->input->post('name'),
-				'config_template' => $_POST['config_template'],
+				'name' => $this->input->post('name', true),
+				'config_template' => $this->input->post('config_template', false),
 			);
 			if ($this->program->update($data, $programId)) {
 				$this->messages->add(sprintf(_("The program &quot;%s&quot; has been updated successfully"), $this->input->post('name')), 'success');
