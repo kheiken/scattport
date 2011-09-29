@@ -76,6 +76,10 @@ class Results extends MY_Controller {
 		$data['project'] = $this->project->getById($experiment['project_id']);
 		$data['results'] = $results;
 
+		// mark the project as seen
+		$job = $this->job->getByExperimentId($experimentId);
+		$this->job->markSeen($job['id']);
+
 		$this->load->view('results/experiment', $data);
 	}
 
