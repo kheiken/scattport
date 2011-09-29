@@ -80,7 +80,7 @@ $(document).ready(function() {
 			</tbody>
 		</table>
 		<p>
-			<label class="note"><?=_('Entries of this table are draggable.');?></label>
+			<label class="note"><?=_('You can drag the items in this table to sort them.');?></label>
 		</p>
 
 		<h3><?=_('Actions');?></h3>
