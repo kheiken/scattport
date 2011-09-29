@@ -15,7 +15,7 @@
 						<?=form_label(_('Name'), 'name');?>
 						<span class="req">*</span>
 						<div>
-							<input type="text" name="name" id="name" class="short text" value="<?=set_value('name');?>" />
+							<input tabindex="1" type="text" name="name" id="name" class="short text" value="<?=set_value('name');?>" />
 							<?=form_error('name');?>
 						</div>
 					</li>
@@ -24,7 +24,7 @@
 						<span class="req">*</span><br />
 						<label class="note"><?=_('A description is useful if you want to share this experiment with co-workers.');?></label>
 						<div>
-							<textarea name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
+							<textarea tabindex="2" name="description" id="description" rows="6" cols="60" class="textarea"><?=set_value('description');?></textarea>
 							<?=form_error('description');?>
 						</div>
 					</li>
@@ -45,7 +45,7 @@
 	endif;
 ?>
 						<div>
-							<input type="file" class="file" name="3dmodel" value="<?=set_value('3dmodel');?>" />
+							<input tabindex="3" type="file" class="file" name="3dmodel" value="<?=set_value('3dmodel');?>" />
 							<?=form_error('3dmodel');?>
 						</div>
 					</li>
@@ -108,7 +108,7 @@
 <?php
 		else:
 ?>
-		<input type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']);?>" />
+		<input tabindex="<?=$i+4;?>" type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=(!empty($_POST['param-' . $param['id']]) ? $this->input->post('param-' . $param['id']) : (isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']);?>" />
 <?php
 		endif;
 		if (!empty($param['description'])):
@@ -135,7 +135,7 @@
 	endforeach;
 ?>
 			<p>
-				<a class="button save-big big" href="javascript:void(0);" onclick="$('form[name=newExperiment]').submit();"><?=_('Save');?></a>
+				<a tabindex="200" class="button save-big big" href="javascript:void(0);" onclick="$('form[name=newExperiment]').submit();"><?=_('Save');?></a>
 			</p>
 		</div>
 	</form>
