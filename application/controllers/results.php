@@ -79,16 +79,32 @@ class Results extends MY_Controller {
 		// mark the project as seen
 		$job = $this->job->getByExperimentId($experimentId);
 		$this->job->markSeen($job['id']);
-
+		
 		$this->load->view('results/experiment', $data);
 	}
 
 	/**
-	 * Get the results of a given job.
+	 * Downloads the results of a given experiment.
 	 *
-	 * @param string $job_id the job for which to get the results
+	 * @param string $experimentId
 	 */
-	public function job($jobId) {
+	public function download($experimentId = '') {
+		$job = $this->job->getByExperimentId($experimentId);
+		if (empty($experimentId) || !$job) {
+			show_404();
+		}
+
+		$experiment = $this->experiment->getById($job['experiment_id']);
+
+		$path = FCPATH.'uploads/'.$experiment['project_id'].'/'.$experiment['id'].'/';
+
+		if (file_exists($path.'default.out')) {
+			// load download helper
+			$this->load->helper('download');
+			// download the file
+			$data = file_get_contents($path.'default.out');
+			force_download('default.out', $data);
+		}
 	}
 }
 

@@ -544,6 +544,11 @@ a.upload {
 	padding-left: 30px;
 }
 
+a.download {
+	background: url(../images/icons/drive-download.png) 10px center no-repeat #f3f3f3;
+	padding-left: 30px;
+}
+
 a.add {
 	background: url(../images/icons/plus-circle.png) 10px center no-repeat #f3f3f3;
 	padding-left: 30px;

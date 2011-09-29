@@ -7,6 +7,15 @@
 
 	<div class="box">
 		<h3><?=_('Results');?></h3>
+<?php
+	if (count($results) > 0):
+?>
+		<p>
+			<a href="<?=site_url('results/download/'.$experiment['id']);?>" class="button download"><?=_('Download');?></a>
+		</p>
+<?php
+	endif;
+?>
 		<table class="tableList">
 <?php
 	$i = 0;
