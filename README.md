@@ -25,4 +25,5 @@ This application uses the following third-party software:
 
 * CodeIgniter by Ellislab, http://codeigniter.com
 * jQuery, http://jquery.com/
+* jsc3d, http://code.google.com/p/jsc3d/
 * Fugue Icons, http://p.yusukekamiyamane.com/
