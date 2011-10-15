@@ -11,7 +11,8 @@
 	if (count($results) > 0):
 ?>
 		<p>
-			<a href="<?=site_url('results/download/'.$experiment['id']);?>" class="button download"><?=_('Download');?></a>
+		<h4>Downloads results</h4>
+			<a href="<?=site_url('results/download/'.$experiment['id']).'/out';?>" class="button left download"><?=_('Results (.out)');?></a><a href="<?=site_url('results/download/'.$experiment['id']).'/tma';?>" class="button middle download"><?=_('T-Matrix (.tma)');?></a><a href="<?=site_url('results/download/'.$experiment['id']).'/log';?>" class="button right download"><?=_('Application output (.log)');?></a>
 		</p>
 <?php
 	endif;

@@ -87,8 +87,14 @@ class Results extends MY_Controller {
 	 * Downloads the results of a given experiment.
 	 *
 	 * @param string $experimentId
+	 * @param string $what
 	 */
-	public function download($experimentId = '') {
+	public function download($experimentId = '', $what = 'out') {
+
+		// only allow download of specific files
+		if(!in_array($what, array('out', 'tma', 'log')))
+			show_404();
+
 		$job = $this->job->getByExperimentId($experimentId);
 		if (empty($experimentId) || !$job) {
 			show_404();
@@ -98,12 +104,12 @@ class Results extends MY_Controller {
 
 		$path = FCPATH.'uploads/'.$experiment['project_id'].'/'.$experiment['id'].'/';
 
-		if (file_exists($path.'default.out')) {
+		if (file_exists($path.'default.'.$what)) {
 			// load download helper
 			$this->load->helper('download');
 			// download the file
-			$data = file_get_contents($path.'default.out');
-			force_download('default.out', $data);
+			$data = file_get_contents($path.'default.'.$what);
+			force_download('default.'.$what, $data);
 		}
 	}
 }
