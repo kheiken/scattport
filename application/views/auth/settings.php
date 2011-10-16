@@ -51,6 +51,7 @@
 							<input type="text" name="phone" id="phone" class="short text" value="<?=set_value('phone', $phone);?>" />
 							<?=form_error('phone');?>
 						</div>
+						<label class="note"><?=_('Example');?>: +49 123 456789</label>
 					</li>
 				</ul>
 			</div>
