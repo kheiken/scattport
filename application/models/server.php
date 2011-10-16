@@ -112,7 +112,11 @@ class Server extends CI_Model {
 		$server = $this->db->get_where('servers', array('id' => $serverId))->row();
 		if (is_object($server)) {
 			$server->uptimestring = prettyTime($server->uptime);
-			$server->lastheartbeat = prettyTime(time_diff($server->last_update, mysql_now()));
+			if($server->last_update == 0) {
+				$server->lastheartbeat = _("No heartbeat received yet.");
+			} else {
+				$server->lastheartbeat = prettyTime(time_diff($server->last_update, mysql_now()));
+			}
 		}
 		return $server;
 	}
