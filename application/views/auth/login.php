@@ -11,7 +11,9 @@
 <?=css_asset('form.css');?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" language="javascript" type="text/javascript"></script>
-
+<script type="text/javascript">
+if (typeof jQuery == 'undefined') document.write(unescape("%3Cscript src='<?=base_url('/assets/js/jquery-1.6.2.min.js');?>' type='text/javascript'%3E%3C/script%3E"));
+</script>
 <?=js_asset('minmax.js');?>
 <?=js_asset('scattport.js');?>
 
