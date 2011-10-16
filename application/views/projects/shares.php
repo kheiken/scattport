@@ -48,7 +48,7 @@
 			</table>
 		</form>
 		<p>
-			<a class="button save" href="javascript:void(0);" onclick="$('form[name=updateShares]').submit();"><?=_('Save and back');?></a>
+			<a class="button save" href="javascript:void(0);" onclick="$('form[name=updateShares]').submit();"><?=_('Save');?></a>
 		</p>
 
 		<h3><?=_('Share with someone');?></h3>
