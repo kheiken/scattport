@@ -31,8 +31,8 @@
 
 		<h4>ScattPort-<?=_('Statistics');?></h4>
 		<p>
-			<?=_('Completed jobs');?>: 47<br />
-			<?=_('Available programs');?>: ScaTT
+			<?=_('Completed jobs');?>: <br />
+			<?=_('Available programs');?>:
 		</p>
 	</div>
 
