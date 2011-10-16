@@ -60,6 +60,46 @@ class Servers extends Admin_Controller {
 	}
 
 	/**
+	* Allows admins to create a server.
+	*
+	* @param string $serverId
+	*/
+	public function create() {
+
+		if ($this->form_validation->run('servers/create') === true) {
+			$data = array(
+						'id' => $this->input->post('id'),
+						'description' => $this->input->post('description'),
+						'location' => $this->input->post('location'),
+						'owner' => $this->input->post('owner'),
+						'secret' => $this->input->post('secret'),
+			);
+
+			if ($this->server->create($data))
+				redirect('admin/servers', 303);
+			else
+				$this->messages->add(_("Something went wrong with the action you performed."), 'error');
+		}
+
+		$data = array(); // empty data array
+
+		$data['users'] = array();
+
+		$users = $this->user->getAll();
+		foreach ($users as $user) {
+			$data['users'][$user['id']] = $user['firstname'] . ' ' . $user['lastname'];
+		}
+
+		// generate a secret
+		$data['secret'] = $this->input->post('secret');
+
+		if(empty($data['secret']))
+			$data['secret'] = sha1(uniqid());
+
+		$this->load->view('admin/servers/create', $data);
+	}
+
+	/**
 	 * Allows admins to edit a server.
 	 *
 	 * @param string $serverId

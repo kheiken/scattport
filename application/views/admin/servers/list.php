@@ -8,6 +8,7 @@
 
 	<div class="box">
 		<h3><?=_('Available servers');?></h3>
+
 		<table class="tableList paginated">
 			<thead>
 				<tr>
@@ -48,6 +49,11 @@
 ?>
 			</tbody>
 		</table>
+
+		<p>
+			<?=anchor('/admin/servers/create', _('Create a new server'), array('class' => 'button add'));?>
+		</p>
+
 	</div>
 </div>
 

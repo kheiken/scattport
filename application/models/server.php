@@ -34,7 +34,11 @@ class Server extends CI_Model {
 	 * @return boolean Returns TRUE if the insert was successful.
 	 */
 	public function create($data) {
-		return $this->db->insert('servers', $data);
+		if ($this->db->insert('servers', $data)) {
+			return $data['id'];
+		} else {
+			return false;
+		}
 	}
 
 	/**
