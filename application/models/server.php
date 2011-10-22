@@ -28,6 +28,17 @@
 class Server extends CI_Model {
 
 	/**
+	 * Add a field 'available' to the server.
+	 *
+	 * This field will be true if the last heartbeat was received less
+	 * than 2 minutes ago.
+	 */
+	private function addAvailability($var) {
+		$var['available'] = time_diff($var['last_update'], mysql_now()) < 120 ? true : false;
+		return $var;
+	}
+
+	/**
 	 * Creates a new server.
 	 *
 	 * @param array $data The server informations
@@ -59,10 +70,7 @@ class Server extends CI_Model {
 	 */
 	public function getAll() {
 		$servers = $this->db->get('servers')->result_array();
-		return array_map(function($var) {
-			$var['available'] = time_diff($var['last_update'], mysql_now()) < 120 ? true : false;
-			return $var;
-		}, $servers);
+		return array_map(array($this, "addAvailability"), $servers);
 	}
 
 	/**
