@@ -15,6 +15,8 @@ Simply import mysql_scheme.sql into your database, set the connection data insid
 Copy config/database.sample.php to config/database.php and adjust the values.
 Same thing goes for config/config.sample.php and .htaccess.sample (if you want mod_rewrite-support).
 
+Don't forget to make the upload directory writable by the web server.
+
 
 License
 -------
