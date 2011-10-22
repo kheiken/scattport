@@ -39,6 +39,20 @@ class Job extends CI_Model {
 	}
 
 	/**
+	 * Add a human readable status to the job.
+	 */
+	private function addStatus($var) {
+		if ($var['started_at'] == '0000-00-00 00:00:00') {
+			$var['status'] = 'pending';
+		} else if ($var['finished_at'] == '0000-00-00 00:00:00') {
+			$var['status'] = 'running';
+		} else {
+			$var['status'] = 'complete';
+		}
+		return $var;
+	}
+
+	/**
 	 * Creates a new job.
 	 *
 	 * @param array $data The data of the new job
@@ -114,14 +128,8 @@ class Job extends CI_Model {
 	public function getById($job_id) {
 		$job = $this->db->get_where('jobs', array('id' => $job_id))->row_array();
 
-		if ($job['started_at'] == '0000-00-00 00:00:00') {
-			$job['status'] = 'pending';
-		} else if ($job['finished_at'] == '0000-00-00 00:00:00') {
-			$job['status'] = 'running';
-		} else {
-			$job['status'] = 'complete';
-		}
-
+		$job = addStatus($job);
+		
 		return $job;
 	}
 
@@ -141,16 +149,7 @@ class Job extends CI_Model {
 		}
 
 		$jobs = $this->db->get('jobs')->result_array();
-		return array_map(function($var) {
-			if ($var['started_at'] == '0000-00-00 00:00:00') {
-				$var['status'] = 'pending';
-			} else if ($var['finished_at'] == '0000-00-00 00:00:00') {
-				$var['status'] = 'running';
-			} else {
-				$var['status'] = 'complete';
-			}
-			return $var;
-		}, $jobs);
+		return array_map(array($this, "addStatus"), $jobs);
 	}
 
 	/**

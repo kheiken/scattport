@@ -28,12 +28,12 @@
  */
 class Project extends CI_Model {
 
-	/**
+	/*
 	 * Add a short and medium length description to one project.
 	 *
 	 * @param mixed $project
 	 */
-	private function _addShortName($project) {
+	private function addShortName($project) {
 		$project['shortname'] = character_limiter($project['name'], 20);
 		$project['mediumname'] = character_limiter($project['name'], 35);
 		return $project;
@@ -44,12 +44,8 @@ class Project extends CI_Model {
 	 *
 	 * @param mixed $project
 	 */
-	private function _addShortNames($project) {
-		return array_map(function($var) {
-			$var['shortname'] = character_limiter($var['name'], 20);
-			$var['mediumname'] = character_limiter($var['name'], 35);
-			return $var;
-		}, $project);
+	private function addShortNames($project) {
+		return array_map(array($this, "addShortName"), $project);
 	}
 
 	/**
@@ -65,7 +61,7 @@ class Project extends CI_Model {
 
 		$query = $this->db->order_by('last_access DESC')->get('projects');
 
-		return $this->_addShortNames($query->result_array());
+		return $this->addShortNames($query->result_array());
 	}
 
 	/**
@@ -79,7 +75,7 @@ class Project extends CI_Model {
 		$this->db->join('projects', 'projects.id = shares.project_id');
 		$query = $this->db->get();
 
-		return $this->_addShortNames($query->result_array());
+		return $this->addShortNames($query->result_array());
 	}
 
 	/**
@@ -89,7 +85,7 @@ class Project extends CI_Model {
 	 */
 	public function getPublic() {
 		$query = $this->db->order_by('name ASC')->get_where('projects', array('public' => 1));
-		return $this->_addShortNames($query->result_array());
+		return $this->addShortNames($query->result_array());
 	}
 
 	/**
@@ -128,7 +124,7 @@ class Project extends CI_Model {
 		$result = $this->db->get_where('projects', array('id' => $projectId))->row_array();
 
 		if ($result) {
-			return $this->_addShortName($result);
+			return $this->addShortName($result);
 		} else {
 			return false;
 		}
@@ -142,7 +138,7 @@ class Project extends CI_Model {
 				->join('users', 'users.id = projects.owner', 'left')
 				->get('projects')->result_array();
 
-		return $this->_addShortNames($result);
+		return $this->addShortNames($result);
 	}
 
 	/**
@@ -191,7 +187,7 @@ class Project extends CI_Model {
 			$query = $this->db->get();
 		}
 
-		return $this->_addShortNames($query->result_array());
+		return $this->addShortNames($query->result_array());
 	}
 
 	/**
