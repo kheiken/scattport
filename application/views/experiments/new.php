@@ -1,12 +1,15 @@
 <?php $this->load->view('header');?>
-
 <div id="content">
-
 	<div class="title">
 		<h2><?=anchor('projects', _('Projects'));?> &raquo; <?=anchor('projects/detail/' . $project['id'], $project['name']);?> &raquo; <?=_('Create experiment');?></h2>
 	</div>
-
-	<form name="newExperiment" method="post" action="<?=site_url('experiments/create/' . $project['id']);?>" enctype="multipart/form-data">
+<?php
+	$form_action = site_url('experiments/create/' . $project['id']);
+	if(isset($copy))
+		$form_action .= '/' . $copy['id'];
+		
+?>
+	<form name="newExperiment" method="post" action="<?=$form_action;?>" enctype="multipart/form-data">
 		<div class="box">
 
 			<h3><?=_('Required information');?></h3>
@@ -102,20 +105,21 @@
 								<td><?=$param['readable'];?></td>
 								<td>
 <?php
+		if(!empty($_POST['param-' . $param['id']])) {
+			$value = $this->input->post('param-' . $param['id']);
+		} else {
+			if(isset($copy_params) && isset($copy_params[$i]['value'])) {
+				$value = $copy_params[$i]['value'];
+			} else {
+				$value = $param['default_value'];
+			}
+		}
+
 		if ($param['type'] == 'boolean'):
 ?>
-									<?=form_boolean('param-'.$param['id'], (!empty($_POST['param-'.$param['id']]) ? $_POST('param-'.$param['id']) : (!is_null($copy_params) && isset($copy_params[$i]['value'])) ? $copy_params[$i]['value'] : $param['default_value']), 'class="drop"')?>
+									<?=form_boolean('param-'.$param['id'], $value, 'class="drop"')?>
 <?php
 		else:
-			if(!empty($_POST['param-' . $param['id']])) {
-				$value = $this->input->post('param-' . $param['id']);
-			} else {
-				if(isset($copy_params) && isset($copy_params[$i]['value'])) {
-					$value = $copy_params[$i]['value'];
-				} else {
-					$value = $param['default_value'];
-				}
-			}
 ?>
 		<input tabindex="<?=$i+4;?>" type="text" name="param-<?=$param['id'];?>" class="long text" value="<?=$value;?>" />
 <?php
@@ -151,11 +155,19 @@
 
 </div>
 
-<?php if (isset($copy['id'])): ?>
+<?php 
+	if (set_value('program_id'))
+		$program_id = set_value('program_id');
+	elseif (isset($copy))
+		$program_id = $copy['program_id'];
+
+	if(isset($program_id)):
+
+?>
 <script type="text/javascript">
-$('#program-<?=$copy['program_id'];?>').addClass('locked');
-$('#<?=$copy['program_id'];?>-params').show();
-$('#program_id').val('<?=$copy['program_id'];?>');
+$('#program-<?=$program_id;?>').addClass('locked');
+$('#<?=$program_id;?>-params').show();
+$('#program_id').val('<?=$program_id;?>');
 </script>
 <?php endif; ?>
 
