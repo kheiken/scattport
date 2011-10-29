@@ -172,20 +172,20 @@ class Project extends CI_Model {
 	 * @return array Returns an array of all found projects.
 	 */
 	public function search($needle, $searchAll = false) {
-		if ($searchAll) {
-			$query = $this->db->like('name', $needle)->get('projects');
-		} else {
-			$this->db->select('projects.*')->from('projects');
+
+		$this->db->select('projects.*')->from('projects');
+
+		if (!$searchAll) {
 			$this->db->join('shares', 'shares.project_id = projects.id', 'left');
 
 			$this->db->where("(`shares`.`user_id` = " . $this->db->escape($this->session->userdata('user_id'))
 					. " OR `projects`.`owner` = " . $this->db->escape($this->session->userdata('user_id'))
 					. " OR `projects`.`public` = 1)");
-
-			$this->db->like('projects.name', $needle);
-
-			$query = $this->db->get();
 		}
+
+		$this->db->like('projects.name', $needle);
+		$this->db->or_like('projects.id', $needle);
+		$query = $this->db->get();
 
 		return $this->addShortNames($query->result_array());
 	}
