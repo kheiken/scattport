@@ -61,6 +61,16 @@
 	endif;
 ?>
 		</p>
+<?php
+	if(ENVIRONMENT != "production" && !empty($job)):
+?>
+		<h3>Debugging actions</h3>
+		<p>
+			<a href="<?=site_url('debug/cancel_job/'.$experiment['id'].'/'.$job['id']);?>" onclick="javascript:return confirm('This will NOT have any effect on the calculation that may or may not be running in a simulator!\nThis simply resets the job to >not started< in the database')" class="button danger">Reset this job</a>
+		</p>
+<?php
+	endif;
+?>
 	</div>
 <?php
 	if (isset($job['id'])):

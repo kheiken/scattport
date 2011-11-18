@@ -445,6 +445,10 @@ a.button.locked {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
+a.button.danger, a.button.danger:hover, a.button.danger:active {
+	color: #f00;
+}
+
 a.button.disabled {
 	color: #6e6e6e;
 	background-color: #fff;
