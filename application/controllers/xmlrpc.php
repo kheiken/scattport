@@ -157,12 +157,21 @@ class Xmlrpc extends MY_Controller {
 
 		if($files_uploaded) {
 			foreach (glob("/tmp/sp_incoming/" . $job_id . "/*") as $filename) {
-				$job_dir = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $job['id'];
-				if(!is_dir($job_dir))
-					mkdir($job_dir);
+				$job_dir = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'];
+				$directories = explode("/", $job_dir);
+				$dir_tmp = '/';
+				foreach ($directories as $directory) {
+					$dir_tmp .= '/' . $directory;
+					if(!is_dir($dir_tmp)) {
+						mkdir($dir_tmp);
+						log_message('debug', "creating directory $dir_tmp");
+					}
+				}
 
 				$pathinfo = pathinfo($filename);
 				$newpath = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/' . $pathinfo['basename'];
+
+				log_message('debug', "copying $filename to $newpath");
 				copy($filename, $newpath);
 			}
 		}
