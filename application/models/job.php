@@ -128,7 +128,7 @@ class Job extends CI_Model {
 	public function getById($job_id) {
 		$job = $this->db->get_where('jobs', array('id' => $job_id))->row_array();
 
-		$job = addStatus($job);
+		$job = $this->addStatus($job);
 		
 		return $job;
 	}
