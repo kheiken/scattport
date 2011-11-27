@@ -37,6 +37,8 @@ class Xmlrpc extends MY_Controller {
 		$this->load->library('xmlrpc');
 		$this->load->library('xmlrpcs');
 
+		$this->load->config('scattport');
+
 		$this->load->model('server');
 
 		$this->session->sess_destroy();
@@ -156,7 +158,7 @@ class Xmlrpc extends MY_Controller {
 		$project = $this->project->getById($experiment['project_id']);
 
 		if($files_uploaded) {
-			foreach (glob("/tmp/sp_incoming/" . $job_id . "/*") as $filename) {
+			foreach (glob($this->config->item('ftp_base') ."/incoming/" . $job_id . "/*") as $filename) {
 				$job_dir = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'];
 				$directories = explode("/", $job_dir);
 				$dir_tmp = '/';
