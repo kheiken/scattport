@@ -1,13 +1,23 @@
 <?php $this->load->view('header');?>
 <div id="content">
 	<div class="title">
+<?php
+	if(isset($copy)):
+?>
+		<h2><?=anchor('projects', _('Projects'));?> &raquo; <?=anchor('projects/detail/' . $project['id'], $project['name']);?> &raquo; <?=sprintf(_('Create copy of %s'), $copy['name']);?></h2>
+<?php
+	else:
+?>
 		<h2><?=anchor('projects', _('Projects'));?> &raquo; <?=anchor('projects/detail/' . $project['id'], $project['name']);?> &raquo; <?=_('Create experiment');?></h2>
+<?php
+	endif;
+?>
 	</div>
 <?php
 	$form_action = site_url('experiments/create/' . $project['id']);
 	if(isset($copy))
 		$form_action .= '/' . $copy['id'];
-		
+
 ?>
 	<form name="newExperiment" method="post" action="<?=$form_action;?>" enctype="multipart/form-data">
 		<div class="box">
@@ -155,7 +165,7 @@
 
 </div>
 
-<?php 
+<?php
 	if (set_value('program_id'))
 		$program_id = set_value('program_id');
 	elseif (isset($copy))
