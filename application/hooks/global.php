@@ -34,7 +34,7 @@ function check_login() {
 	$public_controllers = array('auth', 'xmlrpc');
 
 	$CI = & get_instance();
-	if (!$CI->input->is_ajax_request() && !$CI->access->isLoggedIn() && !in_array($CI->router->class, $public_controllers)) {
+	if (!in_array($CI->router->class, $public_controllers) && !$CI->input->is_ajax_request() && !$CI->access->isLoggedIn()) {
 		redirect('auth/login');
 	}
 }
