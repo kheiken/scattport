@@ -7,6 +7,8 @@
 
 <title>ScattPort | <?=_('Login');?></title>
 
+<link rel="icon" href="<?=base_url('assets/images/favicon.png');?>" type="image/png">
+
 <?=css_asset('login.css');?>
 <?=css_asset('form.css');?>
 
