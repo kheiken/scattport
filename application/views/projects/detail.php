@@ -101,6 +101,10 @@
 ?>
 						<a href="<?=site_url('results/experiment/' . $experiment['id']);?>" title="<?=sprintf(_('Show results for this experiment'), $experiment['name']);?>"><?=_('Show results');?></a> |
 <?php
+			else:
+?>
+						<a href="<?=site_url('jobs/start/' . $experiment['id']);?>" title="<?=_('Run the simulation for this experiment');?>"><?=_('Start job');?></a> |
+<?php
 			endif;
 ?>
 						<a href="<?=site_url('experiments/create/' . $project['id'] . '/' . $experiment['id']);?>" title="<?=sprintf(_('Copy experiment &quot;%s&quot;'), $experiment['name']);?>"><?=_('Copy');?></a>
