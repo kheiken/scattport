@@ -30,8 +30,9 @@
 class Scatt extends Program_runner {
 
 	/**
+	 * Constructor.
 	 *
-	 * @param unknown_type $params
+	 * @param mixed $params
 	 */
 	public function __construct($params) {
 		$this->CI =& get_instance();
@@ -56,16 +57,19 @@ class Scatt extends Program_runner {
 	/**
 	 * Generate dafault.calc and param_dsm.dat files.
 	 *
-	 * @param unknown_type $experimentId
+	 * @param string $experimentId
 	 */
 	public function _createJob($experimentId) {
 		$this->CI->load->library('parser');
 
 		$experiment = $this->CI->experiment->getById($experimentId);
 
+		// create default.calc
 		$path = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/';
 		$handler = fopen($path . 'default.calc', "w");
-		
+
+		// if we didn't specify a model for this experiment, copy the default 
+		// from the project.
 		if (!file_exists($path . 'default.obj')) {
 			@copy(FCPATH . 'uploads/' . $experiment['project_id'] . '/defaultmodel.obj', $path . 'default.obj');
 		}
@@ -76,15 +80,19 @@ class Scatt extends Program_runner {
 		@fwrite($handler, $this->CI->parser->parse_string($this->program['config_template'], $data, true));
 		@fclose($handler);
 
+		// all param_dsm.dat files have the same header:
 		$dsm_dat  = "&param_scat\n";
 		$dsm_dat .= "filein_name='./default.obj',\n";
 		$dsm_dat .= "tmat_file_name='./default.tma',\n";
 		$dsm_dat .= "scat_diag_file_name='./default.out',\n";
 
+		// sscatt requires a specific number format, so we need to convert the 
+		// values
 		foreach ($data['parameters'] as $par) {
 			if ($par['type'] == 'float') {
 				$par['value'] = number_format((double) $par['value'], 6, '.', '').'d0';
 			}
+
 			if ($par['name'] == 'refractive_idx_im') {
 				$refractive_idx_im = $par['value'];
 			} else if ($par['name'] == 'refractive_idx_re') {
@@ -93,7 +101,8 @@ class Scatt extends Program_runner {
 				$dsm_dat .= "{$par['name']}={$par['value']},\n";
 			}
 		}
-		
+
+		// add a field that contains a combination of the refractive indices
 		$dsm_dat .= "ind_ref=({$refractive_idx_re},{$refractive_idx_im})\n";
 		$dsm_dat .= "/\n";
 
@@ -103,6 +112,7 @@ class Scatt extends Program_runner {
 	}
 
 	/**
+	 * Parse results from an .out file.
 	 *
 	 * @param string $experimentId
 	 */
@@ -113,14 +123,17 @@ class Scatt extends Program_runner {
 
 		$path = FCPATH . 'uploads/' . $experiment['project_id'] . '/' . $experiment['id'] . '/';
 
+		// there was no results file found. return an empty array
 		if (!file_exists($path . 'default.out')) {
 			return array();
 		}
 
+		// open the results file
 		$handler = fopen($path . 'default.out', "r");
 
 		$results = array();
 
+		// and parse its contents
 		while (($line = fgets($handler)) !== false) {
 			$values = array();
 			$i = 0;
