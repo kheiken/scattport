@@ -44,6 +44,17 @@ class Scatt extends Program_runner {
 	}
 
 	/**
+	 * Mapping function to generate correct float values
+	 */
+	private function formatNumbers($data) {
+		if($data['type'] == 'float')
+			$data['value'] = sprintf('%.6f', $data['value']);
+
+		return $data;
+	}
+
+	/**
+	 * Generate dafault.calc and param_dsm.dat files.
 	 *
 	 * @param unknown_type $experimentId
 	 */
@@ -59,8 +70,9 @@ class Scatt extends Program_runner {
 			@copy(FCPATH . 'uploads/' . $experiment['project_id'] . '/defaultmodel.obj', $path . 'default.obj');
 		}
 
-		$data['parameters'] = $this->CI->experiment->getParameters($experimentId);
-		
+		// get the parameters for this experiment and convert the simple float values to %.6f
+		$data['parameters'] = array_map(array($this, 'formatNumbers'), $this->CI->experiment->getParameters($experimentId));
+
 		@fwrite($handler, $this->CI->parser->parse_string($this->program['config_template'], $data, true));
 		@fclose($handler);
 
