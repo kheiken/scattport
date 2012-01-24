@@ -9,9 +9,9 @@
 	</div>
 
 	<div id="copyright">
-		<?=image_asset('iwt.png');?>
-		<?=image_asset('dfg.png');?>
-		<?=image_asset('uni.png');?>
+		<a href="http://www.dfg.de/en/index.jsp" target="_blank"><?=img(array('src' => 'assets/images/dfg.png', 'title' => 'Deutsche Forschungsgemeinschaft'))?></a>
+		<a href="http://www.hs-emden-leer.de/en/startseite.html" target="_blank"><?=img(array('src' => 'assets/images/hsemden.png', 'title' => 'University of Applied Sciences Emden'))?></a>
+		<a href="http://www.uni-bremen.de/en.html" target="_blank"><?=img(array('src' => 'assets/images/unibremen.png', 'title' => 'University of Bremen'))?></a>
 	</div>
 
 </div>
