@@ -304,7 +304,7 @@ class User extends CI_Model {
 			$settings['jobs_check_interval'] = 5;
 
 			$this->db->insert('users_settings', $settings);
-			return true;
+			return substr($data['id'], 0, 16);
 		}
 
 		return false;
