@@ -64,8 +64,10 @@ class MY_Session extends CI_Session {
 
 		// before continuing, we need to determine if there is any custom data to deal with.
 		foreach (array('session_id', 'user_id', 'ip_address', 'user_agent', 'last_activity') as $val) {
-			unset($customUserdata[$val]);
-			$cookieUserdata[$val] = $this->userdata[$val];
+			if(isset($customUserdata[$val])) {
+				unset($customUserdata[$val]);
+				$cookieUserdata[$val] = $this->userdata[$val];
+			}
 		}
 
 		// did we find any custom data? If not, we turn the empty array into a string
@@ -74,6 +76,10 @@ class MY_Session extends CI_Session {
 		} else {
 			// serialize the custom data array so we can store it
 			$customUserdata = $this->_serialize($customUserdata);
+		}
+
+		if(!isset($this->userdata['user_id'])) {
+			$this->userdata['user_id'] = '';
 		}
 
 		// run the update query
