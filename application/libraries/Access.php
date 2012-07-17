@@ -204,7 +204,6 @@ class Access {
 		$this->CI->session->sess_destroy();
 		$this->CI->session->sess_create();
 
-		$this->CI->messages->add(_('Logged out successfully'), 'success');
 		return true;
 	}
 
