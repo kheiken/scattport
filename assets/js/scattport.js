@@ -133,6 +133,12 @@ $(document).ready(function() {
 	/*
 	 * Notification stuff
 	 */
+
+	// set a default JOBS_CHECK_INTERVAL
+	if(typeof(window.JOBS_CHECK_INTERVAL) == "undefined") {
+		JOBS_CHECK_INTERVAL = 5;
+	}
+
 	$('#notifications').hide();
 	getNotifications();
 	setInterval('getNotifications()', '5000');
