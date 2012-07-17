@@ -296,7 +296,18 @@ class User extends CI_Model {
 
 		$this->db->insert('users', array_merge($data, $additionalData));
 
-		return $this->db->affected_rows() > 0 ? $data['id'] : false;
+		$user_created = $this->db->affected_rows() == 1;
+
+		if($user_created) {
+			// set the initial user settings
+			$settings['user_id'] = $data['id'];
+			$settings['jobs_check_interval'] = 5;
+
+			$this->db->insert('users_settings', $settings);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
