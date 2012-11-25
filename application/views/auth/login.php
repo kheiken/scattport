@@ -16,7 +16,7 @@
 <script type="text/javascript">
 if (typeof jQuery == 'undefined') document.write(unescape("%3Cscript src='<?=base_url('/assets/js/jquery-1.6.2.min.js');?>' type='text/javascript'%3E%3C/script%3E"));
 </script>
-<script src="http://www.medientechnik-emden.de:8146/assets/js/jquery.tablednd.js" language="javascript" type="text/javascript"></script>
+<?=js_asset('jquery.tablednd.js');?>
 <?=js_asset('minmax.js');?>
 <?=js_asset('scattport.js');?>
 
